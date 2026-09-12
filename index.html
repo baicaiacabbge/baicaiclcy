@@ -5,12 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>我们</title>
   <link rel="icon" type="image/jpeg" href="3.jpeg">
+
+  <!-- Remix Icon -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+  <!-- 霞鹜文楷（unpkg） -->
+  <link rel="stylesheet" href="https://unpkg.com/lxgw-wenkai-webfont@1.7.0/style.css">
+
   <script>
     window._AMapSecurityConfig = {
       securityJsCode: "8bf8a3e5628e6b4f0f8a9f1a8a8dc097"
     };
   </script>
-  <script src="https://webapi.amap.com/maps?v=2.0&key=c4165df92b1f624f44e932659ad0920e&plugin=AMap.GeoJSON,AMap.Text,AMap.Marker,AMap.BezierCurve,AMap.Polyline"></script>
+  <script src="https://webapi.amap.com/maps?v=2.0&key=c4165df92b1f624f44e932659ad0920e&plugin=AMap.GeoJSON,AMap.Text,AMap.Marker,AMap.BezierCurve,AMap.Polyline,AMap.Scale"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -27,30 +35,10 @@
       --text-main: #e0e8f0;
       --text-sub: #98a8b8;
       --text-shadow: rgba(0, 0, 0, 0.75);
-      --season-accent: #e8a0b8;
-      --season-accent-2: #f5c6d6;
-      --season-glow: rgba(232, 160, 184, 0.5);
-    }
-
-    body.season-spring {
-      --season-accent: #e8a0b8;
-      --season-accent-2: #f5c6d6;
-      --season-glow: rgba(232, 160, 184, 0.5);
-    }
-    body.season-summer {
-      --season-accent: #4a9fd4;
-      --season-accent-2: #8fcbe8;
-      --season-glow: rgba(74, 159, 212, 0.5);
-    }
-    body.season-autumn {
-      --season-accent: #d98a3d;
-      --season-accent-2: #f0bd7c;
-      --season-glow: rgba(217, 138, 61, 0.5);
-    }
-    body.season-winter {
-      --season-accent: #8fa8c4;
-      --season-accent-2: #c8d8e8;
-      --season-glow: rgba(143, 168, 196, 0.5);
+      --accent: #e8a0b8;
+      --accent-2: #8fcbe8;
+      --glow: rgba(232, 160, 184, 0.5);
+      --font-kai: 'LXGW WenKai', 'Noto Serif SC', 'Microsoft YaHei', serif;
     }
 
     /* 过渡层 */
@@ -80,13 +68,13 @@
     }
 
     .intro-title {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 400;
       color: #e0e8f0;
       letter-spacing: 8px;
       text-indent: 8px;
       opacity: 0;
-      font-family: 'Noto Serif SC', 'Microsoft YaHei', serif;
+      font-family: var(--font-kai);
       animation: introTextIn 1.8s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
     }
 
@@ -127,6 +115,23 @@
       z-index: 1;
     }
 
+    /* 手绘噪点纹理层 */
+    #noise-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 3;
+      pointer-events: none;
+      opacity: 0.04;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.92 0 0 0 0 0.86 0 0 0 0 0.82 0 0 0 0.55 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+      background-repeat: repeat;
+      background-size: 240px 240px;
+    }
+
     #watermark-layer {
       position: fixed;
       top: 0;
@@ -164,9 +169,30 @@
       visibility: hidden !important;
     }
 
-    /* ============================================================
-       右上角信息面板
-       ============================================================ */
+    /* 比例尺 */
+    .amap-scalecontrol {
+      position: absolute !important;
+      left: 10px !important;
+      bottom: 10px !important;
+      top: auto !important;
+      right: auto !important;
+      background: rgba(30, 40, 50, 0.85) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      border-radius: 4px !important;
+      padding: 2px 6px !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+      color: #e0e8f0 !important;
+      font-size: 11px !important;
+      font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif !important;
+      z-index: 100 !important;
+    }
+    .amap-scalecontrol * { color: #e0e8f0 !important; }
+    .amap-scalecontrol .amap-scale-borderTop,
+    .amap-scalecontrol .amap-scale-borderBottom {
+      border-color: #e0e8f0 !important;
+    }
+
+    /* 右上角信息面板 */
     .info-panel {
       position: fixed;
       right: 16px;
@@ -183,16 +209,34 @@
         0 0 6px var(--text-shadow);
     }
 
+    .info-panel .info-line {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+      line-height: 1.6;
+    }
+
+    .info-panel .info-line i {
+      font-size: 13px;
+      color: var(--text-sub);
+      opacity: 0.85;
+      flex-shrink: 0;
+    }
+
+    .info-panel .info-line span {
+      white-space: nowrap;
+    }
+
     .info-panel .info-ip {
-      display: block;
       font-size: 12px;
       color: var(--text-main);
       font-weight: 600;
       letter-spacing: 0.3px;
+      margin-top: 2px;
     }
 
     .info-panel .info-location {
-      display: block;
       font-size: 11px;
       color: var(--text-sub);
       font-weight: 500;
@@ -200,7 +244,6 @@
     }
 
     .info-panel .info-code {
-      display: block;
       font-size: 12px;
       color: var(--text-main);
       font-weight: 600;
@@ -210,9 +253,6 @@
       font-variant-numeric: tabular-nums;
     }
 
-    /* ============================================================
-       认识时长
-       ============================================================ */
     .info-panel .info-together {
       display: block;
       font-size: 11px;
@@ -221,14 +261,31 @@
       margin-top: 8px;
       padding-top: 6px;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
-      line-height: 1.7;
+      line-height: 1.9;
       letter-spacing: 0.2px;
+    }
+
+    .info-panel .info-together .tg-line {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    .info-panel .info-together .tg-line i {
+      font-size: 12px;
+      color: var(--accent);
+      opacity: 0.9;
+      flex-shrink: 0;
     }
 
     .info-panel .info-together .tg-name {
       color: var(--text-main);
-      font-weight: 600;
+      font-weight: 500;
       margin-right: 4px;
+      font-family: var(--font-kai);
+      font-size: 12px;
+      letter-spacing: 0.5px;
     }
 
     .info-panel .info-together .tg-time {
@@ -279,40 +336,13 @@
       transform: scale(0.96);
     }
 
-    .audio-btn .audio-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 14px;
-      height: 14px;
-      font-size: 12px;
+    .audio-btn i {
+      font-size: 13px;
       line-height: 1;
     }
 
-    .audio-btn.playing .audio-icon::before {
-      content: '';
-      display: inline-block;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--season-accent);
-      animation: audioPulse 1.2s ease-in-out infinite;
-      box-shadow: 0 0 6px var(--season-accent);
-    }
-
-    .audio-btn:not(.playing) .audio-icon::before {
-      content: '';
-      display: inline-block;
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: currentColor;
-      opacity: 0.6;
-    }
-
-    @keyframes audioPulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50%      { transform: scale(1.6); opacity: 0.7; }
+    .audio-btn.playing i {
+      color: var(--accent);
     }
 
     .audio-hint {
@@ -405,6 +435,15 @@
       font-size: 12px;
       font-weight: 600;
       color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .distance-block .db-distance i {
+      font-size: 12px;
+      color: var(--accent);
+      opacity: 0.9;
     }
 
     .distance-block .db-daynight {
@@ -412,6 +451,14 @@
       font-weight: 500;
       color: var(--text-sub);
       letter-spacing: 0.2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .distance-block .db-daynight i {
+      font-size: 11px;
+      opacity: 0.85;
     }
 
     .image-viewer {
@@ -459,7 +506,7 @@
       border-radius: 50%;
       pointer-events: none;
       z-index: 500;
-      background: radial-gradient(circle, var(--season-glow) 0%, transparent 70%);
+      background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
       transform: translate(-50%, -50%) scale(0.3);
       opacity: 0;
       animation: glowPop 1.1s ease-out forwards;
@@ -489,87 +536,38 @@
     }
 
     @media (max-width: 768px) {
-      .intro-title {
-        font-size: 16px;
-        letter-spacing: 6px;
-        text-indent: 6px;
-      }
-      .intro-sub {
-        font-size: 10px;
-        letter-spacing: 3px;
-        text-indent: 3px;
-      }
-      .info-panel {
-        right: 12px;
-        top: 10px;
-      }
-      .info-panel .info-ip {
-        font-size: 11px;
-      }
-      .info-panel .info-location {
-        font-size: 10px;
-      }
-      .info-panel .info-code {
-        font-size: 11px;
-      }
-      .info-panel .info-together {
-        font-size: 10px;
-        margin-top: 6px;
-        padding-top: 5px;
-        line-height: 1.6;
-      }
-      .bottom-right-stack {
-        right: 12px;
-        bottom: 10px;
-      }
-      .audio-btn {
-        font-size: 11px;
-      }
-      .audio-hint {
-        font-size: 10px;
-      }
-      .custom-copyright {
-        font-size: 11px;
-      }
-      .custom-copyright .time-text {
-        font-size: 10.5px;
-      }
-      #watermark-layer {
-        background-size: 140px 94px;
-      }
-      .arrival-glow {
-        width: 60px;
-        height: 60px;
-      }
-      .map-weather {
-        padding: 2px 8px;
-        gap: 4px;
-      }
-      .map-weather .mw-icon {
-        font-size: 12px;
-        width: 14px;
-        height: 14px;
-      }
-      .map-weather .mw-temp {
-        font-size: 11px;
-      }
-      .map-weather .mw-desc {
-        font-size: 10px;
-      }
-      .distance-block {
-        padding: 4px 10px;
-        gap: 2px;
-      }
-      .distance-block .db-distance {
-        font-size: 11px;
-      }
-      .distance-block .db-daynight {
-        font-size: 10px;
-      }
+      .intro-title { font-size: 18px; letter-spacing: 6px; text-indent: 6px; }
+      .intro-sub { font-size: 10px; letter-spacing: 3px; text-indent: 3px; }
+      .info-panel { right: 12px; top: 10px; }
+      .info-panel .info-line { gap: 5px; }
+      .info-panel .info-line i { font-size: 12px; }
+      .info-panel .info-ip { font-size: 11px; }
+      .info-panel .info-location { font-size: 10px; }
+      .info-panel .info-code { font-size: 11px; }
+      .info-panel .info-together { font-size: 10px; margin-top: 6px; padding-top: 5px; line-height: 1.8; }
+      .info-panel .info-together .tg-name { font-size: 11px; }
+      .info-panel .info-together .tg-line i { font-size: 11px; }
+      .bottom-right-stack { right: 12px; bottom: 10px; }
+      .audio-btn { font-size: 11px; }
+      .audio-btn i { font-size: 12px; }
+      .audio-hint { font-size: 10px; }
+      .custom-copyright { font-size: 11px; }
+      .custom-copyright .time-text { font-size: 10.5px; }
+      #watermark-layer { background-size: 140px 94px; }
+      #noise-layer { opacity: 0.03; }
+      .arrival-glow { width: 60px; height: 60px; }
+      .map-weather { padding: 2px 8px; gap: 4px; }
+      .map-weather .mw-icon { font-size: 12px; width: 14px; height: 14px; }
+      .map-weather .mw-temp { font-size: 11px; }
+      .map-weather .mw-desc { font-size: 10px; }
+      .distance-block { padding: 4px 10px; gap: 2px; }
+      .distance-block .db-distance { font-size: 11px; }
+      .distance-block .db-daynight { font-size: 10px; }
+      .amap-scalecontrol { font-size: 10px !important; padding: 1px 5px !important; }
     }
   </style>
 </head>
-<body class="season-spring">
+<body>
 
   <div id="intro-overlay">
     <div class="intro-title">南川 · 嘉祥</div>
@@ -579,21 +577,37 @@
   <div id="main-content">
     <div id="amap-container"></div>
     <div id="watermark-layer"></div>
+    <div id="noise-layer"></div>
 
     <div class="info-panel">
-      <span class="info-ip" id="infoIp">IP 获取中...</span>
-      <span class="info-location" id="infoLocation">位置获取中...</span>
-      <span class="info-code" id="infoCode">CN_--------</span>
+      <div class="info-line">
+        <i class="ri-map-pin-2-line"></i>
+        <span class="info-ip" id="infoIp">IP 获取中...</span>
+      </div>
+      <div class="info-line">
+        <i class="ri-earth-line"></i>
+        <span class="info-location" id="infoLocation">位置获取中...</span>
+      </div>
+      <div class="info-line info-code">
+        <i class="ri-time-line"></i>
+        <span id="infoCode">CN_--------</span>
+      </div>
       <span class="info-together">
-        <span class="tg-name">陈柚柚</span><span class="tg-time" id="tgYouyou">--</span><br>
-        <span class="tg-name">陈落落</span><span class="tg-time" id="tgLuoluo">--</span>
+        <span class="tg-line">
+          <i class="fa-solid fa-heart"></i>
+          <span class="tg-name">陈柚柚</span><span class="tg-time" id="tgYouyou">--</span>
+        </span>
+        <span class="tg-line">
+          <i class="fa-solid fa-heart"></i>
+          <span class="tg-name">陈落落</span><span class="tg-time" id="tgLuoluo">--</span>
+        </span>
       </span>
     </div>
 
     <div class="bottom-right-stack">
       <div class="audio-hint" id="audioHint">点击任意位置开启音乐</div>
       <div class="audio-btn" id="audioBtn" title="点击播放/暂停背景音乐">
-        <span class="audio-icon" id="audioIcon"></span>
+        <i class="fa-solid fa-music" id="audioIcon"></i>
         <span id="audioLabel">播放音乐</span>
       </div>
       <div class="custom-copyright">
@@ -622,6 +636,9 @@
       const IP_INFO_API = 'https://api.auth.top/api/ip';
       const API_KEY = '9e38f0bc62f8fe0d';
 
+      // 高德 Web 服务 Key（路径规划）
+      const AMAP_WS_KEY = '29f1e7dd767d16cbcbf777bfbcde8b54';
+
       const CITY_NANCHUAN = '南川区';
       const CITY_JIAXIANG = '嘉祥县';
 
@@ -629,27 +646,19 @@
       const YANGTUN = [116.35, 35.4819];
 
       // ============================================================
-      // 【新增】认识时长计算
-      // 陈柚柚：从 2025 年 7 月 1 日起
-      // 陈落落：从 2026 年 8 月 2 日起
-      // 格式：
-      //   未满 1 年：X 天 X 时 X 分 X 秒
-      //   满 1 年：第 N 年 X 天 X 时 X 分 X 秒
+      // 认识时长
       // ============================================================
-      const TG_YOUYOU_START = new Date(2025, 6, 1, 0, 0, 0);   // 2025-07-01 00:00:00
-      const TG_LUOLUO_START = new Date(2026, 7, 2, 0, 0, 0);   // 2026-08-02 00:00:00
+      const TG_YOUYOU_START = new Date(2025, 6, 1, 0, 0, 0);
+      const TG_LUOLUO_START = new Date(2026, 7, 2, 0, 0, 0);
 
       function formatTogether(startDate) {
         const now = new Date();
         let diff = now.getTime() - startDate.getTime();
         if (diff < 0) diff = 0;
 
-        // 计算总天数
         const totalDays = Math.floor(diff / 86400000);
 
-        // 计算年数：从起始日期开始，每年同月同日为一年
         let years = now.getFullYear() - startDate.getFullYear();
-        // 检查今年的纪念日是否已过
         const thisYearAnniv = new Date(
           startDate.getFullYear() + years,
           startDate.getMonth(),
@@ -660,7 +669,6 @@
         );
         if (now < thisYearAnniv) years--;
 
-        // 计算剩余天数（从最近一次周年日算起）
         let remainderMs;
         if (years >= 1) {
           const lastAnniv = new Date(
@@ -698,11 +706,12 @@
       setInterval(updateTogether, 1000);
 
       // ============================================================
-      // 音频自动播放 + 提示
+      // 音频
       // ============================================================
       const bgAudio = document.getElementById('bgAudio');
       const audioBtn = document.getElementById('audioBtn');
       const audioLabel = document.getElementById('audioLabel');
+      const audioIcon = document.getElementById('audioIcon');
       const audioHint = document.getElementById('audioHint');
 
       let audioPlaying = false;
@@ -713,10 +722,12 @@
         audioPlaying = playing;
         if (playing) {
           audioBtn.classList.add('playing');
+          audioIcon.className = 'fa-solid fa-pause';
           audioLabel.textContent = '暂停音乐';
           audioHint.classList.remove('show');
         } else {
           audioBtn.classList.remove('playing');
+          audioIcon.className = 'fa-solid fa-music';
           audioLabel.textContent = '播放音乐';
         }
       }
@@ -770,22 +781,6 @@
       bgAudio.addEventListener('ended', () => {
         updateAudioUI(false);
       });
-
-      // ============================================================
-      // 季节主题
-      // ============================================================
-      function applySeasonTheme() {
-        const month = new Date().getMonth() + 1;
-        let season = 'spring';
-        if (month >= 3 && month <= 5) season = 'spring';
-        else if (month >= 6 && month <= 8) season = 'summer';
-        else if (month >= 9 && month <= 11) season = 'autumn';
-        else season = 'winter';
-
-        document.body.classList.remove('season-spring', 'season-summer', 'season-autumn', 'season-winter');
-        document.body.classList.add('season-' + season);
-      }
-      applySeasonTheme();
 
       // ============================================================
       // IP + 位置
@@ -850,7 +845,7 @@
           document.getElementById('infoLocation').textContent = '';
           return;
         }
-        document.getElementById('infoIp').textContent = 'IP: ' + ip;
+        document.getElementById('infoIp').textContent = ip;
 
         const loc = await fetchIPLocation(ip);
         const locText = buildLocationText(loc);
@@ -953,16 +948,19 @@
 
       window.map = map;
 
+      const scale = new AMap.Scale({ position: 'lb' });
+      map.addControl(scale);
+
       function updateWatermark() {
         const color = 'rgba(180, 200, 220, 0.05)';
-        const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='180' height='120' viewBox='0 0 180 120'><text x='10' y='40' font-family='Microsoft YaHei, PingFang SC, sans-serif' font-size='22' font-weight='500' fill='${color}' transform='rotate(-22 90 60)'>白菜</text><text x='100' y='100' font-family='Microsoft YaHei, PingFang SC, sans-serif' font-size='22' font-weight='500' fill='${color}' transform='rotate(-22 90 60)'>白菜</text></svg>`;
+        const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='180' height='120' viewBox='0 0 180 120'><text x='10' y='40' font-family='LXGW WenKai, Microsoft YaHei, PingFang SC, sans-serif' font-size='22' font-weight='500' fill='${color}' transform='rotate(-22 90 60)'>白菜</text><text x='100' y='100' font-family='LXGW WenKai, Microsoft YaHei, PingFang SC, sans-serif' font-size='22' font-weight='500' fill='${color}' transform='rotate(-22 90 60)'>白菜</text></svg>`;
         document.getElementById('watermark-layer').style.backgroundImage =
           `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
       }
       updateWatermark();
 
       // ============================================================
-      // 天气模式
+      // 天气
       // ============================================================
       function getWeatherIcon(weatherText) {
         if (!weatherText) return '·';
@@ -1130,22 +1128,37 @@
         return currentHour >= sunsetHour;
       }
 
-      function getDayNightText() {
+      function getDayNightHTML() {
         const ncDark = isDarkNow(NANCHUAN[1], NANCHUAN[0]);
         const jxDark = isDarkNow(YANGTUN[1], YANGTUN[0]);
-        if (ncDark && jxDark) return '两地都已入夜';
-        if (!ncDark && !jxDark) return '两地天都还亮着';
-        if (ncDark && !jxDark) return '南川已入夜 · 嘉祥天还亮';
-        return '南川天还亮 · 嘉祥已入夜';
+
+        let icon = '';
+        let text = '';
+
+        if (ncDark && jxDark) {
+          icon = 'fa-solid fa-moon';
+          text = '两地都已入夜';
+        } else if (!ncDark && !jxDark) {
+          icon = 'fa-solid fa-sun';
+          text = '两地天都还亮着';
+        } else if (ncDark && !jxDark) {
+          icon = 'fa-solid fa-moon';
+          text = '南川已入夜 · 嘉祥天还亮';
+        } else {
+          icon = 'fa-solid fa-sun';
+          text = '南川天还亮 · 嘉祥已入夜';
+        }
+
+        return `<i class="${icon}"></i>${text}`;
       }
 
       function updateDayNightText() {
         const el = document.querySelector('.distance-block .db-daynight');
-        if (el) el.textContent = getDayNightText();
+        if (el) el.innerHTML = getDayNightHTML();
       }
 
       const distanceLabel = new AMap.Text({
-        text: `<div class="distance-block"><div class="db-distance">${distanceText}</div><div class="db-daynight">${getDayNightText()}</div></div>`,
+        text: `<div class="distance-block"><div class="db-distance"><i class="fa-solid fa-route"></i>${distanceText}</div><div class="db-daynight">${getDayNightHTML()}</div></div>`,
         position: [midLng, midLat],
         anchor: 'center',
         offset: new AMap.Pixel(0, 0),
@@ -1179,7 +1192,8 @@
           'padding': '3px 10px', 'background-color': 'rgba(30,40,50,0.9)',
           'border': '1px solid #2b6f9b', 'border-radius': '4px',
           'color': '#8fcbe8', 'font-size': '12px', 'font-weight': '500',
-          'white-space': 'nowrap', 'box-shadow': '0 2px 6px rgba(0,0,0,0.3)'
+          'white-space': 'nowrap', 'box-shadow': '0 2px 6px rgba(0,0,0,0.3)',
+          'font-family': 'LXGW WenKai, Microsoft YaHei, sans-serif'
         },
         zIndex: 200
       });
@@ -1207,7 +1221,8 @@
           'padding': '3px 10px', 'background-color': 'rgba(30,40,50,0.9)',
           'border': '1px solid #c44536', 'border-radius': '4px',
           'color': '#e8a0b8', 'font-size': '12px', 'font-weight': '500',
-          'white-space': 'nowrap', 'box-shadow': '0 2px 6px rgba(0,0,0,0.3)'
+          'white-space': 'nowrap', 'box-shadow': '0 2px 6px rgba(0,0,0,0.3)',
+          'font-family': 'LXGW WenKai, Microsoft YaHei, sans-serif'
         },
         zIndex: 200
       });
@@ -1222,12 +1237,22 @@
       const factorB = -0.12;
       const ctrlB = [midLng - dLat * factorB, midLat + dLng * factorB];
 
+      // 弧线
+      new AMap.BezierCurve({
+        path: [YANGTUN, ctrlA, NANCHUAN],
+        strokeColor: '#e8a0b8', strokeWeight: 5, strokeOpacity: 0.12,
+        lineJoin: 'round', zIndex: 49, showDir: false
+      }).setMap(map);
       new AMap.BezierCurve({
         path: [YANGTUN, ctrlA, NANCHUAN],
         strokeColor: '#e8a0b8', strokeWeight: 2, strokeOpacity: 0.6,
         lineJoin: 'round', zIndex: 50, showDir: false
       }).setMap(map);
-
+      new AMap.BezierCurve({
+        path: [NANCHUAN, ctrlA, YANGTUN],
+        strokeColor: '#e8a0b8', strokeWeight: 5, strokeOpacity: 0.12,
+        lineJoin: 'round', zIndex: 49, showDir: false
+      }).setMap(map);
       new AMap.BezierCurve({
         path: [NANCHUAN, ctrlA, YANGTUN],
         strokeColor: '#e8a0b8', strokeWeight: 2, strokeOpacity: 0.6,
@@ -1236,15 +1261,86 @@
 
       new AMap.BezierCurve({
         path: [YANGTUN, ctrlB, NANCHUAN],
+        strokeColor: '#8fcbe8', strokeWeight: 5, strokeOpacity: 0.12,
+        lineJoin: 'round', zIndex: 49, showDir: false
+      }).setMap(map);
+      new AMap.BezierCurve({
+        path: [YANGTUN, ctrlB, NANCHUAN],
         strokeColor: '#8fcbe8', strokeWeight: 2, strokeOpacity: 0.6,
         lineJoin: 'round', zIndex: 50, showDir: false
       }).setMap(map);
-
+      new AMap.BezierCurve({
+        path: [NANCHUAN, ctrlB, YANGTUN],
+        strokeColor: '#8fcbe8', strokeWeight: 5, strokeOpacity: 0.12,
+        lineJoin: 'round', zIndex: 49, showDir: false
+      }).setMap(map);
       new AMap.BezierCurve({
         path: [NANCHUAN, ctrlB, YANGTUN],
         strokeColor: '#8fcbe8', strokeWeight: 2, strokeOpacity: 0.6,
         lineJoin: 'round', zIndex: 50, showDir: false
       }).setMap(map);
+
+      // ============================================================
+      // 真实路径：只画实线，不做流动效果
+      // ============================================================
+      function loadRealRoute() {
+        if (!AMAP_WS_KEY || AMAP_WS_KEY === '你的高德Web服务Key') {
+          console.log('未配置高德 Web 服务 Key，真实路径不加载');
+          return;
+        }
+        const url = `https://restapi.amap.com/v3/direction/driving?origin=${NANCHUAN[0]},${NANCHUAN[1]}&destination=${YANGTUN[0]},${YANGTUN[1]}&key=${AMAP_WS_KEY}&extensions=base`;
+        fetch(url)
+          .then(res => res.json())
+          .then(data => {
+            if (data.status !== '1' || !data.route || !data.route.paths || !data.route.paths.length) {
+              console.warn('路径规划返回异常:', data.info, data.infocode);
+              return;
+            }
+            const path = data.route.paths[0];
+            const allCoords = [];
+            path.steps.forEach(step => {
+              if (step.polyline) {
+                step.polyline.split(';').forEach(p => {
+                  const [lng, lat] = p.split(',').map(Number);
+                  if (!isNaN(lng) && !isNaN(lat)) {
+                    allCoords.push([lng, lat]);
+                  }
+                });
+              }
+            });
+
+            if (allCoords.length < 2) {
+              console.warn('路径坐标点不足');
+              return;
+            }
+            console.log('路径坐标点数:', allCoords.length);
+
+            // 底层光晕（粗、淡）
+            new AMap.Polyline({
+              path: allCoords,
+              strokeColor: '#8fcbe8',
+              strokeWeight: 5,
+              strokeOpacity: 0.08,
+              lineJoin: 'round',
+              zIndex: 44,
+              showDir: false
+            }).setMap(map);
+
+            // 主路径实线
+            new AMap.Polyline({
+              path: allCoords,
+              strokeColor: '#98a8b8',
+              strokeWeight: 1.8,
+              strokeOpacity: 0.55,
+              lineJoin: 'round',
+              zIndex: 45,
+              showDir: false
+            }).setMap(map);
+          })
+          .catch(err => {
+            console.warn('路径规划请求失败:', err);
+          });
+      }
 
       const photoJX_A = new AMap.Marker({
         position: YANGTUN,
@@ -1287,7 +1383,7 @@
 
       function createArrivalTextBelow(position, text, color, offsetY) {
         return new AMap.Text({
-          text: text,
+          text: `<span style="font-family: 'LXGW WenKai', 'Microsoft YaHei', sans-serif; letter-spacing: 0.5px;">${text}</span>`,
           position: position,
           anchor: 'top-center',
           offset: new AMap.Pixel(0, offsetY),
@@ -1337,13 +1433,25 @@
             const t = Math.min(elapsed / duration, 1);
 
             markersWithPath.forEach(item => {
-              const pos = bezierPoint(item.p0, item.p1, item.p2, t);
-              const floatOffset = Math.sin(t * Math.PI * 4) * 0.008;
-              const floatPos = [pos[0], pos[1] + floatOffset];
-              item.marker.setPosition(floatPos);
+              const p0Px = map.lngLatToContainer(new AMap.LngLat(item.p0[0], item.p0[1]));
+              const p1Px = map.lngLatToContainer(new AMap.LngLat(item.p1[0], item.p1[1]));
+              const p2Px = map.lngLatToContainer(new AMap.LngLat(item.p2[0], item.p2[1]));
+              if (!p0Px || !p1Px || !p2Px) return;
+
+              const px = bezierPoint(
+                [p0Px.x, p0Px.y],
+                [p1Px.x, p1Px.y],
+                [p2Px.x, p2Px.y],
+                t
+              );
+
+              const floatOffsetPx = Math.sin(t * Math.PI * 4) * 3;
+              const lngLat = map.containerToLngLat(new AMap.Pixel(px[0], px[1] + floatOffsetPx));
+              item.marker.setPosition([lngLat.getLng(), lngLat.getLat()]);
 
               if (trailColor && now - lastTrailTime > TRAIL_INTERVAL && t < 0.98) {
-                spawnTrailDot(pos, trailColor);
+                const lngLatTrail = map.containerToLngLat(new AMap.Pixel(px[0], px[1]));
+                spawnTrailDot([lngLatTrail.getLng(), lngLatTrail.getLat()], trailColor);
               }
             });
 
@@ -1438,6 +1546,7 @@
           const zoom = map.getZoom();
           if (zoom > 6) map.setZoom(zoom - 0.5);
         }, 200);
+        loadRealRoute();
         setTimeout(startLoop, 500);
       });
 
