@@ -1762,7 +1762,7 @@
     (function () {
       "use strict";
 
-      const MODEL_URL = "./baicai2d/object_live2d_020_101.asset.model3.json";
+      const MODEL_URL = "https://cdn.jsdelivr.net/gh/baicaiacabbge/baicaiclcy@main/baicai2d/object_live2d_020_101.asset.model3.json";
 
       const MESSAGES = [
         "我们是好呀好朋友",
@@ -1880,7 +1880,7 @@
 
       // ========== 加载 ==========
       async function loadModel() {
-        statusEl.textContent = "加载幽幽子中…";
+        statusEl.textContent = "模型加载中…";
         statusEl.style.color = "#8888a0";
 
         try {
@@ -1907,7 +1907,7 @@
           setTimeout(() => sayRandom(), 900);
         } catch (err) {
           console.error("幽幽子模型加载失败:", err);
-          statusEl.textContent = "加载失败，请检查控制台";
+          statusEl.textContent = "加载失败";
           statusEl.style.color = "#f87171";
         }
       }
