@@ -554,6 +554,7 @@
       touch-action: none;
       user-select: none;
       transition: opacity 0.4s ease, transform 0.4s ease;
+      pointer-events: none;   /* 容器不拦截事件，让地图可拖 */
     }
 
     #live2d-widget.dragging {
@@ -571,6 +572,7 @@
       width: 100%;
       height: 100%;
       display: block;
+      pointer-events: auto;   /* canvas 恢复事件，模型可点可拖 */
     }
 
     #live2d-bubble {
@@ -631,6 +633,7 @@
       justify-content: center;
       transition: background 0.2s, transform 0.2s;
       z-index: 5;
+      pointer-events: auto;   /* 按钮可点 */
     }
 
     .l2d-btn:hover {
@@ -650,6 +653,7 @@
       color: #8888a0;
       white-space: nowrap;
       pointer-events: none;
+      display: none;   /* 隐藏状态文字 */
     }
 
     /* 隐藏/显示模型按钮 — 独立于模型容器，始终可见 */
@@ -686,7 +690,6 @@
       transform: scale(0.95);
     }
 
-    /* 当模型隐藏时，按钮位置稍微调整，避免被其他元素遮挡 */
     #l2d-visibility-toggle.model-hidden {
       left: 24px;
       bottom: 24px;
@@ -1503,7 +1506,6 @@
             }
             console.log('路径坐标点数:', allCoords.length);
 
-            // 底层光晕（粗、淡）
             new AMap.Polyline({
               path: allCoords,
               strokeColor: '#8fcbe8',
@@ -1514,7 +1516,6 @@
               showDir: false
             }).setMap(map);
 
-            // 主路径实线
             new AMap.Polyline({
               path: allCoords,
               strokeColor: '#98a8b8',
@@ -1757,7 +1758,7 @@
     })();
   </script>
 
-  <!-- Live2D 初始化脚本（复用第一个文件的逻辑） -->
+  <!-- Live2D 初始化脚本 -->
   <script>
     (function () {
       "use strict";
@@ -1947,7 +1948,6 @@
           const mm = model.internalModel.motionManager;
           mm.startMotion(group, index);
 
-          // 动作播到 85% 时接下一个
           const duration = getMotionDuration(list[index]);
           clearTimeout(idleTimer);
           idleTimer = setTimeout(playIdleMotion, Math.max(1200, duration * 0.85));
@@ -2020,8 +2020,8 @@
         }
       });
 
-      // ========== 拖拽 + 点击 ==========
-      widget.addEventListener("pointerdown", (e) => {
+      // ========== 拖拽 + 点击（改到 canvas 上，避免 widget pointer-events: none 影响） ==========
+      canvas.addEventListener("pointerdown", (e) => {
         if (e.target.closest("button")) return;
 
         isDragging = false;
@@ -2032,10 +2032,10 @@
         dragStart.y = e.clientY;
 
         widget.classList.add("dragging");
-        widget.setPointerCapture(e.pointerId);
+        canvas.setPointerCapture(e.pointerId);
       });
 
-      widget.addEventListener("pointermove", (e) => {
+      canvas.addEventListener("pointermove", (e) => {
         if (!widget.classList.contains("dragging")) return;
 
         const dx = e.clientX - dragStart.x;
@@ -2052,11 +2052,11 @@
         widget.style.bottom = "auto";
       });
 
-      widget.addEventListener("pointerup", (e) => {
+      canvas.addEventListener("pointerup", (e) => {
         const wasDragging = isDragging;
 
         widget.classList.remove("dragging");
-        try { widget.releasePointerCapture(e.pointerId); } catch (err) {}
+        try { canvas.releasePointerCapture(e.pointerId); } catch (err) {}
 
         isDragging = false;
 
@@ -2066,11 +2066,9 @@
       });
 
       // ========== 按钮 ==========
-      // 原有的隐藏/显示按钮（模型容器上的 ×）
       toggleBtn.addEventListener("click", () => {
         widget.classList.toggle("hidden");
         toggleBtn.textContent = widget.classList.contains("hidden") ? "L2D" : "×";
-        // 同步更新独立按钮的状态
         syncVisibilityButton();
       });
 
@@ -2083,7 +2081,6 @@
         syncVisibilityButton();
       });
 
-      // ========== 新增：独立隐藏/显示模型按钮 ==========
       function syncVisibilityButton() {
         const isHidden = widget.classList.contains("hidden");
         if (isHidden) {
@@ -2100,12 +2097,10 @@
       visibilityToggle.addEventListener("click", (e) => {
         e.stopPropagation();
         widget.classList.toggle("hidden");
-        // 同步更新模型容器上的按钮文字
         toggleBtn.textContent = widget.classList.contains("hidden") ? "L2D" : "×";
         syncVisibilityButton();
       });
 
-      // 初始化按钮状态
       syncVisibilityButton();
 
       window.addEventListener("resize", fitModel);
