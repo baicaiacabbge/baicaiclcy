@@ -908,7 +908,6 @@
         bgAudio.play().then(() => {
           updateAudioUI(true);
         }).catch(err => {
-          console.log('自动播放被拦截:', err.message);
           audioHint.classList.add('show');
         });
       }
@@ -940,9 +939,7 @@
           userPaused = false;
           bgAudio.play().then(() => {
             updateAudioUI(true);
-          }).catch(err => {
-            console.warn('音频播放失败:', err);
-          });
+          }).catch(err => {});
         }
       });
 
@@ -1453,7 +1450,6 @@
       // ============================================================
       function loadRealRoute() {
         if (!AMAP_WS_KEY || AMAP_WS_KEY === '你的高德Web服务Key') {
-          console.log('未配置高德 Web 服务 Key，真实路径不加载');
           return;
         }
         const url = `https://restapi.amap.com/v3/direction/driving?origin=${NANCHUAN[0]},${NANCHUAN[1]}&destination=${YANGTUN[0]},${YANGTUN[1]}&key=${AMAP_WS_KEY}&extensions=base`;
@@ -1461,7 +1457,6 @@
           .then(res => res.json())
           .then(data => {
             if (data.status !== '1' || !data.route || !data.route.paths || !data.route.paths.length) {
-              console.warn('路径规划返回异常:', data.info, data.infocode);
               return;
             }
             const path = data.route.paths[0];
@@ -1478,10 +1473,8 @@
             });
 
             if (allCoords.length < 2) {
-              console.warn('路径坐标点不足');
               return;
             }
-            console.log('路径坐标点数:', allCoords.length);
 
             new AMap.Polyline({
               path: allCoords,
@@ -1503,9 +1496,7 @@
               showDir: false
             }).setMap(map);
           })
-          .catch(err => {
-            console.warn('路径规划请求失败:', err);
-          });
+          .catch(err => {});
       }
 
       const photoJX_A = new AMap.Marker({
@@ -1735,7 +1726,7 @@
     })();
   </script>
 
-  <!-- Live2D 初始化脚本 -->
+  <!-- Live2D 初始化脚本（已关闭所有 console.log 打印） -->
   <script>
     (function () {
       "use strict";
@@ -1799,7 +1790,6 @@
           const now = performance.now();
           const t = now / 1000;
 
-          // ---- 鼠标平滑 ----
           const fresh = now - pointerFocus.lastAt < 2600;
           const tx = fresh ? pointerFocus.targetX : 0;
           const ty = fresh ? pointerFocus.targetY : 0;
@@ -1808,20 +1798,17 @@
           pointerFocus.y += (ty - pointerFocus.y) * 0.16;
 
           try {
-            // 眼球 + 头部
             core.setParameterValueById("ParamEyeBallX", pointerFocus.x * 0.7);
             core.setParameterValueById("ParamEyeBallY", -pointerFocus.y * 0.5);
             core.addParameterValueById("ParamAngleX", pointerFocus.x * 12, 0.5);
             core.addParameterValueById("ParamAngleY", -pointerFocus.y * 8, 0.5);
             core.addParameterValueById("ParamBodyAngleX", pointerFocus.x * 4, 0.35);
 
-            // ---- 呼吸 ----
             core.setParameterValueById("ParamBreath", 0.5 + Math.sin(t * 1.25) * 0.18);
             core.addParameterValueById("ParamBodyAngleY", Math.sin(t * 0.34) * 0.35, 0.28);
             core.addParameterValueById("ParamBodyAngleZ", Math.sin(t * 0.42) * 0.26, 0.24);
             core.addParameterValueById("ParamAngleZ", Math.sin(t * 0.38) * 0.24, 0.2);
 
-            // ---- 幽灵（水滴） ----
             const wispScale = 1.12;
             core.addParameterValueById("ParamWillOTheWhisp1X", Math.sin(t * 0.64) * 0.58 * wispScale, 0.12);
             core.addParameterValueById("ParamWillOTheWhisp1Y", Math.sin(t * 0.78 + 1.1) * 0.48 * wispScale, 0.12);
@@ -1830,11 +1817,9 @@
             core.addParameterValueById("ParamWillOTheWhisp3X", Math.sin(t * 0.78 + 1.1) * 0.52 * wispScale, 0.12);
             core.addParameterValueById("ParamWillOTheWhisp3Y", -Math.sin(t * 0.42 + 0.6) * 0.45 * wispScale, 0.12);
 
-            // ---- 配饰飘动 ----
             core.addParameterValueById("ParamChainLShake", Math.sin(t * 0.64) * 0.44, 0.14);
             core.addParameterValueById("ParamChainRShake", Math.sin(t * 0.42 + 0.6) * 0.44, 0.14);
 
-            // ---- 眨眼 ----
             if (now > nextBlinkAt) {
               blinkUntil = now + 140;
               nextBlinkAt = now + 2400 + Math.random() * 3200;
@@ -1844,7 +1829,6 @@
               core.setParameterValueById("ParamEyeROpen", 0.08);
             }
 
-            // ---- 张嘴 ----
             if (now < mouthOpenUntil) {
               core.setParameterValueById("ParamMouthOpenY", 1);
             }
@@ -1869,10 +1853,6 @@
           app.stage.addChild(model);
           fitModel();
 
-          const motions = model.internalModel.settings.motions;
-          console.log("动作组：", Object.keys(motions || {}));
-          console.log("动作数量：", motions && motions[""] ? motions[""].length : 0);
-
           statusEl.textContent = "Live2D Ready · Yuyuko";
           statusEl.style.color = "#6b7280";
 
@@ -1882,7 +1862,6 @@
 
           setTimeout(() => sayRandom(), 900);
         } catch (err) {
-          console.error("幽幽子模型加载失败:", err);
           statusEl.textContent = "加载失败";
           statusEl.style.color = "#f87171";
         }
@@ -1904,7 +1883,7 @@
         return maxTime > 0 ? maxTime * 1000 : 3000;
       }
 
-      // ========== 待机动作（连续播放） ==========
+      // ========== 待机动作（连续播放，无 console 打印） ==========
       function playIdleMotion() {
         if (!model) return;
 
@@ -1917,7 +1896,6 @@
         if (!list || !list.length) return;
 
         const index = Math.floor(Math.random() * list.length);
-        console.log("播放动作：", group || "(空组)", index);
 
         try {
           const mm = model.internalModel.motionManager;
@@ -1927,7 +1905,6 @@
           clearTimeout(idleTimer);
           idleTimer = setTimeout(playIdleMotion, Math.max(1200, duration * 0.85));
         } catch (e) {
-          console.warn("播放动作失败：", e);
           clearTimeout(idleTimer);
           idleTimer = setTimeout(playIdleMotion, 3000);
         }
