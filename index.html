@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -547,7 +546,7 @@
        Live2D 部件样式
        ============================================================ */
 
-    /* 电脑端默认（300×380）— 完全不动 */
+    /* 电脑端默认（300×380） */
     #live2d-widget {
       position: fixed;
       left: 24px;
@@ -620,35 +619,6 @@
       transform: rotate(45deg);
     }
 
-    .l2d-btn {
-      position: absolute;
-      top: 8px;
-      width: 26px;
-      height: 26px;
-      border-radius: 8px;
-      border: 1px solid rgba(192, 132, 252, 0.3);
-      background: rgba(26, 26, 38, 0.8);
-      color: #c084fc;
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 1;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, transform 0.2s;
-      z-index: 5;
-      pointer-events: auto;
-    }
-
-    .l2d-btn:hover {
-      background: rgba(192, 132, 252, 0.25);
-      transform: scale(1.1);
-    }
-
-    #l2d-toggle { right: 8px; }
-    #l2d-reset  { right: 40px; }
-
     #l2d-status {
       position: absolute;
       bottom: 6px;
@@ -702,7 +672,6 @@
 
     /* ============================================================
        手机端专属（≤768px）：模型改小，不挡地图
-       电脑端完全不受影响
        ============================================================ */
     @media (max-width: 768px) {
       .intro-title { font-size: 18px; letter-spacing: 6px; text-indent: 6px; }
@@ -807,9 +776,9 @@
       <img id="imageViewerImg" src="" alt="">
     </div>
 
-    <audio id="bgAudio" src="https://videotourl.com/audio/1789279614413-3c09a0fa-4925-471d-a0f9-db3403c741f8.mp3" loop preload="auto"></audio>
+    <audio id="bgAudio" src="https://videotourl.com/audio/1789199120813-c54b5c8b-4697-4bcb-8902-3329b8f2f34d.mp3" loop preload="auto"></audio>
 
-    <!-- Live2D 模型容器（默认显示） -->
+    <!-- Live2D 模型容器（默认显示，已删除 R / × 按钮） -->
     <div id="live2d-widget">
       <div id="live2d-bubble"></div>
       <canvas id="live2d-canvas"></canvas>
@@ -1785,8 +1754,6 @@
       const widget = document.getElementById("live2d-widget");
       const canvas = document.getElementById("live2d-canvas");
       const bubble = document.getElementById("live2d-bubble");
-      const toggleBtn = document.getElementById("l2d-toggle");
-      const resetBtn = document.getElementById("l2d-reset");
       const statusEl = document.getElementById("l2d-status");
       const visibilityToggle = document.getElementById("l2d-visibility-toggle");
       const visibilityIcon = document.getElementById("l2d-visibility-icon");
@@ -2030,8 +1997,6 @@
 
       // ========== 拖拽 + 点击（绑定到 canvas） ==========
       canvas.addEventListener("pointerdown", (e) => {
-        if (e.target.closest("button")) return;
-
         isDragging = false;
         const rect = widget.getBoundingClientRect();
         dragOffset.x = e.clientX - rect.left;
@@ -2073,28 +2038,7 @@
         }
       });
 
-      // ========== 按钮 ==========
-      toggleBtn.addEventListener("click", () => {
-        widget.classList.toggle("hidden");
-        toggleBtn.textContent = widget.classList.contains("hidden") ? "L2D" : "×";
-        syncVisibilityButton();
-      });
-
-      resetBtn.addEventListener("click", () => {
-        const isMobile = window.matchMedia("(max-width: 768px)").matches;
-        if (isMobile) {
-          widget.style.left = "4px";
-          widget.style.bottom = "4px";
-        } else {
-          widget.style.left = "24px";
-          widget.style.bottom = "24px";
-        }
-        widget.style.top = "auto";
-        widget.classList.remove("hidden");
-        toggleBtn.textContent = "×";
-        syncVisibilityButton();
-      });
-
+      // ========== 独立眼睛按钮（唯一可见的隐藏/显示开关） ==========
       function syncVisibilityButton() {
         const isHidden = widget.classList.contains("hidden");
         if (isHidden) {
@@ -2111,7 +2055,6 @@
       visibilityToggle.addEventListener("click", (e) => {
         e.stopPropagation();
         widget.classList.toggle("hidden");
-        toggleBtn.textContent = widget.classList.contains("hidden") ? "L2D" : "×";
         syncVisibilityButton();
       });
 
