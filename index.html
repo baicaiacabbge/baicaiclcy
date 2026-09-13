@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -542,7 +543,11 @@
       100% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
     }
 
-    /* Live2D 部件样式 */
+    /* ============================================================
+       Live2D 部件样式
+       ============================================================ */
+
+    /* 电脑端默认（300×380）— 完全不动 */
     #live2d-widget {
       position: fixed;
       left: 24px;
@@ -554,7 +559,7 @@
       touch-action: none;
       user-select: none;
       transition: opacity 0.4s ease, transform 0.4s ease;
-      pointer-events: none;   /* 容器不拦截事件，让地图可拖 */
+      pointer-events: none;
     }
 
     #live2d-widget.dragging {
@@ -572,7 +577,7 @@
       width: 100%;
       height: 100%;
       display: block;
-      pointer-events: auto;   /* canvas 恢复事件，模型可点可拖 */
+      pointer-events: auto;
     }
 
     #live2d-bubble {
@@ -633,7 +638,7 @@
       justify-content: center;
       transition: background 0.2s, transform 0.2s;
       z-index: 5;
-      pointer-events: auto;   /* 按钮可点 */
+      pointer-events: auto;
     }
 
     .l2d-btn:hover {
@@ -653,7 +658,7 @@
       color: #8888a0;
       white-space: nowrap;
       pointer-events: none;
-      display: none;   /* 隐藏状态文字 */
+      display: none;
     }
 
     /* 隐藏/显示模型按钮 — 独立于模型容器，始终可见 */
@@ -695,6 +700,10 @@
       bottom: 24px;
     }
 
+    /* ============================================================
+       手机端专属（≤768px）：模型改小，不挡地图
+       电脑端完全不受影响
+       ============================================================ */
     @media (max-width: 768px) {
       .intro-title { font-size: 18px; letter-spacing: 6px; text-indent: 6px; }
       .intro-sub { font-size: 10px; letter-spacing: 3px; text-indent: 3px; }
@@ -725,22 +734,24 @@
       .distance-block .db-daynight { font-size: 10px; }
       .amap-scalecontrol { font-size: 10px !important; padding: 1px 5px !important; }
 
+      /* ===== 手机端模型：140×175，紧贴左下角，不挡地图 ===== */
       #live2d-widget {
-        width: 220px;
-        height: 280px;
-        left: 12px;
-        bottom: 12px;
+        width: 140px;
+        height: 175px;
+        left: 4px;
+        bottom: 4px;
       }
       #l2d-visibility-toggle {
-        left: 12px;
-        bottom: 12px;
-        width: 32px;
-        height: 32px;
-        font-size: 14px;
+        left: 4px;
+        bottom: 4px;
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
       }
       #live2d-widget.hidden {
-        transform: translateY(30px);
+        transform: translateY(20px);
       }
+    }
   </style>
 </head>
 <body>
@@ -2019,7 +2030,7 @@
         }
       });
 
-      // ========== 拖拽 + 点击（改到 canvas 上，避免 widget pointer-events: none 影响） ==========
+      // ========== 拖拽 + 点击（绑定到 canvas） ==========
       canvas.addEventListener("pointerdown", (e) => {
         if (e.target.closest("button")) return;
 
@@ -2072,9 +2083,15 @@
       });
 
       resetBtn.addEventListener("click", () => {
-        widget.style.left = "24px";
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+        if (isMobile) {
+          widget.style.left = "4px";
+          widget.style.bottom = "4px";
+        } else {
+          widget.style.left = "24px";
+          widget.style.bottom = "24px";
+        }
         widget.style.top = "auto";
-        widget.style.bottom = "24px";
         widget.classList.remove("hidden");
         toggleBtn.textContent = "×";
         syncVisibilityButton();
@@ -2102,7 +2119,9 @@
 
       syncVisibilityButton();
 
-      window.addEventListener("resize", fitModel);
+      window.addEventListener("resize", () => {
+        fitModel();
+      });
 
       // ========== 启动 ==========
       window.addEventListener("load", () => {
