@@ -13,6 +13,11 @@
   <!-- 霞鹜文楷（unpkg） -->
   <link rel="stylesheet" href="https://unpkg.com/lxgw-wenkai-webfont@1.7.0/style.css">
 
+  <!-- Live2D 依赖 -->
+  <script src="https://cdn.jsdelivr.net/npm/pixi.js@6.5.10/dist/browser/pixi.min.js"></script>
+  <script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.4.0/dist/cubism4.min.js"></script>
+
   <script>
     window._AMapSecurityConfig = {
       securityJsCode: "8bf8a3e5628e6b4f0f8a9f1a8a8dc097"
@@ -169,13 +174,14 @@
       visibility: hidden !important;
     }
 
-    /* 比例尺 */
+    /* 比例尺 — 放在底部居中 */
     .amap-scalecontrol {
       position: absolute !important;
-      left: 10px !important;
+      left: 50% !important;
       bottom: 10px !important;
       top: auto !important;
       right: auto !important;
+      transform: translateX(-50%) !important;
       background: rgba(30, 40, 50, 0.85) !important;
       border: 1px solid rgba(255, 255, 255, 0.15) !important;
       border-radius: 4px !important;
@@ -185,6 +191,7 @@
       font-size: 11px !important;
       font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif !important;
       z-index: 100 !important;
+      margin: 0 !important;
     }
     .amap-scalecontrol * { color: #e0e8f0 !important; }
     .amap-scalecontrol .amap-scale-borderTop,
@@ -535,6 +542,156 @@
       100% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
     }
 
+    /* Live2D 部件样式 */
+    #live2d-widget {
+      position: fixed;
+      left: 24px;
+      bottom: 24px;
+      width: 300px;
+      height: 380px;
+      z-index: 1000;
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    #live2d-widget.dragging {
+      cursor: grabbing;
+      transform: scale(1.02);
+    }
+
+    #live2d-widget.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(40px);
+    }
+
+    #live2d-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    #live2d-bubble {
+      position: absolute;
+      left: 0;
+      bottom: calc(100% + 10px);
+      max-width: 250px;
+      padding: 0.7rem 0.95rem;
+      background: rgba(26, 26, 38, 0.95);
+      border: 1px solid rgba(192, 132, 252, 0.35);
+      border-radius: 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      line-height: 1.5;
+      color: #e8e8f0;
+      opacity: 0;
+      transform: translateY(6px) scale(0.96);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      z-index: 10;
+    }
+
+    #live2d-bubble.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    #live2d-bubble::after {
+      content: "";
+      position: absolute;
+      left: 28px;
+      bottom: -7px;
+      width: 12px;
+      height: 12px;
+      background: rgba(26, 26, 38, 0.95);
+      border-right: 1px solid rgba(192, 132, 252, 0.35);
+      border-bottom: 1px solid rgba(192, 132, 252, 0.35);
+      transform: rotate(45deg);
+    }
+
+    .l2d-btn {
+      position: absolute;
+      top: 8px;
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      border: 1px solid rgba(192, 132, 252, 0.3);
+      background: rgba(26, 26, 38, 0.8);
+      color: #c084fc;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+      z-index: 5;
+    }
+
+    .l2d-btn:hover {
+      background: rgba(192, 132, 252, 0.25);
+      transform: scale(1.1);
+    }
+
+    #l2d-toggle { right: 8px; }
+    #l2d-reset  { right: 40px; }
+
+    #l2d-status {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.65rem;
+      color: #8888a0;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    /* 隐藏/显示模型按钮 — 独立于模型容器，始终可见 */
+    #l2d-visibility-toggle {
+      position: fixed;
+      left: 24px;
+      bottom: 24px;
+      z-index: 1100;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid rgba(192, 132, 252, 0.5);
+      background: rgba(26, 26, 38, 0.92);
+      color: #c084fc;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, transform 0.2s, left 0.3s ease, bottom 0.3s ease;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      user-select: none;
+    }
+
+    #l2d-visibility-toggle:hover {
+      background: rgba(192, 132, 252, 0.3);
+      transform: scale(1.08);
+    }
+
+    #l2d-visibility-toggle:active {
+      transform: scale(0.95);
+    }
+
+    /* 当模型隐藏时，按钮位置稍微调整，避免被其他元素遮挡 */
+    #l2d-visibility-toggle.model-hidden {
+      left: 24px;
+      bottom: 24px;
+    }
+
     @media (max-width: 768px) {
       .intro-title { font-size: 18px; letter-spacing: 6px; text-indent: 6px; }
       .intro-sub { font-size: 10px; letter-spacing: 3px; text-indent: 3px; }
@@ -564,6 +721,23 @@
       .distance-block .db-distance { font-size: 11px; }
       .distance-block .db-daynight { font-size: 10px; }
       .amap-scalecontrol { font-size: 10px !important; padding: 1px 5px !important; }
+
+      #live2d-widget {
+        width: 220px;
+        height: 280px;
+        left: 12px;
+        bottom: 12px;
+      }
+      #l2d-visibility-toggle {
+        left: 12px;
+        bottom: 12px;
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+      }
+      #live2d-widget.hidden {
+        transform: translateY(30px);
+      }
     }
   </style>
 </head>
@@ -621,6 +795,20 @@
     </div>
 
     <audio id="bgAudio" src="https://videotourl.com/audio/1789199120813-c54b5c8b-4697-4bcb-8902-3329b8f2f34d.mp3" loop preload="auto"></audio>
+
+    <!-- Live2D 模型容器（默认显示） -->
+    <div id="live2d-widget">
+      <button class="l2d-btn" id="l2d-toggle" title="隐藏/显示模型">×</button>
+      <button class="l2d-btn" id="l2d-reset" title="重置位置">R</button>
+      <div id="live2d-bubble"></div>
+      <canvas id="live2d-canvas"></canvas>
+      <div id="l2d-status">加载中…</div>
+    </div>
+
+    <!-- 独立的隐藏/显示模型按钮 -->
+    <button id="l2d-visibility-toggle" title="隐藏模型">
+      <i class="fa-solid fa-eye" id="l2d-visibility-icon"></i>
+    </button>
   </div>
 
   <script>
@@ -1401,11 +1589,11 @@
       }
 
       const nanchuanTextOffsetY = Math.round(IMG_SIZE / 2 + 16);
-      const textToNanchuan = createArrivalTextBelow(NANCHUAN, '我们', '#e8a0b8', nanchuanTextOffsetY);
+      const textToNanchuan = createArrivalTextBelow(NANCHUAN, '你想我们了吗？', '#e8a0b8', nanchuanTextOffsetY);
       textToNanchuan.setMap(map);
 
       const jiaxiangTextOffsetY = Math.round(IMG_SIZE / 2 + 16);
-      const textToJiaxiang = createArrivalTextBelow(YANGTUN, '我在南川很想你', '#8fcbe8', jiaxiangTextOffsetY);
+      const textToJiaxiang = createArrivalTextBelow(YANGTUN, '我想你们了', '#8fcbe8', jiaxiangTextOffsetY);
       textToJiaxiang.setMap(map);
 
       function showText(textObj, duration) {
@@ -1566,6 +1754,371 @@
         }, 300);
       });
 
+    })();
+  </script>
+
+  <!-- Live2D 初始化脚本（复用第一个文件的逻辑） -->
+  <script>
+    (function () {
+      "use strict";
+
+      const MODEL_URL = "./baicai2d/object_live2d_020_101.asset.model3.json";
+
+      const MESSAGES = [
+        "我们是好呀好朋友",
+        "思念像一把小刀，一刀一刻一痕...",
+        "也许这就是友谊吧",
+        "今天又是想你的一天~",
+        "陈柚柚&陈落落&天天开心",
+        "誓言也许是如此吧"
+      ];
+
+      const widget = document.getElementById("live2d-widget");
+      const canvas = document.getElementById("live2d-canvas");
+      const bubble = document.getElementById("live2d-bubble");
+      const toggleBtn = document.getElementById("l2d-toggle");
+      const resetBtn = document.getElementById("l2d-reset");
+      const statusEl = document.getElementById("l2d-status");
+      const visibilityToggle = document.getElementById("l2d-visibility-toggle");
+      const visibilityIcon = document.getElementById("l2d-visibility-icon");
+
+      let app = null;
+      let model = null;
+      let bubbleTimer = 0;
+      let idleTimer = 0;
+      let isDragging = false;
+      let dragStart = { x: 0, y: 0 };
+      let dragOffset = { x: 0, y: 0 };
+
+      const pointerFocus = {
+        x: 0, y: 0,
+        targetX: 0, targetY: 0,
+        lastAt: 0
+      };
+
+      let mouthOpenUntil = 0;
+      let blinkUntil = 0;
+      let nextBlinkAt = performance.now() + 2400;
+
+      window.__model = null;
+      window.__playIdle = null;
+
+      // ========== PIXI ==========
+      function initPixi() {
+        app = new PIXI.Application({
+          view: canvas,
+          autoStart: true,
+          backgroundAlpha: 0,
+          antialias: true,
+          autoDensity: true,
+          resolution: Math.min(window.devicePixelRatio || 1, 2),
+          resizeTo: widget
+        });
+
+        app.ticker.add(() => {
+          if (!model) return;
+          const core = model.internalModel && model.internalModel.coreModel;
+          if (!core) return;
+
+          const now = performance.now();
+          const t = now / 1000;
+
+          // ---- 鼠标平滑 ----
+          const fresh = now - pointerFocus.lastAt < 2600;
+          const tx = fresh ? pointerFocus.targetX : 0;
+          const ty = fresh ? pointerFocus.targetY : 0;
+
+          pointerFocus.x += (tx - pointerFocus.x) * 0.16;
+          pointerFocus.y += (ty - pointerFocus.y) * 0.16;
+
+          try {
+            // 眼球 + 头部
+            core.setParameterValueById("ParamEyeBallX", pointerFocus.x * 0.7);
+            core.setParameterValueById("ParamEyeBallY", -pointerFocus.y * 0.5);
+            core.addParameterValueById("ParamAngleX", pointerFocus.x * 12, 0.5);
+            core.addParameterValueById("ParamAngleY", -pointerFocus.y * 8, 0.5);
+            core.addParameterValueById("ParamBodyAngleX", pointerFocus.x * 4, 0.35);
+
+            // ---- 呼吸 ----
+            core.setParameterValueById("ParamBreath", 0.5 + Math.sin(t * 1.25) * 0.18);
+            core.addParameterValueById("ParamBodyAngleY", Math.sin(t * 0.34) * 0.35, 0.28);
+            core.addParameterValueById("ParamBodyAngleZ", Math.sin(t * 0.42) * 0.26, 0.24);
+            core.addParameterValueById("ParamAngleZ", Math.sin(t * 0.38) * 0.24, 0.2);
+
+            // ---- 幽灵（水滴） ----
+            const wispScale = 1.12;
+            core.addParameterValueById("ParamWillOTheWhisp1X", Math.sin(t * 0.64) * 0.58 * wispScale, 0.12);
+            core.addParameterValueById("ParamWillOTheWhisp1Y", Math.sin(t * 0.78 + 1.1) * 0.48 * wispScale, 0.12);
+            core.addParameterValueById("ParamWillOTheWhisp2X", -Math.sin(t * 0.42 + 0.6) * 0.54 * wispScale, 0.12);
+            core.addParameterValueById("ParamWillOTheWhisp2Y", Math.sin(t * 0.64) * 0.42 * wispScale, 0.12);
+            core.addParameterValueById("ParamWillOTheWhisp3X", Math.sin(t * 0.78 + 1.1) * 0.52 * wispScale, 0.12);
+            core.addParameterValueById("ParamWillOTheWhisp3Y", -Math.sin(t * 0.42 + 0.6) * 0.45 * wispScale, 0.12);
+
+            // ---- 配饰飘动 ----
+            core.addParameterValueById("ParamChainLShake", Math.sin(t * 0.64) * 0.44, 0.14);
+            core.addParameterValueById("ParamChainRShake", Math.sin(t * 0.42 + 0.6) * 0.44, 0.14);
+
+            // ---- 眨眼 ----
+            if (now > nextBlinkAt) {
+              blinkUntil = now + 140;
+              nextBlinkAt = now + 2400 + Math.random() * 3200;
+            }
+            if (now < blinkUntil) {
+              core.setParameterValueById("ParamEyeLOpen", 0.08);
+              core.setParameterValueById("ParamEyeROpen", 0.08);
+            }
+
+            // ---- 张嘴 ----
+            if (now < mouthOpenUntil) {
+              core.setParameterValueById("ParamMouthOpenY", 1);
+            }
+          } catch (e) {}
+        });
+
+        return app;
+      }
+
+      // ========== 加载 ==========
+      async function loadModel() {
+        statusEl.textContent = "加载幽幽子中…";
+        statusEl.style.color = "#8888a0";
+
+        try {
+          model = await PIXI.live2d.Live2DModel.from(MODEL_URL, {
+            autoInteract: false
+          });
+
+          window.__model = model;
+
+          app.stage.addChild(model);
+          fitModel();
+
+          const motions = model.internalModel.settings.motions;
+          console.log("动作组：", Object.keys(motions || {}));
+          console.log("动作数量：", motions && motions[""] ? motions[""].length : 0);
+
+          statusEl.textContent = "Live2D Ready · Yuyuko";
+          statusEl.style.color = "#6b7280";
+
+          setTimeout(() => {
+            playIdleMotion();
+          }, 900);
+
+          setTimeout(() => sayRandom(), 900);
+        } catch (err) {
+          console.error("幽幽子模型加载失败:", err);
+          statusEl.textContent = "加载失败，请检查控制台";
+          statusEl.style.color = "#f87171";
+        }
+      }
+
+      // ========== 动作时长估算 ==========
+      function getMotionDuration(motion) {
+        if (!motion || !motion.Motion) return 3000;
+        const curves = motion.Motion.Curves || [];
+        let maxTime = 0;
+        for (const curve of curves) {
+          const segments = curve.Segments || [];
+          for (let i = 0; i < segments.length; i += 3) {
+            if (typeof segments[i] === "number" && segments[i] > maxTime) {
+              maxTime = segments[i];
+            }
+          }
+        }
+        return maxTime > 0 ? maxTime * 1000 : 3000;
+      }
+
+      // ========== 待机动作（连续播放） ==========
+      function playIdleMotion() {
+        if (!model) return;
+
+        const motions = model.internalModel.settings.motions;
+        const groups = Object.keys(motions || {});
+        if (!groups.length) return;
+
+        const group = groups.includes("Idle") ? "Idle" : groups[0];
+        const list = motions[group];
+        if (!list || !list.length) return;
+
+        const index = Math.floor(Math.random() * list.length);
+        console.log("播放动作：", group || "(空组)", index);
+
+        try {
+          const mm = model.internalModel.motionManager;
+          mm.startMotion(group, index);
+
+          // 动作播到 85% 时接下一个
+          const duration = getMotionDuration(list[index]);
+          clearTimeout(idleTimer);
+          idleTimer = setTimeout(playIdleMotion, Math.max(1200, duration * 0.85));
+        } catch (e) {
+          console.warn("播放动作失败：", e);
+          clearTimeout(idleTimer);
+          idleTimer = setTimeout(playIdleMotion, 3000);
+        }
+      }
+
+      window.__playIdle = playIdleMotion;
+
+      // ========== 自适应 ==========
+      function fitModel() {
+        if (!model || !app) return;
+
+        model.scale.set(1);
+        model.position.set(0, 0);
+
+        const sw = app.screen.width;
+        const sh = app.screen.height;
+        const bounds = model.getLocalBounds();
+        const mw = Math.max(bounds.width, 1);
+        const mh = Math.max(bounds.height, 1);
+        const scale = Math.min((sw * 0.92) / mw, (sh * 0.95) / mh);
+
+        model.scale.set(scale);
+        model.position.set(
+          sw / 2 - (bounds.x + bounds.width / 2) * scale,
+          sh / 2 - (bounds.y + bounds.height / 2) * scale
+        );
+      }
+
+      // ========== 点击 ==========
+      function onModelTap() {
+        sayRandom();
+        mouthOpenUntil = performance.now() + 600;
+        playIdleMotion();
+      }
+
+      function sayRandom() {
+        const text = MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
+        bubble.textContent = text;
+        bubble.classList.add("show");
+
+        requestAnimationFrame(() => {
+          const rect = bubble.getBoundingClientRect();
+          if (rect.left < 8) {
+            bubble.style.left = (8 - rect.left) + "px";
+          } else {
+            bubble.style.left = "0";
+          }
+        });
+
+        clearTimeout(bubbleTimer);
+        bubbleTimer = setTimeout(() => bubble.classList.remove("show"), 3200);
+      }
+
+      // ========== 鼠标追踪 ==========
+      window.addEventListener("pointermove", (e) => {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+
+        pointerFocus.targetX = Math.max(-1, Math.min(1, (e.clientX / w - 0.5) * 2));
+        pointerFocus.targetY = Math.max(-1, Math.min(1, (e.clientY / h - 0.5) * 2));
+        pointerFocus.lastAt = performance.now();
+
+        if (model && typeof model.focus === "function") {
+          try { model.focus(e.clientX, e.clientY); } catch (err) {}
+        }
+      });
+
+      // ========== 拖拽 + 点击 ==========
+      widget.addEventListener("pointerdown", (e) => {
+        if (e.target.closest("button")) return;
+
+        isDragging = false;
+        const rect = widget.getBoundingClientRect();
+        dragOffset.x = e.clientX - rect.left;
+        dragOffset.y = e.clientY - rect.top;
+        dragStart.x = e.clientX;
+        dragStart.y = e.clientY;
+
+        widget.classList.add("dragging");
+        widget.setPointerCapture(e.pointerId);
+      });
+
+      widget.addEventListener("pointermove", (e) => {
+        if (!widget.classList.contains("dragging")) return;
+
+        const dx = e.clientX - dragStart.x;
+        const dy = e.clientY - dragStart.y;
+        if (Math.abs(dx) > 4 || Math.abs(dy) > 4) isDragging = true;
+
+        const x = e.clientX - dragOffset.x;
+        const y = e.clientY - dragOffset.y;
+        const maxX = window.innerWidth - widget.offsetWidth;
+        const maxY = window.innerHeight - widget.offsetHeight;
+
+        widget.style.left = Math.max(0, Math.min(x, maxX)) + "px";
+        widget.style.top = Math.max(0, Math.min(y, maxY)) + "px";
+        widget.style.bottom = "auto";
+      });
+
+      widget.addEventListener("pointerup", (e) => {
+        const wasDragging = isDragging;
+
+        widget.classList.remove("dragging");
+        try { widget.releasePointerCapture(e.pointerId); } catch (err) {}
+
+        isDragging = false;
+
+        if (!wasDragging) {
+          onModelTap();
+        }
+      });
+
+      // ========== 按钮 ==========
+      // 原有的隐藏/显示按钮（模型容器上的 ×）
+      toggleBtn.addEventListener("click", () => {
+        widget.classList.toggle("hidden");
+        toggleBtn.textContent = widget.classList.contains("hidden") ? "L2D" : "×";
+        // 同步更新独立按钮的状态
+        syncVisibilityButton();
+      });
+
+      resetBtn.addEventListener("click", () => {
+        widget.style.left = "24px";
+        widget.style.top = "auto";
+        widget.style.bottom = "24px";
+        widget.classList.remove("hidden");
+        toggleBtn.textContent = "×";
+        syncVisibilityButton();
+      });
+
+      // ========== 新增：独立隐藏/显示模型按钮 ==========
+      function syncVisibilityButton() {
+        const isHidden = widget.classList.contains("hidden");
+        if (isHidden) {
+          visibilityToggle.classList.add("model-hidden");
+          visibilityToggle.title = "显示模型";
+          visibilityIcon.className = "fa-solid fa-eye-slash";
+        } else {
+          visibilityToggle.classList.remove("model-hidden");
+          visibilityToggle.title = "隐藏模型";
+          visibilityIcon.className = "fa-solid fa-eye";
+        }
+      }
+
+      visibilityToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        widget.classList.toggle("hidden");
+        // 同步更新模型容器上的按钮文字
+        toggleBtn.textContent = widget.classList.contains("hidden") ? "L2D" : "×";
+        syncVisibilityButton();
+      });
+
+      // 初始化按钮状态
+      syncVisibilityButton();
+
+      window.addEventListener("resize", fitModel);
+
+      // ========== 启动 ==========
+      window.addEventListener("load", () => {
+        if (!window.PIXI || !PIXI.live2d) {
+          statusEl.textContent = "依赖加载失败，请刷新";
+          return;
+        }
+        initPixi();
+        loadModel();
+      });
     })();
   </script>
 </body>
