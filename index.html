@@ -2,28 +2,28 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>我们</title>
   <link rel="icon" type="image/jpeg" href="3.jpeg">
 
-  <!-- Remix Icon -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css">
-  <!-- Font Awesome 6 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
-  <!-- 霞鹜文楷（unpkg） -->
-  <link rel="stylesheet" href="https://unpkg.com/lxgw-wenkai-webfont@1.7.0/style.css">
+  <!-- Remix Icon (国内镜像) -->
+  <link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/remixicon@4.6.0/fonts/remixicon.css">
+  <!-- Font Awesome 6 (国内镜像) -->
+  <link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+  <!-- 霞鹜文楷 (BootCDN) -->
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-webfont/1.6.0/style.min.css">
 
-  <!-- Live2D 依赖 -->
-  <script src="https://cdn.jsdelivr.net/npm/pixi.js@6.5.10/dist/browser/pixi.min.js"></script>
+  <!-- Live2D 依赖 (国内镜像) -->
+  <script src="https://cdn.jsdmirror.com/npm/pixi.js@6.5.10/dist/browser/pixi.min.js"></script>
   <script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display@0.4.0/dist/cubism4.min.js"></script>
+  <script src="https://cdn.jsdmirror.com/npm/pixi-live2d-display@0.4.0/dist/cubism4.min.js"></script>
 
   <script>
     window._AMapSecurityConfig = {
       securityJsCode: "8bf8a3e5628e6b4f0f8a9f1a8a8dc097"
     };
   </script>
-  <script src="https://webapi.amap.com/maps?v=2.0&key=c4165df92b1f624f44e932659ad0920e&plugin=AMap.GeoJSON,AMap.Text,AMap.Marker,AMap.BezierCurve,AMap.Polyline,AMap.Scale"></script>
+  <script src="https://webapi.amap.com/maps?v=2.0&key=c4165df92b1f624f44e932659ad0920e&plugin=AMap.GeoJSON,AMap.Text,AMap.Marker,AMap.BezierCurve,AMap.Polyline"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -120,7 +120,7 @@
       z-index: 1;
     }
 
-    /* 手绘噪点纹理层 */
+    /* 手绘噪点纹理层 — 移动端性能优化：关闭噪点层 */
     #noise-layer {
       position: fixed;
       top: 0;
@@ -172,31 +172,6 @@
       display: none !important;
       opacity: 0 !important;
       visibility: hidden !important;
-    }
-
-    /* 比例尺 — 放在底部居中 */
-    .amap-scalecontrol {
-      position: absolute !important;
-      left: 50% !important;
-      bottom: 10px !important;
-      top: auto !important;
-      right: auto !important;
-      transform: translateX(-50%) !important;
-      background: rgba(30, 40, 50, 0.85) !important;
-      border: 1px solid rgba(255, 255, 255, 0.15) !important;
-      border-radius: 4px !important;
-      padding: 2px 6px !important;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
-      color: #e0e8f0 !important;
-      font-size: 11px !important;
-      font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif !important;
-      z-index: 100 !important;
-      margin: 0 !important;
-    }
-    .amap-scalecontrol * { color: #e0e8f0 !important; }
-    .amap-scalecontrol .amap-scale-borderTop,
-    .amap-scalecontrol .amap-scale-borderBottom {
-      border-color: #e0e8f0 !important;
     }
 
     /* 右上角信息面板 */
@@ -525,23 +500,6 @@
       100% { transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
     }
 
-    .trail-dot {
-      position: fixed;
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 240;
-      transform: translate(-50%, -50%);
-      opacity: 0;
-      animation: trailFade 0.9s ease-out forwards;
-    }
-
-    @keyframes trailFade {
-      0%   { opacity: 0.55; transform: translate(-50%, -50%) scale(1); }
-      100% { opacity: 0; transform: translate(-50%, -50%) scale(0.3); }
-    }
-
     /* ============================================================
        Live2D 部件样式
        ============================================================ */
@@ -671,7 +629,7 @@
     }
 
     /* ============================================================
-       手机端专属（≤768px）：模型改小，不挡地图
+       手机端专属（≤768px）：模型改小，不挡地图 + 性能优化
        ============================================================ */
     @media (max-width: 768px) {
       .intro-title { font-size: 18px; letter-spacing: 6px; text-indent: 6px; }
@@ -692,7 +650,6 @@
       .custom-copyright { font-size: 11px; }
       .custom-copyright .time-text { font-size: 10.5px; }
       #watermark-layer { background-size: 140px 94px; }
-      #noise-layer { opacity: 0.03; }
       .arrival-glow { width: 60px; height: 60px; }
       .map-weather { padding: 2px 8px; gap: 4px; }
       .map-weather .mw-icon { font-size: 12px; width: 14px; height: 14px; }
@@ -701,7 +658,17 @@
       .distance-block { padding: 4px 10px; gap: 2px; }
       .distance-block .db-distance { font-size: 11px; }
       .distance-block .db-daynight { font-size: 10px; }
-      .amap-scalecontrol { font-size: 10px !important; padding: 1px 5px !important; }
+
+      /* 移动端关闭噪点层，降低GPU负担 */
+      #noise-layer {
+        display: none;
+      }
+
+      /* 移动端关掉水印动画，用静态背景替代，减少重绘 */
+      #watermark-layer {
+        animation: none;
+        opacity: 0.9;
+      }
 
       /* ===== 手机端模型：140×175，紧贴左下角，不挡地图 ===== */
       #live2d-widget {
@@ -1113,9 +1080,6 @@
 
       window.map = map;
 
-      const scale = new AMap.Scale({ position: 'lb' });
-      map.addControl(scale);
-
       function updateWatermark() {
         const color = 'rgba(180, 200, 220, 0.05)';
         const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='180' height='120' viewBox='0 0 180 120'><text x='10' y='40' font-family='LXGW WenKai, Microsoft YaHei, PingFang SC, sans-serif' font-size='22' font-weight='500' fill='${color}' transform='rotate(-22 90 60)'>白菜</text><text x='100' y='100' font-family='LXGW WenKai, Microsoft YaHei, PingFang SC, sans-serif' font-size='22' font-weight='500' fill='${color}' transform='rotate(-22 90 60)'>白菜</text></svg>`;
@@ -1232,21 +1196,6 @@
         setTimeout(() => {
           if (glow.parentNode) glow.parentNode.removeChild(glow);
         }, 1200);
-      }
-
-      function spawnTrailDot(lnglat, color) {
-        const pixel = map.lngLatToContainer(new AMap.LngLat(lnglat[0], lnglat[1]));
-        if (!pixel) return;
-        const dot = document.createElement('div');
-        dot.className = 'trail-dot';
-        dot.style.left = pixel.x + 'px';
-        dot.style.top = pixel.y + 'px';
-        dot.style.background = color;
-        dot.style.boxShadow = `0 0 6px ${color}`;
-        document.body.appendChild(dot);
-        setTimeout(() => {
-          if (dot.parentNode) dot.parentNode.removeChild(dot);
-        }, 1000);
       }
 
       function calcDistance(lat1, lon1, lat2, lon2) {
@@ -1576,14 +1525,9 @@
       const DURATION = 4000;
       const PAUSE = 600;
 
-      const TRAIL_COLOR_A = 'rgba(232, 160, 184, 0.7)';
-      const TRAIL_COLOR_B = 'rgba(143, 203, 232, 0.7)';
-
-      function flyMultiple(markersWithPath, duration, trailColor) {
+      function flyMultiple(markersWithPath, duration) {
         return new Promise((resolve) => {
           const startTime = performance.now();
-          let lastTrailTime = 0;
-          const TRAIL_INTERVAL = 55;
 
           function step(now) {
             const elapsed = now - startTime;
@@ -1605,16 +1549,7 @@
               const floatOffsetPx = Math.sin(t * Math.PI * 4) * 3;
               const lngLat = map.containerToLngLat(new AMap.Pixel(px[0], px[1] + floatOffsetPx));
               item.marker.setPosition([lngLat.getLng(), lngLat.getLat()]);
-
-              if (trailColor && now - lastTrailTime > TRAIL_INTERVAL && t < 0.98) {
-                const lngLatTrail = map.containerToLngLat(new AMap.Pixel(px[0], px[1]));
-                spawnTrailDot([lngLatTrail.getLng(), lngLatTrail.getLat()], trailColor);
-              }
             });
-
-            if (now - lastTrailTime > TRAIL_INTERVAL) {
-              lastTrailTime = now;
-            }
 
             if (t < 1) {
               requestAnimationFrame(step);
@@ -1671,7 +1606,7 @@
           await flyMultiple([
             { marker: photoJX_A, p0: YANGTUN, p1: ctrlA, p2: NANCHUAN },
             { marker: photoJX_B, p0: YANGTUN, p1: ctrlB, p2: NANCHUAN }
-          ], DURATION, TRAIL_COLOR_A);
+          ], DURATION);
 
           spawnArrivalGlow(NANCHUAN);
           await fadeOutMarkers([photoJX_A, photoJX_B]);
@@ -1688,7 +1623,7 @@
           await flyMultiple([
             { marker: photoNC_A, p0: NANCHUAN, p1: ctrlA, p2: YANGTUN },
             { marker: photoNC_B, p0: NANCHUAN, p1: ctrlB, p2: YANGTUN }
-          ], DURATION, TRAIL_COLOR_B);
+          ], DURATION);
 
           spawnArrivalGlow(YANGTUN);
           await fadeOutMarkers([photoNC_A, photoNC_B]);
@@ -1776,9 +1711,9 @@
           view: canvas,
           autoStart: true,
           backgroundAlpha: 0,
-          antialias: true,
+          antialias: false, // 移动端性能优化：关闭抗锯齿
           autoDensity: true,
-          resolution: Math.min(window.devicePixelRatio || 1, 2),
+          resolution: Math.min(window.devicePixelRatio || 1, 1.5), // 限制分辨率
           resizeTo: widget
         });
 
