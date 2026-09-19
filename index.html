@@ -296,6 +296,416 @@
         0 0 6px var(--text-shadow);
     }
 
+    /* ========== 音乐选择器 + 播放模式 ========== */
+    .music-control-row {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 2px;
+    }
+
+    .music-selector {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .music-selector i {
+      font-size: 13px;
+      color: var(--text-sub);
+      opacity: 0.85;
+    }
+
+    /* 歌单下拉框（自定义卡片式，不遮挡内容） */
+    .music-selector-wrap {
+      position: relative;
+      pointer-events: auto;
+    }
+
+    .music-selector-trigger {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: rgba(30, 40, 50, 0.92);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      user-select: none;
+      white-space: nowrap;
+      max-width: 150px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .music-selector-trigger:hover {
+      border-color: rgba(232, 160, 184, 0.6);
+    }
+
+    .music-selector-trigger .current-song {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .music-selector-trigger .arrow {
+      font-size: 9px;
+      color: var(--text-sub);
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .music-selector-wrap.open .music-selector-trigger .arrow {
+      transform: rotate(180deg);
+    }
+
+    /* 歌单面板 —— 从底部展开，不遮挡内容 */
+    .music-panel {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      right: 0;
+      width: 220px;
+      max-height: 260px;
+      overflow-y: auto;
+      background: rgba(20, 28, 38, 0.97);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 6px;
+      z-index: 1200;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(6px) scale(0.97);
+      transform-origin: bottom right;
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+      pointer-events: auto;
+    }
+
+    .music-selector-wrap.open .music-panel {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .music-panel::-webkit-scrollbar {
+      width: 5px;
+    }
+    .music-panel::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .music-panel::-webkit-scrollbar-thumb {
+      background: rgba(232, 160, 184, 0.4);
+      border-radius: 3px;
+    }
+    .music-panel::-webkit-scrollbar-thumb:hover {
+      background: rgba(232, 160, 184, 0.7);
+    }
+
+    .music-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 8px 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 4px;
+    }
+
+    .music-panel-header .title {
+      font-size: 11px;
+      color: var(--text-sub);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .music-panel-header .count {
+      font-size: 10px;
+      color: var(--text-sub);
+      opacity: 0.7;
+    }
+
+    .music-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease;
+      user-select: none;
+      position: relative;
+    }
+
+    .music-item:hover {
+      background: rgba(232, 160, 184, 0.12);
+    }
+
+    .music-item.active {
+      background: rgba(232, 160, 184, 0.18);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .music-item .idx {
+      font-size: 10px;
+      color: var(--text-sub);
+      font-family: 'Consolas', 'Monaco', monospace;
+      min-width: 16px;
+      text-align: center;
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+
+    .music-item.active .idx {
+      color: var(--accent);
+      opacity: 1;
+    }
+
+    .music-item .name {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .music-item .playing-icon {
+      font-size: 10px;
+      color: var(--accent);
+      opacity: 0;
+      flex-shrink: 0;
+      animation: soundWave 1s ease-in-out infinite;
+    }
+
+    .music-item.active .playing-icon {
+      opacity: 1;
+    }
+
+    @keyframes soundWave {
+      0%, 100% { transform: scaleY(0.6); }
+      50%      { transform: scaleY(1); }
+    }
+
+    /* 播放模式按钮 */
+    .play-mode-btn {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 26px;
+      border-radius: 6px;
+      background: rgba(30, 40, 50, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-sub);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .play-mode-btn:hover {
+      border-color: rgba(232, 160, 184, 0.6);
+      color: var(--text-main);
+    }
+
+    .play-mode-btn:active {
+      transform: scale(0.94);
+    }
+
+    .play-mode-btn.mode-loop i {
+      color: var(--accent);
+    }
+
+    .play-mode-btn.mode-single i {
+      color: var(--accent-2);
+    }
+
+    .play-mode-btn.mode-shuffle i {
+      color: #c084fc;
+    }
+
+    /* ========== 进度条 ========== */
+    .progress-container {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 230px;
+      padding: 6px 10px;
+      border-radius: 12px;
+      background: rgba(20, 28, 38, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .progress-container.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(4px);
+    }
+
+    .progress-bar-wrap {
+      flex: 1;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.10);
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+      transition: height 0.15s ease, background 0.2s ease;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    .progress-bar-wrap:hover {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .progress-bar-wrap.active {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.16);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: 4px;
+      pointer-events: none;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 8px rgba(232, 160, 184, 0.5);
+      position: relative;
+    }
+
+    .progress-bar-fill::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 14px;
+      height: 14px;
+      background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(232,160,184,0.6) 40%, transparent 70%);
+      border-radius: 50%;
+      transform: translate(50%, -50%);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+
+    .progress-bar-wrap:hover .progress-bar-fill::after,
+    .progress-bar-wrap.active .progress-bar-fill::after {
+      opacity: 1;
+    }
+
+    .progress-bar-thumb {
+      position: absolute;
+      top: 50%;
+      width: 14px;
+      height: 14px;
+      background: #fff;
+      border-radius: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.15s ease;
+      pointer-events: none;
+      box-shadow: 0 0 0 3px rgba(232, 160, 184, 0.35), 0 0 10px rgba(232, 160, 184, 0.8);
+      z-index: 2;
+    }
+
+    .progress-bar-wrap:hover .progress-bar-thumb,
+    .progress-bar-wrap.active .progress-bar-thumb {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .progress-time {
+      font-size: 10.5px;
+      color: var(--text-main);
+      font-variant-numeric: tabular-nums;
+      font-family: 'Consolas', 'Monaco', 'Menlo', monospace;
+      white-space: nowrap;
+      min-width: 34px;
+      text-align: center;
+      font-weight: 600;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .progress-toggle {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-sub);
+      font-size: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .progress-toggle:hover {
+      background: rgba(232, 160, 184, 0.25);
+      color: var(--text-main);
+      border-color: var(--accent);
+    }
+
+    .progress-show-btn {
+      pointer-events: auto;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      height: 26px;
+      padding: 0 10px;
+      border-radius: 8px;
+      background: rgba(20, 28, 38, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-sub);
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      gap: 5px;
+      white-space: nowrap;
+    }
+
+    .progress-show-btn.show {
+      display: flex;
+    }
+
+    .progress-show-btn:hover {
+      border-color: var(--accent);
+      color: var(--text-main);
+    }
+
+    .progress-show-btn:active {
+      transform: scale(0.96);
+    }
+
+    .progress-show-btn i {
+      font-size: 11px;
+    }
+
+    /* 音频按钮 */
     .audio-btn {
       pointer-events: auto;
       display: flex;
@@ -504,7 +914,6 @@
        Live2D 部件样式
        ============================================================ */
 
-    /* 电脑端默认（300×380） */
     #live2d-widget {
       position: fixed;
       left: 24px;
@@ -589,7 +998,6 @@
       display: none;
     }
 
-    /* 隐藏/显示模型按钮 — 独立于模型容器，始终可见 */
     #l2d-visibility-toggle {
       position: fixed;
       left: 24px;
@@ -629,7 +1037,7 @@
     }
 
     /* ============================================================
-       手机端专属（≤768px）：模型改小，不挡地图 + 性能优化
+       手机端专属（≤768px）
        ============================================================ */
     @media (max-width: 768px) {
       .intro-title { font-size: 18px; letter-spacing: 6px; text-indent: 6px; }
@@ -659,18 +1067,49 @@
       .distance-block .db-distance { font-size: 11px; }
       .distance-block .db-daynight { font-size: 10px; }
 
-      /* 移动端关闭噪点层，降低GPU负担 */
-      #noise-layer {
-        display: none;
-      }
+      #noise-layer { display: none; }
 
-      /* 移动端关掉水印动画，用静态背景替代，减少重绘 */
       #watermark-layer {
         animation: none;
         opacity: 0.9;
       }
 
-      /* ===== 手机端模型：140×175，紧贴左下角，不挡地图 ===== */
+      /* 音乐选择器移动端适配 */
+      .music-selector-trigger {
+        max-width: 110px;
+        font-size: 10.5px;
+        padding: 3px 8px;
+      }
+      .music-panel {
+        width: 200px;
+        max-height: 220px;
+      }
+      .music-item {
+        padding: 6px 8px;
+        font-size: 11px;
+      }
+      .progress-container {
+        width: 190px;
+        padding: 5px 8px;
+        gap: 6px;
+      }
+      .progress-time {
+        font-size: 9.5px;
+        min-width: 30px;
+      }
+      .progress-bar-wrap {
+        height: 7px;
+      }
+      .progress-bar-wrap:hover,
+      .progress-bar-wrap.active {
+        height: 9px;
+      }
+      .play-mode-btn {
+        width: 26px;
+        height: 24px;
+        font-size: 11px;
+      }
+
       #live2d-widget {
         width: 140px;
         height: 175px;
@@ -728,6 +1167,50 @@
     </div>
 
     <div class="bottom-right-stack">
+      <!-- 音乐选择器 + 播放模式 -->
+      <div class="music-control-row">
+        <div class="music-selector">
+          <i class="fa-solid fa-list-music"></i>
+          <div class="music-selector-wrap" id="musicSelectorWrap">
+            <div class="music-selector-trigger" id="musicSelectorTrigger">
+              <span class="current-song" id="currentSongName">默认歌曲</span>
+              <i class="fa-solid fa-chevron-up arrow" id="musicArrow"></i>
+            </div>
+            <div class="music-panel" id="musicPanel">
+              <div class="music-panel-header">
+                <span class="title">我的歌单</span>
+                <span class="count" id="musicCount">1 首</span>
+              </div>
+              <div id="musicListContainer">
+                <!-- 歌曲列表由 JS 动态生成 -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="play-mode-btn" id="playModeBtn" title="播放模式：列表循环">
+          <i class="fa-solid fa-repeat" id="playModeIcon"></i>
+        </button>
+      </div>
+
+      <!-- 进度条 -->
+      <div class="progress-container" id="progressContainer">
+        <span class="progress-time" id="currentTime">0:00</span>
+        <div class="progress-bar-wrap" id="progressBarWrap">
+          <div class="progress-bar-fill" id="progressBarFill"></div>
+          <div class="progress-bar-thumb" id="progressBarThumb"></div>
+        </div>
+        <span class="progress-time" id="totalTime">0:00</span>
+        <div class="progress-toggle" id="progressToggle" title="隐藏进度条">
+          <i class="fa-solid fa-eye" id="progressToggleIcon"></i>
+        </div>
+      </div>
+
+      <!-- 进度条显示按钮 -->
+      <button class="progress-show-btn" id="progressShowBtn" title="显示进度条">
+        <i class="fa-solid fa-bars-progress"></i>
+        <span>进度条</span>
+      </button>
+
       <div class="audio-hint" id="audioHint">点击任意位置开启音乐</div>
       <div class="audio-btn" id="audioBtn" title="点击播放/暂停背景音乐">
         <i class="fa-solid fa-music" id="audioIcon"></i>
@@ -743,16 +1226,14 @@
       <img id="imageViewerImg" src="" alt="">
     </div>
 
-    <audio id="bgAudio" src="https://videotourl.com/audio/1789279614413-3c09a0fa-4925-471d-a0f9-db3403c741f8.mp3" loop preload="auto"></audio>
+    <audio id="bgAudio" src="" preload="auto"></audio>
 
-    <!-- Live2D 模型容器（默认显示，已删除 R / × 按钮） -->
     <div id="live2d-widget">
       <div id="live2d-bubble"></div>
       <canvas id="live2d-canvas"></canvas>
       <div id="l2d-status">加载中…</div>
     </div>
 
-    <!-- 独立的隐藏/显示模型按钮 -->
     <button id="l2d-visibility-toggle" title="隐藏模型">
       <i class="fa-solid fa-eye" id="l2d-visibility-icon"></i>
     </button>
@@ -771,7 +1252,6 @@
       const IP_INFO_API = 'https://api.auth.top/api/ip';
       const API_KEY = '9e38f0bc62f8fe0d';
 
-      // 高德 Web 服务 Key（路径规划）
       const AMAP_WS_KEY = '29f1e7dd767d16cbcbf777bfbcde8b54';
 
       const CITY_NANCHUAN = '南川区';
@@ -841,7 +1321,7 @@
       setInterval(updateTogether, 1000);
 
       // ============================================================
-      // 音频
+      // 音乐播放器
       // ============================================================
       const bgAudio = document.getElementById('bgAudio');
       const audioBtn = document.getElementById('audioBtn');
@@ -849,10 +1329,189 @@
       const audioIcon = document.getElementById('audioIcon');
       const audioHint = document.getElementById('audioHint');
 
+      const musicSelectorWrap = document.getElementById('musicSelectorWrap');
+      const musicSelectorTrigger = document.getElementById('musicSelectorTrigger');
+      const currentSongName = document.getElementById('currentSongName');
+      const musicPanel = document.getElementById('musicPanel');
+      const musicListContainer = document.getElementById('musicListContainer');
+      const musicCount = document.getElementById('musicCount');
+
+      const playModeBtn = document.getElementById('playModeBtn');
+      const playModeIcon = document.getElementById('playModeIcon');
+
+      const progressContainer = document.getElementById('progressContainer');
+      const progressBarWrap = document.getElementById('progressBarWrap');
+      const progressBarFill = document.getElementById('progressBarFill');
+      const progressBarThumb = document.getElementById('progressBarThumb');
+      const currentTimeEl = document.getElementById('currentTime');
+      const totalTimeEl = document.getElementById('totalTime');
+      const progressToggle = document.getElementById('progressToggle');
+      const progressShowBtn = document.getElementById('progressShowBtn');
+
+      // ============================================================
+      // 🎵 歌曲列表 —— 在这里添加你的歌曲（共 7 个位置）
+      // 填写方式：{ name: '歌曲名称', src: '歌曲链接' }
+      // 如果暂时不想用某个位置，直接留空字符串即可：
+      //   { name: '', src: '' }
+      // 播放时会自动跳过空位置。
+      // ============================================================
+      const PLAYLIST = [
+        { name: '春娇与志明', src: 'https://videotourl.com/audio/1789783334993-4ab404a8-045a-480e-b109-638c0549c0a4.mp3' },
+        { name: '富士山下', src: 'https://videotourl.com/audio/1789783406615-ba1f9216-a02b-4cfb-b554-0e5343d96688.mp3' },
+        { name: '恋人', src: 'https://videotourl.com/audio/1789783455944-60e0ce74-64ab-4e90-a0c1-b2c637ab05f3.mp3' },
+        { name: '海海海', src: 'https://videotourl.com/audio/1789783515415-c76e304a-fcce-40da-b081-05bf2ba307a6.mp3' },
+        { name: '彩虹', src: 'https://videotourl.com/audio/1789783630720-b4f4f719-6fde-411c-8199-59fbe1f60b35.mp3' },
+        { name: '刚好遇见你', src: 'https://videotourl.com/audio/1789785066150-c2a1f1e8-b406-435c-a8fa-22b0e6e71479.mp3' },
+        { name: '可不可以', src: 'https://videotourl.com/audio/1789279614413-3c09a0fa-4925-471d-a0f9-db3403c741f8.mp3' }
+      ];
+
+      // 过滤出有效的歌曲（有名称且有链接）
+      const validSongs = PLAYLIST.filter(s => s.name && s.src);
+
       let audioPlaying = false;
       let userPaused = false;
       let autoPlayAttempted = false;
+      let currentSongIndex = 0;
+      let isSeeking = false;
+      let progressHidden = false;
 
+      // 播放模式: 'loop'(列表循环) | 'single'(单曲循环) | 'shuffle'(随机)
+      let playMode = 'loop';
+
+      // ========== 初始化歌单 UI ==========
+      function initMusicSelector() {
+        musicListContainer.innerHTML = '';
+        musicCount.textContent = validSongs.length + ' 首';
+
+        if (validSongs.length === 0) {
+          currentSongName.textContent = '暂无歌曲';
+          return;
+        }
+
+        validSongs.forEach((song, index) => {
+          const item = document.createElement('div');
+          item.className = 'music-item' + (index === currentSongIndex ? ' active' : '');
+          item.dataset.index = index;
+          item.innerHTML = `
+            <span class="idx">${String(index + 1).padStart(2, '0')}</span>
+            <span class="name">${song.name}</span>
+            <i class="fa-solid fa-volume-high playing-icon"></i>
+          `;
+          item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const wasPlaying = audioPlaying;
+            loadSong(index, wasPlaying);
+            closeMusicPanel();
+          });
+          musicListContainer.appendChild(item);
+        });
+
+        if (validSongs.length > 0) {
+          currentSongIndex = 0;
+          bgAudio.src = validSongs[0].src;
+          currentSongName.textContent = validSongs[0].name;
+        }
+      }
+
+      // ========== 更新歌单高亮 ==========
+      function updateMusicListUI() {
+        const items = musicListContainer.querySelectorAll('.music-item');
+        items.forEach((item, index) => {
+          if (index === currentSongIndex) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+        if (validSongs[currentSongIndex]) {
+          currentSongName.textContent = validSongs[currentSongIndex].name;
+        }
+      }
+
+      // ========== 打开/关闭歌单面板 ==========
+      function toggleMusicPanel() {
+        musicSelectorWrap.classList.toggle('open');
+      }
+      function closeMusicPanel() {
+        musicSelectorWrap.classList.remove('open');
+      }
+
+      musicSelectorTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleMusicPanel();
+      });
+
+      // 点击外部关闭歌单
+      document.addEventListener('click', (e) => {
+        if (!musicSelectorWrap.contains(e.target)) {
+          closeMusicPanel();
+        }
+      });
+
+      // ========== 加载歌曲 ==========
+      function loadSong(index, autoPlay) {
+        if (index < 0 || index >= validSongs.length) return;
+        currentSongIndex = index;
+        bgAudio.src = validSongs[index].src;
+        bgAudio.load();
+        updateMusicListUI();
+        // 重置进度条
+        progressBarFill.style.width = '0%';
+        progressBarThumb.style.left = '0%';
+        currentTimeEl.textContent = '0:00';
+        totalTimeEl.textContent = '0:00';
+        if (autoPlay) {
+          bgAudio.play().then(() => {
+            updateAudioUI(true);
+          }).catch(() => {
+            updateAudioUI(false);
+          });
+        }
+      }
+
+      // ========== 播放模式切换 ==========
+      function updatePlayModeUI() {
+        playModeBtn.classList.remove('mode-loop', 'mode-single', 'mode-shuffle');
+        if (playMode === 'loop') {
+          playModeIcon.className = 'fa-solid fa-repeat';
+          playModeBtn.classList.add('mode-loop');
+          playModeBtn.title = '播放模式：列表循环';
+        } else if (playMode === 'single') {
+          playModeIcon.className = 'fa-solid fa-repeat-1';
+          playModeBtn.classList.add('mode-single');
+          playModeBtn.title = '播放模式：单曲循环';
+        } else if (playMode === 'shuffle') {
+          playModeIcon.className = 'fa-solid fa-shuffle';
+          playModeBtn.classList.add('mode-shuffle');
+          playModeBtn.title = '播放模式：随机播放';
+        }
+      }
+
+      playModeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (playMode === 'loop') playMode = 'single';
+        else if (playMode === 'single') playMode = 'shuffle';
+        else playMode = 'loop';
+        updatePlayModeUI();
+      });
+
+      // 获取下一首索引（顺序按列表从上往下）
+      function getNextIndex() {
+        if (validSongs.length === 0) return 0;
+        if (validSongs.length === 1) return 0;
+        if (playMode === 'single') return currentSongIndex;
+        if (playMode === 'shuffle') {
+          let next = currentSongIndex;
+          while (next === currentSongIndex) {
+            next = Math.floor(Math.random() * validSongs.length);
+          }
+          return next;
+        }
+        // loop: 列表循环（从上往下，到底后回到第一首）
+        return (currentSongIndex + 1) % validSongs.length;
+      }
+
+      // ========== 音频 UI ==========
       function updateAudioUI(playing) {
         audioPlaying = playing;
         if (playing) {
@@ -871,6 +1530,7 @@
         if (autoPlayAttempted) return;
         autoPlayAttempted = true;
         if (userPaused) return;
+        if (!bgAudio.src) return;
 
         bgAudio.play().then(() => {
           updateAudioUI(true);
@@ -882,10 +1542,17 @@
       setTimeout(tryAutoPlay, 2000);
 
       function onUserInteraction(e) {
-        if (e && e.target && e.target.closest && e.target.closest('#audioBtn')) {
+        if (e && e.target && e.target.closest && (
+          e.target.closest('#audioBtn') ||
+          e.target.closest('#musicSelectorWrap') ||
+          e.target.closest('#progressBarWrap') ||
+          e.target.closest('#playModeBtn') ||
+          e.target.closest('#progressToggle') ||
+          e.target.closest('#progressShowBtn')
+        )) {
           return;
         }
-        if (!audioPlaying && !userPaused) {
+        if (!audioPlaying && !userPaused && bgAudio.src) {
           bgAudio.play().then(() => {
             updateAudioUI(true);
           }).catch(err => {});
@@ -904,15 +1571,160 @@
           updateAudioUI(false);
         } else {
           userPaused = false;
+          if (!bgAudio.src) return;
           bgAudio.play().then(() => {
             updateAudioUI(true);
           }).catch(err => {});
         }
       });
 
+      // ========== 歌曲播放结束处理 ==========
       bgAudio.addEventListener('ended', () => {
-        updateAudioUI(false);
+        const nextIndex = getNextIndex();
+        if (nextIndex === currentSongIndex && playMode === 'single') {
+          bgAudio.currentTime = 0;
+          bgAudio.play().then(() => {
+            updateAudioUI(true);
+          }).catch(() => {
+            updateAudioUI(false);
+          });
+        } else {
+          loadSong(nextIndex, true);
+        }
       });
+
+      // ============================================================
+      // 进度条功能
+      // ============================================================
+      function formatTime(seconds) {
+        if (!isFinite(seconds) || seconds < 0) return '0:00';
+        const m = Math.floor(seconds / 60);
+        const s = Math.floor(seconds % 60);
+        return m + ':' + String(s).padStart(2, '0');
+      }
+
+      function updateProgress() {
+        if (isSeeking) return;
+        if (!bgAudio.duration || !isFinite(bgAudio.duration)) {
+          progressBarFill.style.width = '0%';
+          progressBarThumb.style.left = '0%';
+          currentTimeEl.textContent = '0:00';
+          totalTimeEl.textContent = '0:00';
+          return;
+        }
+        const percent = (bgAudio.currentTime / bgAudio.duration) * 100;
+        progressBarFill.style.width = percent + '%';
+        progressBarThumb.style.left = percent + '%';
+        currentTimeEl.textContent = formatTime(bgAudio.currentTime);
+        totalTimeEl.textContent = formatTime(bgAudio.duration);
+      }
+
+      bgAudio.addEventListener('timeupdate', updateProgress);
+      bgAudio.addEventListener('loadedmetadata', updateProgress);
+
+      // ========== 拖动进度条 ==========
+      function getPercentFromEvent(e) {
+        const rect = progressBarWrap.getBoundingClientRect();
+        let clientX;
+        if (e.touches && e.touches.length) {
+          clientX = e.touches[0].clientX;
+        } else if (e.changedTouches && e.changedTouches.length) {
+          clientX = e.changedTouches[0].clientX;
+        } else {
+          clientX = e.clientX;
+        }
+        const percent = (clientX - rect.left) / rect.width;
+        return Math.max(0, Math.min(1, percent));
+      }
+
+      function seekToPercent(percent) {
+        if (bgAudio.duration && isFinite(bgAudio.duration)) {
+          bgAudio.currentTime = percent * bgAudio.duration;
+          progressBarFill.style.width = (percent * 100) + '%';
+          progressBarThumb.style.left = (percent * 100) + '%';
+          currentTimeEl.textContent = formatTime(bgAudio.currentTime);
+        }
+      }
+
+      progressBarWrap.addEventListener('pointerdown', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        isSeeking = true;
+        progressBarWrap.classList.add('active');
+        try { progressBarWrap.setPointerCapture(e.pointerId); } catch (err) {}
+        const percent = getPercentFromEvent(e);
+        seekToPercent(percent);
+      });
+
+      progressBarWrap.addEventListener('pointermove', (e) => {
+        if (!isSeeking) return;
+        e.preventDefault();
+        const percent = getPercentFromEvent(e);
+        seekToPercent(percent);
+      });
+
+      progressBarWrap.addEventListener('pointerup', (e) => {
+        if (!isSeeking) return;
+        e.stopPropagation();
+        isSeeking = false;
+        progressBarWrap.classList.remove('active');
+        try { progressBarWrap.releasePointerCapture(e.pointerId); } catch (err) {}
+      });
+
+      progressBarWrap.addEventListener('pointercancel', () => {
+        isSeeking = false;
+        progressBarWrap.classList.remove('active');
+      });
+
+      progressBarWrap.addEventListener('touchstart', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        isSeeking = true;
+        progressBarWrap.classList.add('active');
+        const percent = getPercentFromEvent(e);
+        seekToPercent(percent);
+      }, { passive: false });
+
+      progressBarWrap.addEventListener('touchmove', (e) => {
+        if (!isSeeking) return;
+        e.preventDefault();
+        const percent = getPercentFromEvent(e);
+        seekToPercent(percent);
+      }, { passive: false });
+
+      progressBarWrap.addEventListener('touchend', (e) => {
+        if (!isSeeking) return;
+        e.stopPropagation();
+        isSeeking = false;
+        progressBarWrap.classList.remove('active');
+      });
+
+      // ========== 进度条隐藏 / 显示 ==========
+      function hideProgress() {
+        progressHidden = true;
+        progressContainer.classList.add('hidden');
+        progressShowBtn.classList.add('show');
+      }
+
+      function showProgress() {
+        progressHidden = false;
+        progressContainer.classList.remove('hidden');
+        progressShowBtn.classList.remove('show');
+      }
+
+      progressToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        hideProgress();
+      });
+
+      progressShowBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showProgress();
+      });
+
+      // 初始化播放器
+      initMusicSelector();
+      updatePlayModeUI();
 
       // ============================================================
       // IP + 位置
@@ -1351,7 +2163,6 @@
       const factorB = -0.12;
       const ctrlB = [midLng - dLat * factorB, midLat + dLng * factorB];
 
-      // 弧线
       new AMap.BezierCurve({
         path: [YANGTUN, ctrlA, NANCHUAN],
         strokeColor: '#e8a0b8', strokeWeight: 5, strokeOpacity: 0.12,
@@ -1394,11 +2205,8 @@
         lineJoin: 'round', zIndex: 50, showDir: false
       }).setMap(map);
 
-      // ============================================================
-      // 真实路径：只画实线，不做流动效果
-      // ============================================================
       function loadRealRoute() {
-        if (!AMAP_WS_KEY || AMAP_WS_KEY === '你的高德Web服务Key') {
+        if (!AMAP_WS_KEY || AMAP_WS_KEY === '') {
           return;
         }
         const url = `https://restapi.amap.com/v3/direction/driving?origin=${NANCHUAN[0]},${NANCHUAN[1]}&destination=${YANGTUN[0]},${YANGTUN[1]}&key=${AMAP_WS_KEY}&extensions=base`;
@@ -1661,7 +2469,7 @@
     })();
   </script>
 
-  <!-- Live2D 初始化脚本（已关闭所有 console.log 打印） -->
+  <!-- Live2D 初始化脚本 -->
   <script>
     (function () {
       "use strict";
@@ -1705,15 +2513,14 @@
       window.__model = null;
       window.__playIdle = null;
 
-      // ========== PIXI ==========
       function initPixi() {
         app = new PIXI.Application({
           view: canvas,
           autoStart: true,
           backgroundAlpha: 0,
-          antialias: false, // 移动端性能优化：关闭抗锯齿
+          antialias: false,
           autoDensity: true,
-          resolution: Math.min(window.devicePixelRatio || 1, 1.5), // 限制分辨率
+          resolution: Math.min(window.devicePixelRatio || 1, 1.5),
           resizeTo: widget
         });
 
@@ -1773,7 +2580,6 @@
         return app;
       }
 
-      // ========== 加载 ==========
       async function loadModel() {
         statusEl.textContent = "模型加载中…";
         statusEl.style.color = "#8888a0";
@@ -1802,7 +2608,6 @@
         }
       }
 
-      // ========== 动作时长估算 ==========
       function getMotionDuration(motion) {
         if (!motion || !motion.Motion) return 3000;
         const curves = motion.Motion.Curves || [];
@@ -1818,7 +2623,6 @@
         return maxTime > 0 ? maxTime * 1000 : 3000;
       }
 
-      // ========== 待机动作（连续播放，无 console 打印） ==========
       function playIdleMotion() {
         if (!model) return;
 
@@ -1847,7 +2651,6 @@
 
       window.__playIdle = playIdleMotion;
 
-      // ========== 自适应 ==========
       function fitModel() {
         if (!model || !app) return;
 
@@ -1868,7 +2671,6 @@
         );
       }
 
-      // ========== 点击 ==========
       function onModelTap() {
         sayRandom();
         mouthOpenUntil = performance.now() + 600;
@@ -1893,7 +2695,6 @@
         bubbleTimer = setTimeout(() => bubble.classList.remove("show"), 3200);
       }
 
-      // ========== 鼠标追踪 ==========
       window.addEventListener("pointermove", (e) => {
         const w = window.innerWidth;
         const h = window.innerHeight;
@@ -1907,7 +2708,6 @@
         }
       });
 
-      // ========== 拖拽 + 点击（绑定到 canvas） ==========
       canvas.addEventListener("pointerdown", (e) => {
         isDragging = false;
         const rect = widget.getBoundingClientRect();
@@ -1950,7 +2750,6 @@
         }
       });
 
-      // ========== 独立眼睛按钮（唯一可见的隐藏/显示开关） ==========
       function syncVisibilityButton() {
         const isHidden = widget.classList.contains("hidden");
         if (isHidden) {
@@ -1976,7 +2775,6 @@
         fitModel();
       });
 
-      // ========== 启动 ==========
       window.addEventListener("load", () => {
         if (!window.PIXI || !PIXI.live2d) {
           statusEl.textContent = "依赖加载失败，请刷新";
@@ -1987,5 +2785,6 @@
       });
     })();
   </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"e73519f3fe2e40058035919fcc2cc6f0","r":1,"spa":2}' crossorigin="anonymous"></script>
 </body>
 </html>
