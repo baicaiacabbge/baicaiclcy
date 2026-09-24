@@ -497,24 +497,29 @@
       50%      { transform: scaleY(1); }
     }
 
-    /* 播放模式按钮 */
+    /* 播放模式按钮 —— 改为文字版 */
     .play-mode-btn {
       pointer-events: auto;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 28px;
+      min-width: 44px;
       height: 26px;
+      padding: 0 8px;
       border-radius: 6px;
       background: rgba(30, 40, 50, 0.92);
       border: 1px solid rgba(255, 255, 255, 0.15);
       color: var(--text-sub);
-      font-size: 12px;
+      font-size: 11px;
+      font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+      font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      white-space: nowrap;
+      letter-spacing: 0.5px;
     }
 
     .play-mode-btn:hover {
@@ -526,19 +531,22 @@
       transform: scale(0.94);
     }
 
-    .play-mode-btn.mode-loop i {
+    .play-mode-btn.mode-loop {
       color: var(--accent);
+      border-color: rgba(232, 160, 184, 0.5);
     }
 
-    .play-mode-btn.mode-single i {
+    .play-mode-btn.mode-single {
       color: var(--accent-2);
+      border-color: rgba(143, 203, 232, 0.5);
     }
 
-    .play-mode-btn.mode-shuffle i {
+    .play-mode-btn.mode-shuffle {
       color: #c084fc;
+      border-color: rgba(192, 132, 252, 0.5);
     }
 
-    /* ========== 进度条 ========== */
+    /* ========== 进度条 —— 手机端优化触摸区域 ========== */
     .progress-container {
       pointer-events: auto;
       display: flex;
@@ -563,34 +571,56 @@
 
     .progress-bar-wrap {
       flex: 1;
-      height: 8px;
-      background: rgba(255, 255, 255, 0.10);
+      height: 24px;
+      background: transparent;
       border-radius: 4px;
       position: relative;
       cursor: pointer;
+      transition: background 0.2s ease;
+      touch-action: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .progress-bar-wrap::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 8px;
+      background: rgba(255, 255, 255, 0.10);
+      border-radius: 4px;
       transition: height 0.15s ease, background 0.2s ease;
       box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+      pointer-events: none;
     }
 
-    .progress-bar-wrap:hover {
-      height: 10px;
-      background: rgba(255, 255, 255, 0.16);
-    }
-
-    .progress-bar-wrap.active {
+    .progress-bar-wrap:hover::before,
+    .progress-bar-wrap.active::before {
       height: 10px;
       background: rgba(255, 255, 255, 0.16);
     }
 
     .progress-bar-fill {
-      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 8px;
       width: 0%;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
       border-radius: 4px;
       pointer-events: none;
-      transition: width 0.1s linear;
+      transition: width 0.1s linear, height 0.15s ease;
       box-shadow: 0 0 8px rgba(232, 160, 184, 0.5);
-      position: relative;
+      z-index: 1;
+    }
+
+    .progress-bar-wrap:hover .progress-bar-fill,
+    .progress-bar-wrap.active .progress-bar-fill {
+      height: 10px;
     }
 
     .progress-bar-fill::after {
@@ -616,14 +646,14 @@
     .progress-bar-thumb {
       position: absolute;
       top: 50%;
-      width: 14px;
-      height: 14px;
+      width: 20px;
+      height: 20px;
       background: #fff;
       border-radius: 50%;
       transform: translate(-50%, -50%) scale(0);
       transition: transform 0.15s ease;
       pointer-events: none;
-      box-shadow: 0 0 0 3px rgba(232, 160, 184, 0.35), 0 0 10px rgba(232, 160, 184, 0.8);
+      box-shadow: 0 0 0 4px rgba(232, 160, 184, 0.35), 0 0 10px rgba(232, 160, 184, 0.8);
       z-index: 2;
     }
 
@@ -649,8 +679,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.15);
@@ -1098,16 +1128,31 @@
         min-width: 30px;
       }
       .progress-bar-wrap {
+        height: 28px;
+      }
+      .progress-bar-wrap::before {
         height: 7px;
       }
-      .progress-bar-wrap:hover,
-      .progress-bar-wrap.active {
+      .progress-bar-wrap:hover::before,
+      .progress-bar-wrap.active::before {
         height: 9px;
       }
-      .play-mode-btn {
-        width: 26px;
+      .progress-bar-fill {
+        height: 7px;
+      }
+      .progress-bar-wrap:hover .progress-bar-fill,
+      .progress-bar-wrap.active .progress-bar-fill {
+        height: 9px;
+      }
+      .progress-bar-thumb {
+        width: 24px;
         height: 24px;
-        font-size: 11px;
+      }
+      .play-mode-btn {
+        min-width: 42px;
+        height: 24px;
+        font-size: 10px;
+        padding: 0 6px;
       }
 
       #live2d-widget {
@@ -1187,9 +1232,7 @@
             </div>
           </div>
         </div>
-        <button class="play-mode-btn" id="playModeBtn" title="播放模式：列表循环">
-          <i class="fa-solid fa-repeat" id="playModeIcon"></i>
-        </button>
+        <button class="play-mode-btn" id="playModeBtn" title="播放模式：列表循环">列表</button>
       </div>
 
       <!-- 进度条 -->
@@ -1337,7 +1380,6 @@
       const musicCount = document.getElementById('musicCount');
 
       const playModeBtn = document.getElementById('playModeBtn');
-      const playModeIcon = document.getElementById('playModeIcon');
 
       const progressContainer = document.getElementById('progressContainer');
       const progressBarWrap = document.getElementById('progressBarWrap');
@@ -1350,10 +1392,6 @@
 
       // ============================================================
       // 🎵 歌曲列表 —— 在这里添加你的歌曲（共 7 个位置）
-      // 填写方式：{ name: '歌曲名称', src: '歌曲链接' }
-      // 如果暂时不想用某个位置，直接留空字符串即可：
-      //   { name: '', src: '' }
-      // 播放时会自动跳过空位置。
       // ============================================================
       const PLAYLIST = [
         { name: '春娇与志明', src: 'https://videotourl.com/audio/1789783334993-4ab404a8-045a-480e-b109-638c0549c0a4.mp3' },
@@ -1365,7 +1403,6 @@
         { name: '可不可以', src: 'https://videotourl.com/audio/1789279614413-3c09a0fa-4925-471d-a0f9-db3403c741f8.mp3' }
       ];
 
-      // 过滤出有效的歌曲（有名称且有链接）
       const validSongs = PLAYLIST.filter(s => s.name && s.src);
 
       let audioPlaying = false;
@@ -1375,7 +1412,6 @@
       let isSeeking = false;
       let progressHidden = false;
 
-      // 播放模式: 'loop'(列表循环) | 'single'(单曲循环) | 'shuffle'(随机)
       let playMode = 'loop';
 
       // ========== 初始化歌单 UI ==========
@@ -1441,7 +1477,6 @@
         toggleMusicPanel();
       });
 
-      // 点击外部关闭歌单
       document.addEventListener('click', (e) => {
         if (!musicSelectorWrap.contains(e.target)) {
           closeMusicPanel();
@@ -1455,7 +1490,6 @@
         bgAudio.src = validSongs[index].src;
         bgAudio.load();
         updateMusicListUI();
-        // 重置进度条
         progressBarFill.style.width = '0%';
         progressBarThumb.style.left = '0%';
         currentTimeEl.textContent = '0:00';
@@ -1469,19 +1503,19 @@
         }
       }
 
-      // ========== 播放模式切换 ==========
+      // ========== 播放模式切换 —— 文字版 ==========
       function updatePlayModeUI() {
         playModeBtn.classList.remove('mode-loop', 'mode-single', 'mode-shuffle');
         if (playMode === 'loop') {
-          playModeIcon.className = 'fa-solid fa-repeat';
+          playModeBtn.textContent = '列表';
           playModeBtn.classList.add('mode-loop');
           playModeBtn.title = '播放模式：列表循环';
         } else if (playMode === 'single') {
-          playModeIcon.className = 'fa-solid fa-repeat-1';
+          playModeBtn.textContent = '单曲';
           playModeBtn.classList.add('mode-single');
           playModeBtn.title = '播放模式：单曲循环';
         } else if (playMode === 'shuffle') {
-          playModeIcon.className = 'fa-solid fa-shuffle';
+          playModeBtn.textContent = '随机';
           playModeBtn.classList.add('mode-shuffle');
           playModeBtn.title = '播放模式：随机播放';
         }
@@ -1495,7 +1529,6 @@
         updatePlayModeUI();
       });
 
-      // 获取下一首索引（顺序按列表从上往下）
       function getNextIndex() {
         if (validSongs.length === 0) return 0;
         if (validSongs.length === 1) return 0;
@@ -1507,7 +1540,6 @@
           }
           return next;
         }
-        // loop: 列表循环（从上往下，到底后回到第一首）
         return (currentSongIndex + 1) % validSongs.length;
       }
 
@@ -1622,7 +1654,6 @@
       bgAudio.addEventListener('timeupdate', updateProgress);
       bgAudio.addEventListener('loadedmetadata', updateProgress);
 
-      // ========== 拖动进度条 ==========
       function getPercentFromEvent(e) {
         const rect = progressBarWrap.getBoundingClientRect();
         let clientX;
@@ -1722,7 +1753,6 @@
         showProgress();
       });
 
-      // 初始化播放器
       initMusicSelector();
       updatePlayModeUI();
 
@@ -2476,6 +2506,7 @@
 
       const MODEL_URL = "https://cdn.jsdelivr.net/gh/baicaiacabbge/baicaiclcy@main/baicai2d/object_live2d_020_101.asset.model3.json";
 
+      // 台词按顺序循环播放，不再随机
       const MESSAGES = [
         "我们是好呀好朋友",
         "思念像一把小刀，一刀一刻一痕...",
@@ -2484,6 +2515,7 @@
         "陈柚柚&陈落落&天天开心",
         "誓言也许是如此吧"
       ];
+      let messageIndex = 0;
 
       const widget = document.getElementById("live2d-widget");
       const canvas = document.getElementById("live2d-canvas");
@@ -2601,7 +2633,7 @@
             playIdleMotion();
           }, 900);
 
-          setTimeout(() => sayRandom(), 900);
+          setTimeout(() => sayNext(), 900);
         } catch (err) {
           statusEl.textContent = "加载失败";
           statusEl.style.color = "#f87171";
@@ -2672,13 +2704,16 @@
       }
 
       function onModelTap() {
-        sayRandom();
+        sayNext();
         mouthOpenUntil = performance.now() + 600;
         playIdleMotion();
       }
 
-      function sayRandom() {
-        const text = MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
+      // 按顺序播放台词
+      function sayNext() {
+        const text = MESSAGES[messageIndex];
+        messageIndex = (messageIndex + 1) % MESSAGES.length;
+
         bubble.textContent = text;
         bubble.classList.add("show");
 
@@ -2786,5 +2821,6 @@
     })();
   </script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"e73519f3fe2e40058035919fcc2cc6f0","r":1,"spa":2}' crossorigin="anonymous"></script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a40088885a9b9383',t:'MTc5MDIzOTc0MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
