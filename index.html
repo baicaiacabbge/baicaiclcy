@@ -1300,8 +1300,8 @@
       const CITY_NANCHUAN = '南川区';
       const CITY_JIAXIANG = '嘉祥县';
 
-      const NANCHUAN = [107.10, 29.15];
-      const YANGTUN = [116.35, 35.4819];
+      const NANCHUAN = [107.07863330841064, 29.148580238074164];
+      const YANGTUN = [116.34984970092775, 35.47646812589911];
 
       // ============================================================
       // 认识时长
@@ -2160,7 +2160,7 @@
 
       const nanchuanPhotoGroup = new AMap.Marker({
         position: NANCHUAN,
-        title: '重庆市南川区',
+        title: '重庆市南川区泽凯德润',
         offset: new AMap.Pixel(-IMG_SIZE / 2, -IMG_SIZE / 2 - 4),
         zIndex: 150
       });
@@ -2348,11 +2348,11 @@
       }
 
       const nanchuanTextOffsetY = Math.round(IMG_SIZE / 2 + 16);
-      const textToNanchuan = createArrivalTextBelow(NANCHUAN, '？', '#e8a0b8', nanchuanTextOffsetY);
+      const textToNanchuan = createArrivalTextBelow(NANCHUAN, '人生若只如初见', '#e8a0b8', nanchuanTextOffsetY);
       textToNanchuan.setMap(map);
 
       const jiaxiangTextOffsetY = Math.round(IMG_SIZE / 2 + 16);
-      const textToJiaxiang = createArrivalTextBelow(YANGTUN, '？', '#8fcbe8', jiaxiangTextOffsetY);
+      const textToJiaxiang = createArrivalTextBelow(YANGTUN, '何事秋风悲画', '#8fcbe8', jiaxiangTextOffsetY);
       textToJiaxiang.setMap(map);
 
       function showText(textObj, duration) {
@@ -2512,11 +2512,11 @@
       // 台词按顺序循环播放，不再随机
       const MESSAGES = [
         "我们",
-        "看什么看",
-        "也许吧",
-        "......",
-        "陈柚柚&陈落落",
-        "也许"
+        "我们之间的回忆",
+        "人生若只如初见",
+        "看看我们",
+        "白菜&陈柚柚&陈落落",
+        "曾经的誓言是？"
       ];
       let messageIndex = 0;
 
