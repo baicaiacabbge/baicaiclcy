@@ -1442,10 +1442,6 @@
       <span class="info-together">
         <span class="tg-line">
           <i class=""></i>
-          <span class="tg-name">陈柚柚</span><span class="tg-time" id="tgYouyou">--</span>
-        </span>
-        <span class="tg-line">
-          <i class=""></i>
           <span class="tg-name">陈落落</span><span class="tg-time" id="tgLuoluo">--</span>
         </span>
       </span>
@@ -1611,7 +1607,6 @@
       // ============================================================
       // 认识时长
       // ============================================================
-      const TG_YOUYOU_START = new Date(2025, 6, 1, 0, 0, 0);
       const TG_LUOLUO_START = new Date(2026, 7, 2, 0, 0, 0);
 
       function formatTogether(startDate) {
@@ -1659,9 +1654,7 @@
       }
 
       function updateTogether() {
-        const youyouEl = document.getElementById('tgYouyou');
         const luoluoEl = document.getElementById('tgLuoluo');
-        if (youyouEl) youyouEl.textContent = '· ' + formatTogether(TG_YOUYOU_START);
         if (luoluoEl) luoluoEl.textContent = '· ' + formatTogether(TG_LUOLUO_START);
       }
 
@@ -1692,14 +1685,12 @@
         closeSiteInfo();
       });
 
-      // 点击遮罩层关闭
       siteInfoModal.addEventListener('click', (e) => {
         if (e.target === siteInfoModal) {
           closeSiteInfo();
         }
       });
 
-      // ESC 关闭
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && siteInfoModal.classList.contains('show')) {
           closeSiteInfo();
@@ -2197,7 +2188,7 @@
         const currentYear = new Date().getFullYear();
         const yearText = currentYear > startYear ? `${startYear}-${currentYear}` : `${startYear}`;
         document.getElementById('copyrightText').textContent =
-          `白菜 & 陈落落 & 陈柚柚 ©${yearText}`;
+          `陈白白&陈落落 ©${yearText}`;
       }
 
       function updateTime() {
@@ -2232,7 +2223,6 @@
       imageViewer.addEventListener('click', closeImageViewer);
 
       const IMG_JX_1 = '1.jpeg';
-      const IMG_JX_2 = '2.jpeg';
       const IMG_NC_1 = '3.jpeg';
 
       function getImgSize() {
@@ -2262,7 +2252,6 @@
         mapStyle: IS_MOBILE ? 'amap://styles/darkblue' : 'amap://styles/normal'
       });
 
-      // 只有桌面端才叠卫星图层
       if (!IS_MOBILE) {
         const satelliteLayer = new AMap.TileLayer.Satellite({ zIndex: 2 });
         const roadNetLayer = new AMap.TileLayer.RoadNet({ zIndex: 3 });
@@ -2331,8 +2320,7 @@
       });
       weatherTextNanchuan.setMap(map);
 
-      const jiaxiangGroupWidth = IMG_SIZE * 2 + 10;
-      const jiaxiangWeatherOffsetX = Math.round(jiaxiangGroupWidth / 2 + 12);
+      const jiaxiangWeatherOffsetX = Math.round(IMG_SIZE / 2 + 12);
       const weatherTextJiaxiang = new AMap.Text({
         text: '',
         position: YANGTUN,
@@ -2355,7 +2343,7 @@
       setInterval(loadBothWeather, 30 * 60 * 1000);
 
       function preloadImages() {
-        [IMG_JX_1, IMG_JX_2, IMG_NC_1].forEach(src => {
+        [IMG_JX_1, IMG_NC_1].forEach(src => {
           const img = new Image();
           img.src = src;
         });
@@ -2477,13 +2465,12 @@
       const jiaxiangPhotoGroup = new AMap.Marker({
         position: YANGTUN,
         title: '山东省济宁市嘉祥县万张街道杨屯村',
-        offset: new AMap.Pixel(-IMG_SIZE - 5, -IMG_SIZE / 2 - 4),
+        offset: new AMap.Pixel(-IMG_SIZE / 2, -IMG_SIZE / 2 - 4),
         zIndex: 150
       });
       jiaxiangPhotoGroup.setContent(`
-        <div style="display:flex;align-items:center;gap:10px;padding:6px;background:rgba(30,40,50,0.85);border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.4);">
+        <div style="padding:6px;background:rgba(30,40,50,0.85);border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.4);">
           ${makeSingleImg(IMG_JX_1, '#c44536', '图1', IMG_SIZE, true)}
-          ${makeSingleImg(IMG_JX_2, '#2b6f9b', '图2', IMG_SIZE, true)}
         </div>
       `);
       jiaxiangPhotoGroup.setMap(map);
@@ -2539,9 +2526,6 @@
       const factorA = 0.12;
       const ctrlA = [midLng - dLat * factorA, midLat + dLng * factorA];
 
-      const factorB = -0.12;
-      const ctrlB = [midLng - dLat * factorB, midLat + dLng * factorB];
-
       new AMap.BezierCurve({
         path: [YANGTUN, ctrlA, NANCHUAN],
         strokeColor: '#e8a0b8', strokeWeight: 5, strokeOpacity: 0.12,
@@ -2560,27 +2544,6 @@
       new AMap.BezierCurve({
         path: [NANCHUAN, ctrlA, YANGTUN],
         strokeColor: '#e8a0b8', strokeWeight: 2, strokeOpacity: 0.6,
-        lineJoin: 'round', zIndex: 50, showDir: false
-      }).setMap(map);
-
-      new AMap.BezierCurve({
-        path: [YANGTUN, ctrlB, NANCHUAN],
-        strokeColor: '#8fcbe8', strokeWeight: 5, strokeOpacity: 0.12,
-        lineJoin: 'round', zIndex: 49, showDir: false
-      }).setMap(map);
-      new AMap.BezierCurve({
-        path: [YANGTUN, ctrlB, NANCHUAN],
-        strokeColor: '#8fcbe8', strokeWeight: 2, strokeOpacity: 0.6,
-        lineJoin: 'round', zIndex: 50, showDir: false
-      }).setMap(map);
-      new AMap.BezierCurve({
-        path: [NANCHUAN, ctrlB, YANGTUN],
-        strokeColor: '#8fcbe8', strokeWeight: 5, strokeOpacity: 0.12,
-        lineJoin: 'round', zIndex: 49, showDir: false
-      }).setMap(map);
-      new AMap.BezierCurve({
-        path: [NANCHUAN, ctrlB, YANGTUN],
-        strokeColor: '#8fcbe8', strokeWeight: 2, strokeOpacity: 0.6,
         lineJoin: 'round', zIndex: 50, showDir: false
       }).setMap(map);
 
@@ -2641,12 +2604,6 @@
         offset: new AMap.Pixel(-IMG_SIZE / 2, -IMG_SIZE / 2),
         zIndex: 250
       });
-      const photoJX_B = new AMap.Marker({
-        position: YANGTUN,
-        content: makeSingleImg(IMG_JX_2, '#2b6f9b', '图2', IMG_SIZE, true),
-        offset: new AMap.Pixel(-IMG_SIZE / 2, -IMG_SIZE / 2),
-        zIndex: 250
-      });
 
       const photoNC_A = new AMap.Marker({
         position: NANCHUAN,
@@ -2654,17 +2611,9 @@
         offset: new AMap.Pixel(-IMG_SIZE / 2, -IMG_SIZE / 2),
         zIndex: 250
       });
-      const photoNC_B = new AMap.Marker({
-        position: NANCHUAN,
-        content: makeSingleImg(IMG_NC_1, '#2b6f9b', '图3', IMG_SIZE, true),
-        offset: new AMap.Pixel(-IMG_SIZE / 2, -IMG_SIZE / 2),
-        zIndex: 250
-      });
 
       photoJX_A.setMap(map);
-      photoJX_B.setMap(map);
       photoNC_A.setMap(map);
-      photoNC_B.setMap(map);
 
       function bezierPoint(p0, p1, p2, t) {
         const mt = 1 - t;
@@ -2694,11 +2643,11 @@
       }
 
       const nanchuanTextOffsetY = Math.round(IMG_SIZE / 2 + 16);
-      const textToNanchuan = createArrivalTextBelow(NANCHUAN, '人生若只如初见', '#e8a0b8', nanchuanTextOffsetY);
+      const textToNanchuan = createArrivalTextBelow(NANCHUAN, '天天开心', '#e8a0b8', nanchuanTextOffsetY);
       textToNanchuan.setMap(map);
 
       const jiaxiangTextOffsetY = Math.round(IMG_SIZE / 2 + 16);
-      const textToJiaxiang = createArrivalTextBelow(YANGTUN, '何事秋风悲画', '#8fcbe8', jiaxiangTextOffsetY);
+      const textToJiaxiang = createArrivalTextBelow(YANGTUN, '天天开心', '#8fcbe8', jiaxiangTextOffsetY);
       textToJiaxiang.setMap(map);
 
       function showText(textObj, duration) {
@@ -2798,41 +2747,37 @@
         if (running) return;
         running = true;
 
-        photoJX_A.hide(); photoJX_B.hide();
-        photoNC_A.hide(); photoNC_B.hide();
+        photoJX_A.hide();
+        photoNC_A.hide();
 
         while (true) {
           photoJX_A.show();
-          photoJX_B.show();
-          [photoJX_A, photoJX_B].forEach(m => {
-            const dom = m.getContentDom();
+          {
+            const dom = photoJX_A.getContentDom();
             if (dom) { dom.style.transform = ''; dom.style.opacity = ''; }
-          });
+          }
 
           await flyMultiple([
-            { marker: photoJX_A, p0: YANGTUN, p1: ctrlA, p2: NANCHUAN },
-            { marker: photoJX_B, p0: YANGTUN, p1: ctrlB, p2: NANCHUAN }
+            { marker: photoJX_A, p0: YANGTUN, p1: ctrlA, p2: NANCHUAN }
           ], DURATION);
 
           spawnArrivalGlow(NANCHUAN);
-          await fadeOutMarkers([photoJX_A, photoJX_B]);
+          await fadeOutMarkers([photoJX_A]);
           showText(textToNanchuan, 2000);
           await new Promise(r => setTimeout(r, PAUSE + 2000));
 
           photoNC_A.show();
-          photoNC_B.show();
-          [photoNC_A, photoNC_B].forEach(m => {
-            const dom = m.getContentDom();
+          {
+            const dom = photoNC_A.getContentDom();
             if (dom) { dom.style.transform = ''; dom.style.opacity = ''; }
-          });
+          }
 
           await flyMultiple([
-            { marker: photoNC_A, p0: NANCHUAN, p1: ctrlA, p2: YANGTUN },
-            { marker: photoNC_B, p0: NANCHUAN, p1: ctrlB, p2: YANGTUN }
+            { marker: photoNC_A, p0: NANCHUAN, p1: ctrlA, p2: YANGTUN }
           ], DURATION);
 
           spawnArrivalGlow(YANGTUN);
-          await fadeOutMarkers([photoNC_A, photoNC_B]);
+          await fadeOutMarkers([photoNC_A]);
           showText(textToJiaxiang, 2000);
           await new Promise(r => setTimeout(r, PAUSE + 2000));
         }
@@ -2875,11 +2820,11 @@
 
       const MESSAGES = [
         "我们",
-        "看什么看",
-        "也许吧",
-        "......",
-        "陈柚柚&陈落落",
-        "也许"
+        "陈落落天天开心",
+        "好好的",
+        "但愿长久",
+        "陈白白&陈落落",
+        "要开心呀"
       ];
       let messageIndex = 0;
 
