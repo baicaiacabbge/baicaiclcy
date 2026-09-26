@@ -99,7 +99,6 @@
       100% { opacity: 1; transform: translateY(0); filter: blur(0); }
     }
 
-    /* 主内容 */
     #main-content {
       opacity: 0;
       animation: mainContentIn 1s cubic-bezier(0.2, 0.8, 0.3, 1) 2s forwards;
@@ -118,7 +117,6 @@
       height: 100vh;
       height: 100dvh;
       z-index: 1;
-      /* 闪屏修复：独立合成层 + 底色兜底 */
       transform: translateZ(0);
       -webkit-transform: translateZ(0);
       backface-visibility: hidden;
@@ -126,7 +124,6 @@
       background-color: #1a2530;
     }
 
-    /* 手绘噪点纹理层 — 移动端性能优化：关闭噪点层 */
     #noise-layer {
       position: fixed;
       top: 0;
@@ -283,6 +280,225 @@
       font-weight: 600;
     }
 
+    /* ========== 网站说明按钮 ========== */
+    .site-info-btn {
+      pointer-events: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 8px;
+      padding: 4px 10px;
+      background: rgba(30, 40, 50, 0.92);
+      color: var(--text-sub);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      font-size: 11px;
+      font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      user-select: none;
+      white-space: nowrap;
+      text-shadow: none;
+    }
+
+    .site-info-btn:hover {
+      border-color: rgba(232, 160, 184, 0.6);
+      color: var(--text-main);
+    }
+
+    .site-info-btn:active {
+      transform: scale(0.96);
+    }
+
+    .site-info-btn i {
+      font-size: 11px;
+      color: var(--accent);
+    }
+
+    /* ========== 网站说明弹窗 ========== */
+    .site-info-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(6, 10, 16, 0.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      padding: 20px;
+    }
+
+    .site-info-modal.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .site-info-card {
+      width: 100%;
+      max-width: 460px;
+      max-height: 80vh;
+      overflow-y: auto;
+      background: rgba(18, 26, 36, 0.98);
+      border: 1px solid rgba(232, 160, 184, 0.25);
+      border-radius: 16px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.75);
+      padding: 22px 22px 18px;
+      transform: translateY(12px) scale(0.96);
+      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1);
+      color: var(--text-main);
+      font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+    }
+
+    .site-info-modal.show .site-info-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .site-info-card::-webkit-scrollbar {
+      width: 6px;
+    }
+    .site-info-card::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .site-info-card::-webkit-scrollbar-thumb {
+      background: rgba(232, 160, 184, 0.35);
+      border-radius: 3px;
+    }
+
+    .site-info-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .site-info-header h3 {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-kai);
+    }
+
+    .site-info-header h3 i {
+      color: var(--accent);
+      font-size: 14px;
+    }
+
+    .site-info-close {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-sub);
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .site-info-close:hover {
+      background: rgba(232, 160, 184, 0.25);
+      color: var(--text-main);
+      border-color: var(--accent);
+    }
+
+    .site-info-section {
+      margin-bottom: 16px;
+    }
+
+    .site-info-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .site-info-section h4 {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--accent-2);
+      letter-spacing: 0.8px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .site-info-section h4 i {
+      font-size: 11px;
+      opacity: 0.9;
+    }
+
+    .site-info-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .site-info-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 11.5px;
+      line-height: 1.55;
+      color: var(--text-sub);
+    }
+
+    .site-info-list li .dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      margin-top: 6px;
+      opacity: 0.7;
+    }
+
+    .site-info-list li .name {
+      color: var(--text-main);
+      font-weight: 500;
+      margin-right: 2px;
+    }
+
+    .site-info-list li a {
+      color: var(--accent-2);
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .site-info-list li a:hover {
+      text-decoration: underline;
+    }
+
+    .site-info-footer {
+      margin-top: 18px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 10.5px;
+      color: var(--text-sub);
+      text-align: center;
+      opacity: 0.8;
+      letter-spacing: 0.3px;
+      font-family: var(--font-kai);
+    }
+
     .bottom-right-stack {
       position: fixed;
       right: 16px;
@@ -302,7 +518,6 @@
         0 0 6px var(--text-shadow);
     }
 
-    /* ========== 音乐选择器 + 播放模式 ========== */
     .music-control-row {
       pointer-events: auto;
       display: flex;
@@ -1157,6 +1372,29 @@
         padding: 0 6px;
       }
 
+      .site-info-btn {
+        font-size: 10px;
+        padding: 3px 8px;
+        margin-top: 6px;
+      }
+
+      .site-info-card {
+        max-width: 92vw;
+        padding: 18px 16px 14px;
+      }
+
+      .site-info-header h3 {
+        font-size: 13.5px;
+      }
+
+      .site-info-section h4 {
+        font-size: 11px;
+      }
+
+      .site-info-list li {
+        font-size: 11px;
+      }
+
       #live2d-widget {
         width: 140px;
         height: 175px;
@@ -1211,6 +1449,10 @@
           <span class="tg-name">陈落落</span><span class="tg-time" id="tgLuoluo">--</span>
         </span>
       </span>
+      <button class="site-info-btn" id="siteInfoBtn" title="查看网站说明">
+        <i class="fa-solid fa-circle-info"></i>
+        <span>网站说明</span>
+      </button>
     </div>
 
     <div class="bottom-right-stack">
@@ -1278,6 +1520,69 @@
     <button id="l2d-visibility-toggle" title="隐藏模型">
       <i class="fa-solid fa-eye" id="l2d-visibility-icon"></i>
     </button>
+
+    <!-- ============================================================
+         网站说明弹窗
+         ============================================================ -->
+    <div class="site-info-modal" id="siteInfoModal">
+      <div class="site-info-card">
+        <div class="site-info-header">
+          <h3><i class="fa-solid fa-circle-info"></i>网站说明</h3>
+          <button class="site-info-close" id="siteInfoClose" title="关闭">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="site-info-section">
+          <h4><i class="fa-solid fa-map-location-dot"></i>地图服务</h4>
+          <ul class="site-info-list">
+            <li><span class="dot"></span><span><span class="name">高德地图 JS API v2.0</span> — 底图、标记、贝塞尔曲线、路线规划</span></li>
+            <li><span class="dot"></span><span><span class="name">高德地图 Web 服务</span> — 驾车路线查询</span></li>
+            <li><span class="dot"></span><span>移动端使用矢量底图，桌面端使用卫星图</span></li>
+          </ul>
+        </div>
+
+        <div class="site-info-section">
+          <h4><i class="fa-solid fa-cloud-sun"></i>数据接口</h4>
+          <ul class="site-info-list">
+            <li><span class="dot"></span><span><span class="name">api.auth.top</span> — IP 获取、IP 归属地查询</span></li>
+            <li><span class="dot"></span><span><span class="name">api.auth.top/weather</span> — 南川区、嘉祥县实时天气</span></li>
+          </ul>
+        </div>
+
+        <div class="site-info-section">
+          <h4><i class="fa-solid fa-cube"></i>第三方 SDK 与资源</h4>
+          <ul class="site-info-list">
+            <li><span class="dot"></span><span><span class="name">Live2D Cubism 4 SDK</span> — 看板娘模型渲染</span></li>
+            <li><span class="dot"></span><span><span class="name">PIXI.js 6.5</span> — WebGL 渲染引擎</span></li>
+            <li><span class="dot"></span><span><span class="name">pixi-live2d-display</span> — Live2D 与 PIXI 桥接</span></li>
+            <li><span class="dot"></span><span><span class="name">Font Awesome 6</span> — 图标库</span></li>
+            <li><span class="dot"></span><span><span class="name">Remix Icon</span> — 图标库</span></li>
+            <li><span class="dot"></span><span><span class="name">霞鹜文楷</span> — 中文字体</span></li>
+          </ul>
+        </div>
+
+        <div class="site-info-section">
+          <h4><i class="fa-solid fa-music"></i>音乐来源</h4>
+          <ul class="site-info-list">
+            <li><span class="dot"></span><span>音频文件托管于第三方平台</span></li>
+            <li><span class="dot"></span><span>音乐均来自第三方平台</span></li>
+          </ul>
+        </div>
+
+        <div class="site-info-section">
+          <h4><i class="fa-solid fa-shield-halved"></i>隐私说明</h4>
+          <ul class="site-info-list">
+            <li><span class="dot"></span><span>本网站仅读取访客 IP 与归属地，用于展示访问者信息</span></li>
+            <li><span class="dot"></span><span>不收集、不存储任何个人身份信息</span></li>
+          </ul>
+        </div>
+
+        <div class="site-info-footer">
+          Cloudflare提供CDN加速
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -1301,9 +1606,6 @@
       const NANCHUAN = [107.07863330841064, 29.148580238074164];
       const YANGTUN = [116.34984970092775, 35.47646812589911];
 
-      // ============================================================
-      // 移动端检测
-      // ============================================================
       const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
 
       // ============================================================
@@ -1365,6 +1667,44 @@
 
       updateTogether();
       setInterval(updateTogether, 1000);
+
+      // ============================================================
+      // 网站说明弹窗
+      // ============================================================
+      const siteInfoBtn = document.getElementById('siteInfoBtn');
+      const siteInfoModal = document.getElementById('siteInfoModal');
+      const siteInfoClose = document.getElementById('siteInfoClose');
+
+      function openSiteInfo() {
+        siteInfoModal.classList.add('show');
+      }
+      function closeSiteInfo() {
+        siteInfoModal.classList.remove('show');
+      }
+
+      siteInfoBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openSiteInfo();
+      });
+
+      siteInfoClose.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeSiteInfo();
+      });
+
+      // 点击遮罩层关闭
+      siteInfoModal.addEventListener('click', (e) => {
+        if (e.target === siteInfoModal) {
+          closeSiteInfo();
+        }
+      });
+
+      // ESC 关闭
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && siteInfoModal.classList.contains('show')) {
+          closeSiteInfo();
+        }
+      });
 
       // ============================================================
       // 音乐播放器
@@ -1577,7 +1917,9 @@
           e.target.closest('#progressBarWrap') ||
           e.target.closest('#playModeBtn') ||
           e.target.closest('#progressToggle') ||
-          e.target.closest('#progressShowBtn')
+          e.target.closest('#progressShowBtn') ||
+          e.target.closest('#siteInfoBtn') ||
+          e.target.closest('#siteInfoModal')
         )) {
           return;
         }
@@ -1904,7 +2246,8 @@
 
       // ============================================================
       // 地图初始化
-      // 闪屏修复：移动端关动画、限缩放、卫星图层关 retina
+      // 移动端：矢量底图（不闪、不卡）
+      // 桌面端：卫星图
       // ============================================================
       const map = new AMap.Map('amap-container', {
         zoom: IS_MOBILE ? 4 : 4.5,
@@ -1915,17 +2258,16 @@
         doubleClickZoom: true,
         animateEnable: !IS_MOBILE,
         jogEnable: !IS_MOBILE,
-        zooms: IS_MOBILE ? [3, 10] : [3, 18]
+        zooms: IS_MOBILE ? [3, 12] : [3, 18],
+        mapStyle: IS_MOBILE ? 'amap://styles/darkblue' : 'amap://styles/normal'
       });
 
-      const satelliteLayer = new AMap.TileLayer.Satellite({
-        detectRetina: false,
-        zIndex: 2
-      });
-      const roadNetLayer = new AMap.TileLayer.RoadNet({
-        zIndex: 3
-      });
-      map.add([satelliteLayer, roadNetLayer]);
+      // 只有桌面端才叠卫星图层
+      if (!IS_MOBILE) {
+        const satelliteLayer = new AMap.TileLayer.Satellite({ zIndex: 2 });
+        const roadNetLayer = new AMap.TileLayer.RoadNet({ zIndex: 3 });
+        map.add([satelliteLayer, roadNetLayer]);
+      }
 
       window.map = map;
 
@@ -2412,7 +2754,6 @@
           markers.forEach(marker => {
             const dom = marker.getContentDom();
 
-            // 移动端：不做 transition，直接隐藏
             if (IS_MOBILE) {
               if (dom) {
                 dom.style.transition = 'none';
@@ -2431,7 +2772,6 @@
               return;
             }
 
-            // 桌面端：保留淡出动画
             if (dom) {
               dom.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
               dom.style.transform = 'scale(0.4)';
@@ -2527,7 +2867,6 @@
     })();
   </script>
 
-  <!-- Live2D 初始化脚本 -->
   <script>
     (function () {
       "use strict";
@@ -2535,12 +2874,12 @@
       const MODEL_URL = "https://cdn.jsdelivr.net/gh/baicaiacabbge/baicaiclcy@main/baicai2d/object_live2d_020_101.asset.model3.json";
 
       const MESSAGES = [
-        "人生若只如初见",
-        "我们之间的回忆",
-        "好好的",
-        "念往昔",
-        "白菜&陈柚柚&陈落落",
-        "也许吧"
+        "我们",
+        "看什么看",
+        "也许吧",
+        "......",
+        "陈柚柚&陈落落",
+        "也许"
       ];
       let messageIndex = 0;
 
