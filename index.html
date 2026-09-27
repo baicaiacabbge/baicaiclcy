@@ -46,7 +46,6 @@
       --font-kai: 'LXGW WenKai', 'Noto Serif SC', 'Microsoft YaHei', serif;
     }
 
-    /* 过渡层 */
     #intro-overlay {
       position: fixed;
       top: 0;
@@ -177,7 +176,6 @@
       visibility: hidden !important;
     }
 
-    /* 右上角信息面板 */
     .info-panel {
       position: fixed;
       right: 16px;
@@ -280,7 +278,7 @@
       font-weight: 600;
     }
 
-    /* ========== 右上角两个按钮：统一样式，无方框 ========== */
+    /* ========== 无方框按钮 ========== */
     .site-info-btn,
     .luoluo-btn {
       pointer-events: auto;
@@ -288,7 +286,6 @@
       align-items: center;
       gap: 5px;
       padding: 0;
-      margin-top: 0;
       background: transparent;
       border: none;
       outline: none;
@@ -307,13 +304,8 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    .site-info-btn {
-      margin-top: 10px;
-    }
-
-    .luoluo-btn {
-      margin-top: 6px;
-    }
+    .site-info-btn { margin-top: 10px; }
+    .luoluo-btn { margin-top: 6px; }
 
     .site-info-btn:hover,
     .luoluo-btn:hover {
@@ -377,12 +369,8 @@
       transform: translateY(0) scale(1);
     }
 
-    .site-info-card::-webkit-scrollbar {
-      width: 6px;
-    }
-    .site-info-card::-webkit-scrollbar-track {
-      background: transparent;
-    }
+    .site-info-card::-webkit-scrollbar { width: 6px; }
+    .site-info-card::-webkit-scrollbar-track { background: transparent; }
     .site-info-card::-webkit-scrollbar-thumb {
       background: rgba(232, 160, 184, 0.35);
       border-radius: 3px;
@@ -435,13 +423,8 @@
       border-color: var(--accent);
     }
 
-    .site-info-section {
-      margin-bottom: 16px;
-    }
-
-    .site-info-section:last-child {
-      margin-bottom: 0;
-    }
+    .site-info-section { margin-bottom: 16px; }
+    .site-info-section:last-child { margin-bottom: 0; }
 
     .site-info-section h4 {
       font-size: 11.5px;
@@ -491,16 +474,6 @@
       margin-right: 2px;
     }
 
-    .site-info-list li a {
-      color: var(--accent-2);
-      text-decoration: none;
-      word-break: break-all;
-    }
-
-    .site-info-list li a:hover {
-      text-decoration: underline;
-    }
-
     .site-info-footer {
       margin-top: 18px;
       padding-top: 12px;
@@ -530,7 +503,7 @@
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.3s ease, visibility 0.3s ease;
-      padding: 16px;
+      padding: 20px;
     }
 
     .luoluo-modal.show {
@@ -538,19 +511,18 @@
       visibility: visible;
     }
 
-    /* 卡片高度 = 视口 90%，内部 flex 布局，图片自适应不溢出 */
+    /* 卡片是 flex 纵向容器，图片区占满剩余高度 */
     .luoluo-card {
-      width: 100%;
-      max-width: 900px;
-      height: 90vh;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
+      width: 100%;
+      max-width: 900px;
+      max-height: 90vh;
       background: rgba(18, 26, 36, 0.98);
       border: 1px solid rgba(232, 160, 184, 0.25);
       border-radius: 16px;
       box-shadow: 0 30px 80px rgba(0, 0, 0, 0.75);
-      padding: 18px 18px 14px;
+      padding: 16px 16px 16px;
       transform: translateY(12px) scale(0.96);
       transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1);
       color: var(--text-main);
@@ -609,43 +581,37 @@
       border-color: var(--accent);
     }
 
-    /* 图片区：撑满剩余高度，内部滚动，图片自适应 */
+    /* 图片区：flex 撑满剩余高度，图片居中、原比例、完整显示 */
     .luoluo-grid {
       flex: 1;
       min-height: 0;
       overflow-y: auto;
       display: flex;
-      flex-direction: column;
-      gap: 12px;
       align-items: center;
-      padding-right: 4px;
+      justify-content: center;
+      gap: 12px;
+      flex-direction: column;
+      padding: 4px 4px 4px;
     }
 
-    .luoluo-grid::-webkit-scrollbar {
-      width: 6px;
-    }
-    .luoluo-grid::-webkit-scrollbar-track {
-      background: transparent;
-    }
+    .luoluo-grid::-webkit-scrollbar { width: 6px; }
+    .luoluo-grid::-webkit-scrollbar-track { background: transparent; }
     .luoluo-grid::-webkit-scrollbar-thumb {
       background: rgba(232, 160, 184, 0.35);
       border-radius: 3px;
     }
 
-    /* 图片：宽度自适应，最大高度受限，原比例不裁切 */
+    /* 图片：原比例，最大不超出容器 */
     .luoluo-grid img {
+      display: block;
       max-width: 100%;
       max-height: 100%;
       width: auto;
       height: auto;
       object-fit: contain;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: zoom-in;
       transition: transform 0.25s ease, box-shadow 0.25s ease;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      display: block;
-      background: rgba(30, 40, 50, 0.6);
-      flex-shrink: 0;
     }
 
     .luoluo-grid img:hover {
@@ -780,12 +746,8 @@
       transform: translateY(0) scale(1);
     }
 
-    .music-panel::-webkit-scrollbar {
-      width: 5px;
-    }
-    .music-panel::-webkit-scrollbar-track {
-      background: transparent;
-    }
+    .music-panel::-webkit-scrollbar { width: 5px; }
+    .music-panel::-webkit-scrollbar-track { background: transparent; }
     .music-panel::-webkit-scrollbar-thumb {
       background: rgba(232, 160, 184, 0.4);
       border-radius: 3px;
@@ -870,9 +832,7 @@
       animation: soundWave 1s ease-in-out infinite;
     }
 
-    .music-item.active .playing-icon {
-      opacity: 1;
-    }
+    .music-item.active .playing-icon { opacity: 1; }
 
     @keyframes soundWave {
       0%, 100% { transform: scaleY(0.6); }
@@ -908,24 +868,10 @@
       color: var(--text-main);
     }
 
-    .play-mode-btn:active {
-      transform: scale(0.94);
-    }
-
-    .play-mode-btn.mode-loop {
-      color: var(--accent);
-      border-color: rgba(232, 160, 184, 0.5);
-    }
-
-    .play-mode-btn.mode-single {
-      color: var(--accent-2);
-      border-color: rgba(143, 203, 232, 0.5);
-    }
-
-    .play-mode-btn.mode-shuffle {
-      color: #c084fc;
-      border-color: rgba(192, 132, 252, 0.5);
-    }
+    .play-mode-btn:active { transform: scale(0.94); }
+    .play-mode-btn.mode-loop { color: var(--accent); border-color: rgba(232, 160, 184, 0.5); }
+    .play-mode-btn.mode-single { color: var(--accent-2); border-color: rgba(143, 203, 232, 0.5); }
+    .play-mode-btn.mode-shuffle { color: #c084fc; border-color: rgba(192, 132, 252, 0.5); }
 
     .progress-container {
       pointer-events: auto;
@@ -1098,22 +1044,13 @@
       white-space: nowrap;
     }
 
-    .progress-show-btn.show {
-      display: flex;
-    }
-
+    .progress-show-btn.show { display: flex; }
     .progress-show-btn:hover {
       border-color: var(--accent);
       color: var(--text-main);
     }
-
-    .progress-show-btn:active {
-      transform: scale(0.96);
-    }
-
-    .progress-show-btn i {
-      font-size: 11px;
-    }
+    .progress-show-btn:active { transform: scale(0.96); }
+    .progress-show-btn i { font-size: 11px; }
 
     .audio-btn {
       pointer-events: auto;
@@ -1129,22 +1066,10 @@
       white-space: nowrap;
     }
 
-    .audio-btn:hover {
-      color: var(--text-main);
-    }
-
-    .audio-btn:active {
-      transform: scale(0.96);
-    }
-
-    .audio-btn i {
-      font-size: 13px;
-      line-height: 1;
-    }
-
-    .audio-btn.playing i {
-      color: var(--accent);
-    }
+    .audio-btn:hover { color: var(--text-main); }
+    .audio-btn:active { transform: scale(0.96); }
+    .audio-btn i { font-size: 13px; line-height: 1; }
+    .audio-btn.playing i { color: var(--accent); }
 
     .audio-hint {
       font-size: 10.5px;
@@ -1156,9 +1081,7 @@
       white-space: nowrap;
     }
 
-    .audio-hint.show {
-      opacity: 0.75;
-    }
+    .audio-hint.show { opacity: 0.75; }
 
     .custom-copyright {
       font-size: 12px;
@@ -1281,10 +1204,7 @@
       cursor: zoom-out;
     }
 
-    .image-viewer.show {
-      opacity: 1;
-      visibility: visible;
-    }
+    .image-viewer.show { opacity: 1; visibility: visible; }
 
     .image-viewer img {
       max-width: 82vw;
@@ -1296,9 +1216,7 @@
       object-fit: contain;
     }
 
-    .image-viewer.show img {
-      transform: scale(1);
-    }
+    .image-viewer.show img { transform: scale(1); }
 
     .arrival-glow {
       position: fixed;
@@ -1318,10 +1236,6 @@
       30%  { opacity: 1; }
       100% { transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
     }
-
-    /* ============================================================
-       Live2D 部件样式
-       ============================================================ */
 
     #live2d-widget {
       position: fixed;
@@ -1377,10 +1291,7 @@
       z-index: 10;
     }
 
-    #live2d-bubble.show {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
+    #live2d-bubble.show { opacity: 1; transform: translateY(0) scale(1); }
 
     #live2d-bubble::after {
       content: "";
@@ -1436,18 +1347,10 @@
       transform: scale(1.08);
     }
 
-    #l2d-visibility-toggle:active {
-      transform: scale(0.95);
-    }
+    #l2d-visibility-toggle:active { transform: scale(0.95); }
 
-    #l2d-visibility-toggle.model-hidden {
-      left: 24px;
-      bottom: 24px;
-    }
+    #l2d-visibility-toggle.model-hidden { left: 24px; bottom: 24px; }
 
-    /* ============================================================
-       手机端专属（≤768px）
-       ============================================================ */
     @media (max-width: 768px) {
       .intro-title { font-size: 18px; letter-spacing: 6px; text-indent: 6px; }
       .intro-sub { font-size: 10px; letter-spacing: 3px; text-indent: 3px; }
@@ -1490,91 +1393,30 @@
         font-size: 10.5px;
         padding: 3px 8px;
       }
-      .music-panel {
-        width: 200px;
-        max-height: 220px;
-      }
-      .music-item {
-        padding: 6px 8px;
-        font-size: 11px;
-      }
-      .progress-container {
-        width: 190px;
-        padding: 5px 8px;
-        gap: 6px;
-      }
-      .progress-time {
-        font-size: 9.5px;
-        min-width: 30px;
-      }
-      .progress-bar-wrap {
-        height: 28px;
-      }
-      .progress-bar-wrap::before {
-        height: 7px;
-      }
+      .music-panel { width: 200px; max-height: 220px; }
+      .music-item { padding: 6px 8px; font-size: 11px; }
+      .progress-container { width: 190px; padding: 5px 8px; gap: 6px; }
+      .progress-time { font-size: 9.5px; min-width: 30px; }
+      .progress-bar-wrap { height: 28px; }
+      .progress-bar-wrap::before { height: 7px; }
       .progress-bar-wrap:hover::before,
-      .progress-bar-wrap.active::before {
-        height: 9px;
-      }
-      .progress-bar-fill {
-        height: 7px;
-      }
+      .progress-bar-wrap.active::before { height: 9px; }
+      .progress-bar-fill { height: 7px; }
       .progress-bar-wrap:hover .progress-bar-fill,
-      .progress-bar-wrap.active .progress-bar-fill {
-        height: 9px;
-      }
-      .progress-bar-thumb {
-        width: 24px;
-        height: 24px;
-      }
-      .play-mode-btn {
-        min-width: 42px;
-        height: 24px;
-        font-size: 10px;
-        padding: 0 6px;
-      }
+      .progress-bar-wrap.active .progress-bar-fill { height: 9px; }
+      .progress-bar-thumb { width: 24px; height: 24px; }
+      .play-mode-btn { min-width: 42px; height: 24px; font-size: 10px; padding: 0 6px; }
 
-      .site-info-btn {
-        font-size: 11px;
-        margin-top: 8px;
-      }
+      .site-info-btn { font-size: 11px; margin-top: 8px; }
+      .luoluo-btn { font-size: 11px; margin-top: 4px; }
 
-      .luoluo-btn {
-        font-size: 11px;
-        margin-top: 4px;
-      }
+      .site-info-card { max-width: 92vw; padding: 18px 16px 14px; }
+      .site-info-header h3 { font-size: 13.5px; }
+      .site-info-section h4 { font-size: 11px; }
+      .site-info-list li { font-size: 11px; }
 
-      .site-info-card {
-        max-width: 92vw;
-        padding: 18px 16px 14px;
-      }
-
-      .site-info-header h3 {
-        font-size: 13.5px;
-      }
-
-      .site-info-section h4 {
-        font-size: 11px;
-      }
-
-      .site-info-list li {
-        font-size: 11px;
-      }
-
-      .luoluo-card {
-        max-width: 94vw;
-        height: 88vh;
-        padding: 14px 12px 12px;
-      }
-
-      .luoluo-header h3 {
-        font-size: 13.5px;
-      }
-
-      .luoluo-grid {
-        gap: 10px;
-      }
+      .luoluo-card { max-width: 94vw; padding: 14px 12px; }
+      .luoluo-header h3 { font-size: 13.5px; }
 
       #live2d-widget {
         width: 140px;
@@ -1589,9 +1431,7 @@
         height: 28px;
         font-size: 12px;
       }
-      #live2d-widget.hidden {
-        transform: translateY(20px);
-      }
+      #live2d-widget.hidden { transform: translateY(20px); }
     }
   </style>
 </head>
@@ -1650,8 +1490,7 @@
                 <span class="title">我的歌单</span>
                 <span class="count" id="musicCount">1 首</span>
               </div>
-              <div id="musicListContainer">
-              </div>
+              <div id="musicListContainer"></div>
             </div>
           </div>
         </div>
@@ -1702,9 +1541,7 @@
       <i class="fa-solid fa-eye" id="l2d-visibility-icon"></i>
     </button>
 
-    <!-- ============================================================
-         网站说明弹窗
-         ============================================================ -->
+    <!-- 网站说明弹窗 -->
     <div class="site-info-modal" id="siteInfoModal">
       <div class="site-info-card">
         <div class="site-info-header">
@@ -1765,9 +1602,7 @@
       </div>
     </div>
 
-    <!-- ============================================================
-         陈落落照片弹窗
-         ============================================================ -->
+    <!-- 陈落落照片弹窗 -->
     <div class="luoluo-modal" id="luoluoModal">
       <div class="luoluo-card">
         <div class="luoluo-header">
@@ -1776,18 +1611,13 @@
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
-        <div class="luoluo-grid" id="luoluoGrid">
-          <!-- 图片由 JS 生成 -->
-        </div>
+        <div class="luoluo-grid" id="luoluoGrid"></div>
       </div>
     </div>
   </div>
 
   <script>
     (function() {
-      // ============================================================
-      // 接口配置
-      // ============================================================
       const WEATHER_ENABLED = true;
       const WEATHER_KEY = '9e38f0bc62f8fe0d';
       const WEATHER_API = 'https://api.auth.top/api/weather';
@@ -1806,9 +1636,6 @@
 
       const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
 
-      // ============================================================
-      // 认识时长
-      // ============================================================
       const TG_LUOLUO_START = new Date(2026, 7, 2, 0, 0, 0);
 
       function formatTogether(startDate) {
@@ -1870,12 +1697,8 @@
       const siteInfoModal = document.getElementById('siteInfoModal');
       const siteInfoClose = document.getElementById('siteInfoClose');
 
-      function openSiteInfo() {
-        siteInfoModal.classList.add('show');
-      }
-      function closeSiteInfo() {
-        siteInfoModal.classList.remove('show');
-      }
+      function openSiteInfo() { siteInfoModal.classList.add('show'); }
+      function closeSiteInfo() { siteInfoModal.classList.remove('show'); }
 
       siteInfoBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -1888,9 +1711,7 @@
       });
 
       siteInfoModal.addEventListener('click', (e) => {
-        if (e.target === siteInfoModal) {
-          closeSiteInfo();
-        }
+        if (e.target === siteInfoModal) closeSiteInfo();
       });
 
       document.addEventListener('keydown', (e) => {
@@ -1900,14 +1721,10 @@
       });
 
       // ============================================================
-      // 陈落落照片弹窗
+      // 陈落落照片弹窗（大图、原比例、自适应高度）
       // ============================================================
-      // 🖼️ 图片列表 —— 在这里添加/删除图片路径（大图，原比例展示，自适应弹窗高度）
       const LUOLUO_IMAGES = [
-        'https://videotourl.com/images/1790499135575-2c9ee6bc-29cd-419d-9306-89f6f0ff327d.jpg'
-        // 需要更多就往下加，例如：
-        // 'https://videotourl.com/images/xxx.jpg',
-        // 'https://videotourl.com/images/yyy.jpg'
+        'https://videotourl.com/images/1790498284644-337e8265-282c-42c9-a944-3ff43513e113.jpg'
       ];
 
       const luoluoBtn = document.getElementById('luoluoBtn');
@@ -1964,9 +1781,7 @@
       });
 
       luoluoModal.addEventListener('click', (e) => {
-        if (e.target === luoluoModal) {
-          closeLuoluo();
-        }
+        if (e.target === luoluoModal) closeLuoluo();
       });
 
       document.addEventListener('keydown', (e) => {
@@ -2067,23 +1882,16 @@
       function updateMusicListUI() {
         const items = musicListContainer.querySelectorAll('.music-item');
         items.forEach((item, index) => {
-          if (index === currentSongIndex) {
-            item.classList.add('active');
-          } else {
-            item.classList.remove('active');
-          }
+          if (index === currentSongIndex) item.classList.add('active');
+          else item.classList.remove('active');
         });
         if (validSongs[currentSongIndex]) {
           currentSongName.textContent = validSongs[currentSongIndex].name;
         }
       }
 
-      function toggleMusicPanel() {
-        musicSelectorWrap.classList.toggle('open');
-      }
-      function closeMusicPanel() {
-        musicSelectorWrap.classList.remove('open');
-      }
+      function toggleMusicPanel() { musicSelectorWrap.classList.toggle('open'); }
+      function closeMusicPanel() { musicSelectorWrap.classList.remove('open'); }
 
       musicSelectorTrigger.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -2091,9 +1899,7 @@
       });
 
       document.addEventListener('click', (e) => {
-        if (!musicSelectorWrap.contains(e.target)) {
-          closeMusicPanel();
-        }
+        if (!musicSelectorWrap.contains(e.target)) closeMusicPanel();
       });
 
       function loadSong(index, autoPlay) {
@@ -2107,11 +1913,7 @@
         currentTimeEl.textContent = '0:00';
         totalTimeEl.textContent = '0:00';
         if (autoPlay) {
-          bgAudio.play().then(() => {
-            updateAudioUI(true);
-          }).catch(() => {
-            updateAudioUI(false);
-          });
+          bgAudio.play().then(() => updateAudioUI(true)).catch(() => updateAudioUI(false));
         }
       }
 
@@ -2174,9 +1976,7 @@
         if (userPaused) return;
         if (!bgAudio.src) return;
 
-        bgAudio.play().then(() => {
-          updateAudioUI(true);
-        }).catch(err => {
+        bgAudio.play().then(() => updateAudioUI(true)).catch(() => {
           audioHint.classList.add('show');
         });
       }
@@ -2199,9 +1999,7 @@
           return;
         }
         if (!audioPlaying && !userPaused && bgAudio.src) {
-          bgAudio.play().then(() => {
-            updateAudioUI(true);
-          }).catch(err => {});
+          bgAudio.play().then(() => updateAudioUI(true)).catch(() => {});
         }
       }
 
@@ -2218,9 +2016,7 @@
         } else {
           userPaused = false;
           if (!bgAudio.src) return;
-          bgAudio.play().then(() => {
-            updateAudioUI(true);
-          }).catch(err => {});
+          bgAudio.play().then(() => updateAudioUI(true)).catch(() => {});
         }
       });
 
@@ -2228,19 +2024,13 @@
         const nextIndex = getNextIndex();
         if (nextIndex === currentSongIndex && playMode === 'single') {
           bgAudio.currentTime = 0;
-          bgAudio.play().then(() => {
-            updateAudioUI(true);
-          }).catch(() => {
-            updateAudioUI(false);
-          });
+          bgAudio.play().then(() => updateAudioUI(true)).catch(() => updateAudioUI(false));
         } else {
           loadSong(nextIndex, true);
         }
       });
 
-      // ============================================================
       // 进度条
-      // ============================================================
       function formatTime(seconds) {
         if (!isFinite(seconds) || seconds < 0) return '0:00';
         const m = Math.floor(seconds / 60);
@@ -2270,13 +2060,9 @@
       function getPercentFromEvent(e) {
         const rect = progressBarWrap.getBoundingClientRect();
         let clientX;
-        if (e.touches && e.touches.length) {
-          clientX = e.touches[0].clientX;
-        } else if (e.changedTouches && e.changedTouches.length) {
-          clientX = e.changedTouches[0].clientX;
-        } else {
-          clientX = e.clientX;
-        }
+        if (e.touches && e.touches.length) clientX = e.touches[0].clientX;
+        else if (e.changedTouches && e.changedTouches.length) clientX = e.changedTouches[0].clientX;
+        else clientX = e.clientX;
         const percent = (clientX - rect.left) / rect.width;
         return Math.max(0, Math.min(1, percent));
       }
@@ -2296,15 +2082,13 @@
         isSeeking = true;
         progressBarWrap.classList.add('active');
         try { progressBarWrap.setPointerCapture(e.pointerId); } catch (err) {}
-        const percent = getPercentFromEvent(e);
-        seekToPercent(percent);
+        seekToPercent(getPercentFromEvent(e));
       });
 
       progressBarWrap.addEventListener('pointermove', (e) => {
         if (!isSeeking) return;
         e.preventDefault();
-        const percent = getPercentFromEvent(e);
-        seekToPercent(percent);
+        seekToPercent(getPercentFromEvent(e));
       });
 
       progressBarWrap.addEventListener('pointerup', (e) => {
@@ -2325,15 +2109,13 @@
         e.preventDefault();
         isSeeking = true;
         progressBarWrap.classList.add('active');
-        const percent = getPercentFromEvent(e);
-        seekToPercent(percent);
+        seekToPercent(getPercentFromEvent(e));
       }, { passive: false });
 
       progressBarWrap.addEventListener('touchmove', (e) => {
         if (!isSeeking) return;
         e.preventDefault();
-        const percent = getPercentFromEvent(e);
-        seekToPercent(percent);
+        seekToPercent(getPercentFromEvent(e));
       }, { passive: false });
 
       progressBarWrap.addEventListener('touchend', (e) => {
@@ -2348,7 +2130,6 @@
         progressContainer.classList.add('hidden');
         progressShowBtn.classList.add('show');
       }
-
       function showProgress() {
         progressHidden = false;
         progressContainer.classList.remove('hidden');
@@ -2359,7 +2140,6 @@
         e.stopPropagation();
         hideProgress();
       });
-
       progressShowBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         showProgress();
@@ -2368,9 +2148,7 @@
       initMusicSelector();
       updatePlayModeUI();
 
-      // ============================================================
       // IP + 位置
-      // ============================================================
       async function fetchVisitorIP() {
         try {
           const res = await fetch(IP_GET_API, {
@@ -2386,9 +2164,7 @@
           const ip = data.ip || (data.data && data.data.ip);
           if (data.code !== 0 || !ip) return null;
           return ip;
-        } catch (err) {
-          return null;
-        }
+        } catch (err) { return null; }
       }
 
       async function fetchIPLocation(ip) {
@@ -2410,9 +2186,7 @@
             province: loc.province || '',
             city: loc.city || ''
           };
-        } catch (err) {
-          return null;
-        }
+        } catch (err) { return null; }
       }
 
       function buildLocationText(loc) {
@@ -2432,7 +2206,6 @@
           return;
         }
         document.getElementById('infoIp').textContent = ip;
-
         const loc = await fetchIPLocation(ip);
         const locText = buildLocationText(loc);
         document.getElementById('infoLocation').textContent = locText || '位置未知';
@@ -2440,9 +2213,7 @@
 
       initIPInfo();
 
-      // ============================================================
       // CN 编码
-      // ============================================================
       function updateCNCode() {
         const now = new Date();
         const y = now.getFullYear();
@@ -2464,15 +2235,12 @@
         }, msToNextMinute);
       })();
 
-      // ============================================================
       // 版权 + 时间
-      // ============================================================
       function updateCopyright() {
         const startYear = 2025;
         const currentYear = new Date().getFullYear();
         const yearText = currentYear > startYear ? `${startYear}-${currentYear}` : `${startYear}`;
-        document.getElementById('copyrightText').textContent =
-          `陈白白&陈落落 ©${yearText}`;
+        document.getElementById('copyrightText').textContent = `陈白白&陈落落 ©${yearText}`;
       }
 
       function updateTime() {
@@ -2491,9 +2259,7 @@
       setInterval(updateCopyright, 60000);
       setInterval(updateTime, 1000);
 
-      // ============================================================
       // 图片查看器
-      // ============================================================
       const imageViewer = document.getElementById('imageViewer');
       const imageViewerImg = document.getElementById('imageViewerImg');
 
@@ -2518,11 +2284,7 @@
       }
       let IMG_SIZE = getImgSize();
 
-      // ============================================================
       // 地图初始化
-      // 移动端：矢量底图（不闪、不卡）
-      // 桌面端：卫星图
-      // ============================================================
       const map = new AMap.Map('amap-container', {
         zoom: IS_MOBILE ? 4 : 4.5,
         center: [111.5, 32.5],
@@ -2552,9 +2314,7 @@
       }
       updateWatermark();
 
-      // ============================================================
       // 天气
-      // ============================================================
       function getWeatherIcon(weatherText) {
         if (!weatherText) return '·';
         const map = {
@@ -2563,9 +2323,7 @@
           '大雪': '🌨', '雨夹雪': '🌨', '雾': '🌫', '霾': '🌫', '沙尘': '🌫',
           '浮尘': '🌫', '扬沙': '🌫'
         };
-        for (const key in map) {
-          if (weatherText.includes(key)) return map[key];
-        }
+        for (const key in map) if (weatherText.includes(key)) return map[key];
         return '·';
       }
 
@@ -2578,9 +2336,7 @@
           const data = await res.json();
           if (data.code !== 0 || !data.data) return null;
           return data.data;
-        } catch (err) {
-          return null;
-        }
+        } catch (err) { return null; }
       }
 
       function buildWeatherHTML(weather) {
@@ -2656,9 +2412,7 @@
         glow.style.left = pixel.x + 'px';
         glow.style.top = pixel.y + 'px';
         document.body.appendChild(glow);
-        setTimeout(() => {
-          if (glow.parentNode) glow.parentNode.removeChild(glow);
-        }, 1200);
+        setTimeout(() => { if (glow.parentNode) glow.parentNode.removeChild(glow); }, 1200);
       }
 
       function calcDistance(lat1, lon1, lat2, lon2) {
@@ -2679,8 +2433,7 @@
 
       function getDayOfYear(date) {
         const start = new Date(date.getFullYear(), 0, 0);
-        const diff = date - start;
-        return Math.floor(diff / 86400000);
+        return Math.floor((date - start) / 86400000);
       }
 
       function getSunsetHour(lat, lng, date) {
@@ -2693,8 +2446,7 @@
         if (cosH > 1) return 0;
         const H = Math.acos(cosH) * 180 / Math.PI;
         const sunsetSolar = 12 + H / 15;
-        const sunsetBeijing = sunsetSolar + (120 - lng) / 15;
-        return sunsetBeijing;
+        return sunsetSolar + (120 - lng) / 15;
       }
 
       function isDarkNow(lat, lng) {
@@ -2708,24 +2460,11 @@
       function getDayNightHTML() {
         const ncDark = isDarkNow(NANCHUAN[1], NANCHUAN[0]);
         const jxDark = isDarkNow(YANGTUN[1], YANGTUN[0]);
-
-        let icon = '';
-        let text = '';
-
-        if (ncDark && jxDark) {
-          icon = 'fa-solid fa-moon';
-          text = '两地都已入夜';
-        } else if (!ncDark && !jxDark) {
-          icon = 'fa-solid fa-sun';
-          text = '两地天都还亮着';
-        } else if (ncDark && !jxDark) {
-          icon = 'fa-solid fa-moon';
-          text = '南川已入夜 · 嘉祥天还亮';
-        } else {
-          icon = 'fa-solid fa-sun';
-          text = '南川天还亮 · 嘉祥已入夜';
-        }
-
+        let icon = '', text = '';
+        if (ncDark && jxDark) { icon = 'fa-solid fa-moon'; text = '两地都已入夜'; }
+        else if (!ncDark && !jxDark) { icon = 'fa-solid fa-sun'; text = '两地天都还亮着'; }
+        else if (ncDark && !jxDark) { icon = 'fa-solid fa-moon'; text = '南川已入夜 · 嘉祥天还亮'; }
+        else { icon = 'fa-solid fa-sun'; text = '南川天还亮 · 嘉祥已入夜'; }
         return `<i class="${icon}"></i>${text}`;
       }
 
@@ -2832,54 +2571,32 @@
       }).setMap(map);
 
       function loadRealRoute() {
-        if (!AMAP_WS_KEY || AMAP_WS_KEY === '') {
-          return;
-        }
+        if (!AMAP_WS_KEY || AMAP_WS_KEY === '') return;
         const url = `https://restapi.amap.com/v3/direction/driving?origin=${NANCHUAN[0]},${NANCHUAN[1]}&destination=${YANGTUN[0]},${YANGTUN[1]}&key=${AMAP_WS_KEY}&extensions=base`;
-        fetch(url)
-          .then(res => res.json())
-          .then(data => {
-            if (data.status !== '1' || !data.route || !data.route.paths || !data.route.paths.length) {
-              return;
+        fetch(url).then(res => res.json()).then(data => {
+          if (data.status !== '1' || !data.route || !data.route.paths || !data.route.paths.length) return;
+          const path = data.route.paths[0];
+          const allCoords = [];
+          path.steps.forEach(step => {
+            if (step.polyline) {
+              step.polyline.split(';').forEach(p => {
+                const [lng, lat] = p.split(',').map(Number);
+                if (!isNaN(lng) && !isNaN(lat)) allCoords.push([lng, lat]);
+              });
             }
-            const path = data.route.paths[0];
-            const allCoords = [];
-            path.steps.forEach(step => {
-              if (step.polyline) {
-                step.polyline.split(';').forEach(p => {
-                  const [lng, lat] = p.split(',').map(Number);
-                  if (!isNaN(lng) && !isNaN(lat)) {
-                    allCoords.push([lng, lat]);
-                  }
-                });
-              }
-            });
+          });
+          if (allCoords.length < 2) return;
 
-            if (allCoords.length < 2) {
-              return;
-            }
+          new AMap.Polyline({
+            path: allCoords, strokeColor: '#8fcbe8', strokeWeight: 5,
+            strokeOpacity: 0.08, lineJoin: 'round', zIndex: 44, showDir: false
+          }).setMap(map);
 
-            new AMap.Polyline({
-              path: allCoords,
-              strokeColor: '#8fcbe8',
-              strokeWeight: 5,
-              strokeOpacity: 0.08,
-              lineJoin: 'round',
-              zIndex: 44,
-              showDir: false
-            }).setMap(map);
-
-            new AMap.Polyline({
-              path: allCoords,
-              strokeColor: '#98a8b8',
-              strokeWeight: 1.8,
-              strokeOpacity: 0.55,
-              lineJoin: 'round',
-              zIndex: 45,
-              showDir: false
-            }).setMap(map);
-          })
-          .catch(err => {});
+          new AMap.Polyline({
+            path: allCoords, strokeColor: '#98a8b8', strokeWeight: 1.8,
+            strokeOpacity: 0.55, lineJoin: 'round', zIndex: 45, showDir: false
+          }).setMap(map);
+        }).catch(() => {});
       }
 
       const photoJX_A = new AMap.Marker({
@@ -2948,34 +2665,21 @@
       function flyMultiple(markersWithPath, duration) {
         return new Promise((resolve) => {
           const startTime = performance.now();
-
           function step(now) {
             const elapsed = now - startTime;
             const t = Math.min(elapsed / duration, 1);
-
             markersWithPath.forEach(item => {
               const p0Px = map.lngLatToContainer(new AMap.LngLat(item.p0[0], item.p0[1]));
               const p1Px = map.lngLatToContainer(new AMap.LngLat(item.p1[0], item.p1[1]));
               const p2Px = map.lngLatToContainer(new AMap.LngLat(item.p2[0], item.p2[1]));
               if (!p0Px || !p1Px || !p2Px) return;
-
-              const px = bezierPoint(
-                [p0Px.x, p0Px.y],
-                [p1Px.x, p1Px.y],
-                [p2Px.x, p2Px.y],
-                t
-              );
-
+              const px = bezierPoint([p0Px.x, p0Px.y], [p1Px.x, p1Px.y], [p2Px.x, p2Px.y], t);
               const floatOffsetPx = Math.sin(t * Math.PI * 4) * 3;
               const lngLat = map.containerToLngLat(new AMap.Pixel(px[0], px[1] + floatOffsetPx));
               item.marker.setPosition([lngLat.getLng(), lngLat.getLat()]);
             });
-
-            if (t < 1) {
-              requestAnimationFrame(step);
-            } else {
-              resolve();
-            }
+            if (t < 1) requestAnimationFrame(step);
+            else resolve();
           }
           requestAnimationFrame(step);
         });
@@ -2986,25 +2690,17 @@
           let done = 0;
           markers.forEach(marker => {
             const dom = marker.getContentDom();
-
             if (IS_MOBILE) {
-              if (dom) {
-                dom.style.transition = 'none';
-                dom.style.opacity = '0';
-              }
+              if (dom) { dom.style.transition = 'none'; dom.style.opacity = '0'; }
               setTimeout(() => {
                 marker.hide();
                 const d = marker.getContentDom();
-                if (d) {
-                  d.style.transition = '';
-                  d.style.opacity = '';
-                }
+                if (d) { d.style.transition = ''; d.style.opacity = ''; }
                 done++;
                 if (done === markers.length) resolve();
               }, 60);
               return;
             }
-
             if (dom) {
               dom.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
               dom.style.transform = 'scale(0.4)';
@@ -3013,11 +2709,7 @@
             setTimeout(() => {
               marker.hide();
               const d = marker.getContentDom();
-              if (d) {
-                d.style.transition = '';
-                d.style.transform = '';
-                d.style.opacity = '';
-              }
+              if (d) { d.style.transition = ''; d.style.transform = ''; d.style.opacity = ''; }
               done++;
               if (done === markers.length) resolve();
             }, 420);
@@ -3036,30 +2728,18 @@
 
         while (true) {
           photoJX_A.show();
-          {
-            const dom = photoJX_A.getContentDom();
-            if (dom) { dom.style.transform = ''; dom.style.opacity = ''; }
-          }
+          { const dom = photoJX_A.getContentDom(); if (dom) { dom.style.transform = ''; dom.style.opacity = ''; } }
 
-          await flyMultiple([
-            { marker: photoJX_A, p0: YANGTUN, p1: ctrlA, p2: NANCHUAN }
-          ], DURATION);
-
+          await flyMultiple([{ marker: photoJX_A, p0: YANGTUN, p1: ctrlA, p2: NANCHUAN }], DURATION);
           spawnArrivalGlow(NANCHUAN);
           await fadeOutMarkers([photoJX_A]);
           showText(textToNanchuan, 2000);
           await new Promise(r => setTimeout(r, PAUSE + 2000));
 
           photoNC_A.show();
-          {
-            const dom = photoNC_A.getContentDom();
-            if (dom) { dom.style.transform = ''; dom.style.opacity = ''; }
-          }
+          { const dom = photoNC_A.getContentDom(); if (dom) { dom.style.transform = ''; dom.style.opacity = ''; } }
 
-          await flyMultiple([
-            { marker: photoNC_A, p0: NANCHUAN, p1: ctrlA, p2: YANGTUN }
-          ], DURATION);
-
+          await flyMultiple([{ marker: photoNC_A, p0: NANCHUAN, p1: ctrlA, p2: YANGTUN }], DURATION);
           spawnArrivalGlow(YANGTUN);
           await fadeOutMarkers([photoNC_A]);
           showText(textToJiaxiang, 2000);
@@ -3224,10 +2904,7 @@
           statusEl.textContent = "Live2D Ready · Yuyuko";
           statusEl.style.color = "#6b7280";
 
-          setTimeout(() => {
-            playIdleMotion();
-          }, 900);
-
+          setTimeout(() => { playIdleMotion(); }, 900);
           setTimeout(() => sayNext(), 900);
         } catch (err) {
           statusEl.textContent = "加载失败";
@@ -3252,21 +2929,16 @@
 
       function playIdleMotion() {
         if (!model) return;
-
         const motions = model.internalModel.settings.motions;
         const groups = Object.keys(motions || {});
         if (!groups.length) return;
-
         const group = groups.includes("Idle") ? "Idle" : groups[0];
         const list = motions[group];
         if (!list || !list.length) return;
-
         const index = Math.floor(Math.random() * list.length);
-
         try {
           const mm = model.internalModel.motionManager;
           mm.startMotion(group, index);
-
           const duration = getMotionDuration(list[index]);
           clearTimeout(idleTimer);
           idleTimer = setTimeout(playIdleMotion, Math.max(1200, duration * 0.85));
@@ -3280,17 +2952,14 @@
 
       function fitModel() {
         if (!model || !app) return;
-
         model.scale.set(1);
         model.position.set(0, 0);
-
         const sw = app.screen.width;
         const sh = app.screen.height;
         const bounds = model.getLocalBounds();
         const mw = Math.max(bounds.width, 1);
         const mh = Math.max(bounds.height, 1);
         const scale = Math.min((sw * 0.92) / mw, (sh * 0.95) / mh);
-
         model.scale.set(scale);
         model.position.set(
           sw / 2 - (bounds.x + bounds.width / 2) * scale,
@@ -3307,19 +2976,13 @@
       function sayNext() {
         const text = MESSAGES[messageIndex];
         messageIndex = (messageIndex + 1) % MESSAGES.length;
-
         bubble.textContent = text;
         bubble.classList.add("show");
-
         requestAnimationFrame(() => {
           const rect = bubble.getBoundingClientRect();
-          if (rect.left < 8) {
-            bubble.style.left = (8 - rect.left) + "px";
-          } else {
-            bubble.style.left = "0";
-          }
+          if (rect.left < 8) bubble.style.left = (8 - rect.left) + "px";
+          else bubble.style.left = "0";
         });
-
         clearTimeout(bubbleTimer);
         bubbleTimer = setTimeout(() => bubble.classList.remove("show"), 3200);
       }
@@ -3327,11 +2990,9 @@
       window.addEventListener("pointermove", (e) => {
         const w = window.innerWidth;
         const h = window.innerHeight;
-
         pointerFocus.targetX = Math.max(-1, Math.min(1, (e.clientX / w - 0.5) * 2));
         pointerFocus.targetY = Math.max(-1, Math.min(1, (e.clientY / h - 0.5) * 2));
         pointerFocus.lastAt = performance.now();
-
         if (model && typeof model.focus === "function") {
           try { model.focus(e.clientX, e.clientY); } catch (err) {}
         }
@@ -3344,23 +3005,19 @@
         dragOffset.y = e.clientY - rect.top;
         dragStart.x = e.clientX;
         dragStart.y = e.clientY;
-
         widget.classList.add("dragging");
         canvas.setPointerCapture(e.pointerId);
       });
 
       canvas.addEventListener("pointermove", (e) => {
         if (!widget.classList.contains("dragging")) return;
-
         const dx = e.clientX - dragStart.x;
         const dy = e.clientY - dragStart.y;
         if (Math.abs(dx) > 4 || Math.abs(dy) > 4) isDragging = true;
-
         const x = e.clientX - dragOffset.x;
         const y = e.clientY - dragOffset.y;
         const maxX = window.innerWidth - widget.offsetWidth;
         const maxY = window.innerHeight - widget.offsetHeight;
-
         widget.style.left = Math.max(0, Math.min(x, maxX)) + "px";
         widget.style.top = Math.max(0, Math.min(y, maxY)) + "px";
         widget.style.bottom = "auto";
@@ -3368,15 +3025,10 @@
 
       canvas.addEventListener("pointerup", (e) => {
         const wasDragging = isDragging;
-
         widget.classList.remove("dragging");
         try { canvas.releasePointerCapture(e.pointerId); } catch (err) {}
-
         isDragging = false;
-
-        if (!wasDragging) {
-          onModelTap();
-        }
+        if (!wasDragging) onModelTap();
       });
 
       function syncVisibilityButton() {
@@ -3400,9 +3052,7 @@
 
       syncVisibilityButton();
 
-      window.addEventListener("resize", () => {
-        fitModel();
-      });
+      window.addEventListener("resize", () => { fitModel(); });
 
       window.addEventListener("load", () => {
         if (!window.PIXI || !PIXI.live2d) {
