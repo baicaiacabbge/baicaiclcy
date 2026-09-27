@@ -6,14 +6,10 @@
   <title>我们</title>
   <link rel="icon" type="image/jpeg" href="https://videotourl.com/images/1790446808049-f56f13e8-21df-477c-9576-52ed146e2a27.jpeg">
 
-  <!-- Remix Icon (国内镜像) -->
   <link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/remixicon@4.6.0/fonts/remixicon.css">
-  <!-- Font Awesome 6 (国内镜像) -->
   <link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
-  <!-- 霞鹜文楷 (BootCDN) -->
   <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-webfont/1.6.0/style.min.css">
 
-  <!-- Live2D 依赖 (国内镜像) -->
   <script src="https://cdn.jsdmirror.com/npm/pixi.js@6.5.10/dist/browser/pixi.min.js"></script>
   <script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
   <script src="https://cdn.jsdmirror.com/npm/pixi-live2d-display@0.4.0/dist/cubism4.min.js"></script>
@@ -483,148 +479,6 @@
       text-align: center;
       opacity: 0.8;
       letter-spacing: 0.3px;
-      font-family: var(--font-kai);
-    }
-
-    /* ========== 陈落落照片弹窗 ========== */
-    .luoluo-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 3000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(6, 10, 16, 0.85);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-      padding: 20px;
-    }
-
-    .luoluo-modal.show {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    /* 卡片是 flex 纵向容器，图片区占满剩余高度 */
-    .luoluo-card {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      max-width: 900px;
-      max-height: 90vh;
-      background: rgba(18, 26, 36, 0.98);
-      border: 1px solid rgba(232, 160, 184, 0.25);
-      border-radius: 16px;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.75);
-      padding: 16px 16px 16px;
-      transform: translateY(12px) scale(0.96);
-      transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1);
-      color: var(--text-main);
-      font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
-    }
-
-    .luoluo-modal.show .luoluo-card {
-      transform: translateY(0) scale(1);
-    }
-
-    .luoluo-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      flex-shrink: 0;
-    }
-
-    .luoluo-header h3 {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font-kai);
-    }
-
-    .luoluo-header h3 i {
-      color: var(--accent);
-      font-size: 14px;
-    }
-
-    .luoluo-close {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      background: rgba(255, 255, 255, 0.06);
-      color: var(--text-sub);
-      font-size: 12px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    .luoluo-close:hover {
-      background: rgba(232, 160, 184, 0.25);
-      color: var(--text-main);
-      border-color: var(--accent);
-    }
-
-    /* 图片区：flex 撑满剩余高度，图片居中、原比例、完整显示 */
-    .luoluo-grid {
-      flex: 1;
-      min-height: 0;
-      overflow-y: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      flex-direction: column;
-      padding: 4px 4px 4px;
-    }
-
-    .luoluo-grid::-webkit-scrollbar { width: 6px; }
-    .luoluo-grid::-webkit-scrollbar-track { background: transparent; }
-    .luoluo-grid::-webkit-scrollbar-thumb {
-      background: rgba(232, 160, 184, 0.35);
-      border-radius: 3px;
-    }
-
-    /* 图片：原比例，最大不超出容器 */
-    .luoluo-grid img {
-      display: block;
-      max-width: 100%;
-      max-height: 100%;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      border-radius: 8px;
-      cursor: zoom-in;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .luoluo-grid img:hover {
-      transform: scale(1.01);
-      box-shadow: 0 10px 26px rgba(232, 160, 184, 0.25);
-    }
-
-    .luoluo-empty {
-      text-align: center;
-      font-size: 12px;
-      color: var(--text-sub);
-      padding: 30px 0;
-      opacity: 0.7;
       font-family: var(--font-kai);
     }
 
@@ -1415,9 +1269,6 @@
       .site-info-section h4 { font-size: 11px; }
       .site-info-list li { font-size: 11px; }
 
-      .luoluo-card { max-width: 94vw; padding: 14px 12px; }
-      .luoluo-header h3 { font-size: 13.5px; }
-
       #live2d-widget {
         width: 140px;
         height: 175px;
@@ -1541,7 +1392,6 @@
       <i class="fa-solid fa-eye" id="l2d-visibility-icon"></i>
     </button>
 
-    <!-- 网站说明弹窗 -->
     <div class="site-info-modal" id="siteInfoModal">
       <div class="site-info-card">
         <div class="site-info-header">
@@ -1599,19 +1449,6 @@
         <div class="site-info-footer">
           Cloudflare提供CDN加速
         </div>
-      </div>
-    </div>
-
-    <!-- 陈落落照片弹窗 -->
-    <div class="luoluo-modal" id="luoluoModal">
-      <div class="luoluo-card">
-        <div class="luoluo-header">
-          <h3><i class="fa-solid fa-image"></i>陈落落</h3>
-          <button class="luoluo-close" id="luoluoClose" title="关闭">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
-        <div class="luoluo-grid" id="luoluoGrid"></div>
       </div>
     </div>
   </div>
@@ -1717,76 +1554,6 @@
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && siteInfoModal.classList.contains('show')) {
           closeSiteInfo();
-        }
-      });
-
-      // ============================================================
-      // 陈落落照片弹窗（大图、原比例、自适应高度）
-      // ============================================================
-      const LUOLUO_IMAGES = [
-        'https://videotourl.com/images/1790502740819-49eaf254-0132-42e2-98f3-3018b672ea70.jpg'
-      ];
-
-      const luoluoBtn = document.getElementById('luoluoBtn');
-      const luoluoModal = document.getElementById('luoluoModal');
-      const luoluoClose = document.getElementById('luoluoClose');
-      const luoluoGrid = document.getElementById('luoluoGrid');
-
-      function renderLuoluoImages() {
-        luoluoGrid.innerHTML = '';
-
-        const valid = LUOLUO_IMAGES.filter(p => p && typeof p === 'string');
-        if (valid.length === 0) {
-          const empty = document.createElement('div');
-          empty.className = 'luoluo-empty';
-          empty.textContent = '还没有照片';
-          luoluoGrid.appendChild(empty);
-          return;
-        }
-
-        valid.forEach(src => {
-          const img = document.createElement('img');
-          img.src = src;
-          img.alt = '';
-          img.loading = 'lazy';
-          img.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (typeof window._openImageViewer === 'function') {
-              window._openImageViewer(src);
-            }
-          });
-          img.addEventListener('error', () => {
-            img.style.display = 'none';
-          });
-          luoluoGrid.appendChild(img);
-        });
-      }
-
-      function openLuoluo() {
-        renderLuoluoImages();
-        luoluoModal.classList.add('show');
-      }
-      function closeLuoluo() {
-        luoluoModal.classList.remove('show');
-      }
-
-      luoluoBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openLuoluo();
-      });
-
-      luoluoClose.addEventListener('click', (e) => {
-        e.stopPropagation();
-        closeLuoluo();
-      });
-
-      luoluoModal.addEventListener('click', (e) => {
-        if (e.target === luoluoModal) closeLuoluo();
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && luoluoModal.classList.contains('show')) {
-          closeLuoluo();
         }
       });
 
@@ -1994,7 +1761,7 @@
           e.target.closest('#siteInfoBtn') ||
           e.target.closest('#siteInfoModal') ||
           e.target.closest('#luoluoBtn') ||
-          e.target.closest('#luoluoModal')
+          e.target.closest('#imageViewer')
         )) {
           return;
         }
@@ -2274,6 +2041,15 @@
 
       const IMG_JX_1 = 'https://videotourl.com/images/1790447001064-f4bc47a5-6626-4eb5-955b-99b78b24acac.jpeg';
       const IMG_NC_1 = 'https://videotourl.com/images/1790446808049-f56f13e8-21df-477c-9576-52ed146e2a27.jpeg';
+
+      // 🖼️ 陈落落按钮点开的大图：在这里换成你想要的图片
+      const LUOLUO_IMAGE = 'https://videotourl.com/images/1790502740819-49eaf254-0132-42e2-98f3-3018b672ea70.jpg';
+
+      const luoluoBtn = document.getElementById('luoluoBtn');
+      luoluoBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openImageViewer(LUOLUO_IMAGE);
+      });
 
       function getImgSize() {
         const w = window.innerWidth;
