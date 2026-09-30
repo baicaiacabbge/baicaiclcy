@@ -4,6 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>我们</title>
+  <link rel="dns-prefetch" href="//videotourl.com">
+  <link rel="preconnect" href="https://videotourl.com" crossorigin>
+  <link rel="dns-prefetch" href="//cdn.jsdmirror.com">
+  <link rel="preconnect" href="https://cdn.jsdmirror.com" crossorigin>
+  <link rel="dns-prefetch" href="//cdn.bootcdn.net">
+  <link rel="preconnect" href="https://cdn.bootcdn.net" crossorigin>
+  <link rel="dns-prefetch" href="//webapi.amap.com">
+  <link rel="preconnect" href="https://webapi.amap.com" crossorigin>
+  <link rel="dns-prefetch" href="//restapi.amap.com">
+  <link rel="preconnect" href="https://restapi.amap.com" crossorigin>
+  <link rel="dns-prefetch" href="//api.auth.top">
+  <link rel="preconnect" href="https://api.auth.top" crossorigin>
+  <link rel="dns-prefetch" href="//cubism.live2d.com">
+  <link rel="preconnect" href="https://cubism.live2d.com" crossorigin>
+
   <link rel="icon" type="image/jpeg" href="https://videotourl.com/images/1790446808049-f56f13e8-21df-477c-9576-52ed146e2a27.jpeg">
 
   <link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/remixicon@4.6.0/fonts/remixicon.css">
@@ -274,13 +289,13 @@
       font-weight: 600;
     }
 
-    /* ========== 无方框按钮 ========== */
-    .site-info-btn,
-    .luoluo-btn {
+    /* ========== 网站说明按钮（无方框） ========== */
+    .site-info-btn {
       pointer-events: auto;
       display: inline-flex;
       align-items: center;
       gap: 5px;
+      margin-top: 10px;
       padding: 0;
       background: transparent;
       border: none;
@@ -300,21 +315,9 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    .site-info-btn { margin-top: 10px; }
-    .luoluo-btn { margin-top: 6px; }
-
-    .site-info-btn:hover,
-    .luoluo-btn:hover {
-      color: var(--accent);
-    }
-
-    .site-info-btn:active,
-    .luoluo-btn:active {
-      transform: scale(0.96);
-    }
-
-    .site-info-btn i,
-    .luoluo-btn i {
+    .site-info-btn:hover { color: var(--accent); }
+    .site-info-btn:active { transform: scale(0.96); }
+    .site-info-btn i {
       font-size: 12px;
       color: var(--accent);
       opacity: 0.9;
@@ -1262,7 +1265,6 @@
       .play-mode-btn { min-width: 42px; height: 24px; font-size: 10px; padding: 0 6px; }
 
       .site-info-btn { font-size: 11px; margin-top: 8px; }
-      .luoluo-btn { font-size: 11px; margin-top: 4px; }
 
       .site-info-card { max-width: 92vw; padding: 18px 16px 14px; }
       .site-info-header h3 { font-size: 13.5px; }
@@ -1320,10 +1322,6 @@
       <button class="site-info-btn" id="siteInfoBtn" title="查看网站说明">
         <i class="fa-solid fa-circle-info"></i>
         <span>网站说明</span>
-      </button>
-      <button class="luoluo-btn" id="luoluoBtn" title="查看陈落落的照片">
-        <i class="fa-solid fa-image"></i>
-        <span>陈落落</span>
       </button>
     </div>
 
@@ -1527,9 +1525,7 @@
       updateTogether();
       setInterval(updateTogether, 1000);
 
-      // ============================================================
       // 网站说明弹窗
-      // ============================================================
       const siteInfoBtn = document.getElementById('siteInfoBtn');
       const siteInfoModal = document.getElementById('siteInfoModal');
       const siteInfoClose = document.getElementById('siteInfoClose');
@@ -1557,9 +1553,7 @@
         }
       });
 
-      // ============================================================
       // 音乐播放器
-      // ============================================================
       const bgAudio = document.getElementById('bgAudio');
       const audioBtn = document.getElementById('audioBtn');
       const audioLabel = document.getElementById('audioLabel');
@@ -1760,7 +1754,6 @@
           e.target.closest('#progressShowBtn') ||
           e.target.closest('#siteInfoBtn') ||
           e.target.closest('#siteInfoModal') ||
-          e.target.closest('#luoluoBtn') ||
           e.target.closest('#imageViewer')
         )) {
           return;
@@ -2041,15 +2034,6 @@
 
       const IMG_JX_1 = 'https://videotourl.com/images/1790447001064-f4bc47a5-6626-4eb5-955b-99b78b24acac.jpeg';
       const IMG_NC_1 = 'https://videotourl.com/images/1790446808049-f56f13e8-21df-477c-9576-52ed146e2a27.jpeg';
-
-      // 🖼️ 陈落落按钮点开的大图：在这里换成你想要的图片
-      const LUOLUO_IMAGE = 'https://videotourl.com/images/1790502740819-49eaf254-0132-42e2-98f3-3018b672ea70.jpg';
-
-      const luoluoBtn = document.getElementById('luoluoBtn');
-      luoluoBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        openImageViewer(LUOLUO_IMAGE);
-      });
 
       function getImgSize() {
         const w = window.innerWidth;
