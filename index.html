@@ -135,7 +135,6 @@
       background-color: #0a0b10;
     }
 
-    /* 雨滴效果层 —— 加强版 */
     #rain-layer {
       position: fixed;
       top: 0;
@@ -145,7 +144,7 @@
       height: 100dvh;
       z-index: 4;
       pointer-events: none;
-      opacity: 0.95;
+      opacity: 0.9;
       mix-blend-mode: screen;
     }
 
@@ -688,9 +687,6 @@
       font-weight: 600;
     }
 
-    /* ============================================================
-       禁用歌曲：保持原样式，只让点击无效、不可选中
-       ============================================================ */
     .music-item.disabled {
       cursor: not-allowed;
       user-select: none;
@@ -1677,19 +1673,9 @@
             <i class="fa-solid fa-volume-high playing-icon"></i>
           `;
           if (isDisabled) {
-            // 禁用：不响应点击，但保留外观
-            item.addEventListener('click', (e) => {
-              e.stopPropagation();
-              e.preventDefault();
-            });
-            item.addEventListener('mousedown', (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            });
-            item.addEventListener('touchstart', (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-            }, { passive: false });
+            item.addEventListener('click', (e) => { e.stopPropagation(); e.preventDefault(); });
+            item.addEventListener('mousedown', (e) => { e.preventDefault(); e.stopPropagation(); });
+            item.addEventListener('touchstart', (e) => { e.preventDefault(); e.stopPropagation(); }, { passive: false });
           } else {
             item.addEventListener('click', (e) => {
               e.stopPropagation();
@@ -2418,11 +2404,11 @@
       }
 
       const nanchuanTextOffsetY = Math.round(IMG_SIZE / 2 + 16);
-      const textToNanchuan = createArrivalTextBelow(NANCHUAN, '......', '#7a8498', nanchuanTextOffsetY);
+      const textToNanchuan = createArrivalTextBelow(NANCHUAN, '今生不见', '#7a8498', nanchuanTextOffsetY);
       textToNanchuan.setMap(map);
 
       const jiaxiangTextOffsetY = Math.round(IMG_SIZE / 2 + 16);
-      const textToJiaxiang = createArrivalTextBelow(YANGTUN, '......', '#8a94a8', jiaxiangTextOffsetY);
+      const textToJiaxiang = createArrivalTextBelow(YANGTUN, '来世不念', '#8a94a8', jiaxiangTextOffsetY);
       textToJiaxiang.setMap(map);
 
       function showText(textObj, duration) {
@@ -2550,7 +2536,7 @@
     })();
   </script>
 
-  <!-- 雨滴效果 —— 加强版 -->
+  <!-- 雨滴效果 —— 真实版（三层绘制 + 全局风向） -->
   <script>
     (function () {
       const canvas = document.getElementById('rain-layer');
@@ -2561,8 +2547,10 @@
       let dpr = 1;
       const IS_MOBILE = window.innerWidth <= 768;
 
-      // 雨滴数量：桌面 350，手机 180（是原来的近两倍）
-      const DROP_COUNT = IS_MOBILE ? 180 : 350;
+      const DROP_COUNT = IS_MOBILE ? 130 : 220;
+
+      // 全局风向：所有雨滴基本往同一个方向斜
+      const WIND_X = -0.75;
 
       const drops = [];
       const splashes = [];
@@ -2581,19 +2569,19 @@
       }
 
       function createDrop() {
+        const vy = rand(IS_MOBILE ? 7 : 10, IS_MOBILE ? 14 : 20);
+        const len = vy * rand(1.1, 1.6);
         return {
           x: rand(-80, W + 80),
           y: rand(-H, 0),
-          // 下落更快
-          vy: rand(IS_MOBILE ? 9 : 12, IS_MOBILE ? 16 : 24),
-          // 横向漂移更大，斜雨更明显
-          vx: rand(-1.2, -0.4),
-          // 雨丝更长
-          len: rand(18, 42),
-          // 雨丝更粗
-          width: rand(0.8, 2),
-          // 透明度更高
-          alpha: rand(0.35, 0.9)
+          vy: vy,
+          // 全局风向 + 微扰
+          vx: WIND_X + rand(-0.15, 0.15),
+          len: len,
+          width: rand(0.5, 1.4),
+          alpha: rand(0.35, 0.85),
+          headR: rand(0.6, 1.3),
+          blur: rand(0, 1)
         };
       }
 
@@ -2602,9 +2590,10 @@
           x: x,
           y: y,
           r: 0,
-          maxR: rand(5, 14),
+          maxR: rand(5, 12),
           alpha: 0.7,
-          vy: rand(-0.4, -0.15)
+          vy: rand(-0.4, -0.15),
+          rings: Math.random() < 0.4 ? 2 : 1
         };
       }
 
@@ -2618,31 +2607,100 @@
         }
       }
 
+      // 画一颗真实雨滴：拖尾 + 水珠核心 + 水滴头
+      function drawDrop(d) {
+        const endX = d.x + d.vx * (d.len / d.vy) * 6;
+        const endY = d.y + d.len;
+
+        // ---- 第一层：拖尾渐变 ----
+        const tailGrad = ctx.createLinearGradient(d.x, d.y, endX, endY);
+        tailGrad.addColorStop(0, `rgba(180, 205, 240, 0)`);
+        tailGrad.addColorStop(0.6, `rgba(180, 205, 240, ${d.alpha * 0.25})`);
+        tailGrad.addColorStop(1, `rgba(200, 225, 255, ${d.alpha * 0.5})`);
+
+        ctx.beginPath();
+        ctx.strokeStyle = tailGrad;
+        ctx.lineWidth = d.width * 1.5;
+        ctx.lineCap = 'round';
+        if (d.blur > 0) {
+          ctx.shadowBlur = d.blur * 2;
+          ctx.shadowColor = `rgba(180, 205, 240, ${d.alpha * 0.4})`;
+        }
+        ctx.moveTo(d.x, d.y);
+        ctx.lineTo(endX, endY);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // ---- 第二层：水珠核心 ----
+        const coreStartRatio = 0.55;
+        const coreStartX = d.x + (endX - d.x) * coreStartRatio;
+        const coreStartY = d.y + (endY - d.y) * coreStartRatio;
+
+        const coreGrad = ctx.createLinearGradient(coreStartX, coreStartY, endX, endY);
+        coreGrad.addColorStop(0, `rgba(220, 235, 255, ${d.alpha * 0.35})`);
+        coreGrad.addColorStop(1, `rgba(240, 248, 255, ${d.alpha * 0.95})`);
+
+        ctx.beginPath();
+        ctx.strokeStyle = coreGrad;
+        ctx.lineWidth = d.width * 0.65;
+        ctx.lineCap = 'round';
+        ctx.moveTo(coreStartX, coreStartY);
+        ctx.lineTo(endX, endY);
+        ctx.stroke();
+
+        // ---- 第三层：水滴头（末端小圆点）----
+        const headGrad = ctx.createRadialGradient(endX, endY, 0, endX, endY, d.headR * 2);
+        headGrad.addColorStop(0, `rgba(255, 255, 255, ${d.alpha})`);
+        headGrad.addColorStop(0.5, `rgba(200, 225, 255, ${d.alpha * 0.5})`);
+        headGrad.addColorStop(1, `rgba(200, 225, 255, 0)`);
+
+        ctx.beginPath();
+        ctx.fillStyle = headGrad;
+        ctx.arc(endX, endY, d.headR * 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function drawSplash(s) {
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(180, 205, 240, ${s.alpha})`;
+        ctx.lineWidth = 1;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.stroke();
+
+        if (s.rings === 2 && s.r > s.maxR * 0.4) {
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(180, 205, 240, ${s.alpha * 0.5})`;
+          ctx.lineWidth = 0.7;
+          ctx.arc(s.x, s.y, s.r * 0.6, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        if (s.r > 2 && Math.random() < 0.12) {
+          const angle = Math.random() * Math.PI * 2;
+          const dist = s.r * 1.2;
+          const dx = s.x + Math.cos(angle) * dist;
+          const dy = s.y + Math.sin(angle) * dist;
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(220, 235, 255, ${s.alpha * 0.6})`;
+          ctx.arc(dx, dy, 0.8, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
       function draw() {
         ctx.clearRect(0, 0, W, H);
 
-        // 底部雨雾：让雨有"落地积水"的感觉
+        // 底部雨雾
         const fogGrad = ctx.createLinearGradient(0, H * 0.75, 0, H);
         fogGrad.addColorStop(0, 'rgba(140, 165, 200, 0)');
-        fogGrad.addColorStop(1, 'rgba(140, 165, 200, 0.18)');
+        fogGrad.addColorStop(1, 'rgba(140, 165, 200, 0.13)');
         ctx.fillStyle = fogGrad;
         ctx.fillRect(0, H * 0.75, W, H * 0.25);
 
-        // 画雨丝
-        ctx.lineCap = 'round';
+        // 画雨滴
         for (let i = 0; i < drops.length; i++) {
           const d = drops[i];
-
-          ctx.beginPath();
-          // 颜色更亮：从 140,160,190 提到 170,195,235
-          ctx.strokeStyle = `rgba(170, 195, 235, ${d.alpha})`;
-          ctx.lineWidth = d.width;
-
-          const endX = d.x + d.vx * (d.len / d.vy) * 8;
-          const endY = d.y + d.len;
-          ctx.moveTo(d.x, d.y);
-          ctx.lineTo(endX, endY);
-          ctx.stroke();
+          drawDrop(d);
 
           d.x += d.vx;
           d.y += d.vy;
@@ -2650,8 +2708,7 @@
           if (d.y > H + 40 || d.x < -120 || d.x > W + 120) {
             drops[i] = createDrop();
           } else {
-            // 涟漪触发概率从 0.02 提到 0.06
-            if (d.y > H * 0.85 && Math.random() < 0.06) {
+            if (d.y > H * 0.85 && Math.random() < 0.04) {
               splashes.push(createSplash(d.x, d.y));
             }
           }
@@ -2669,11 +2726,7 @@
             continue;
           }
 
-          ctx.beginPath();
-          ctx.strokeStyle = `rgba(170, 195, 235, ${s.alpha})`;
-          ctx.lineWidth = 1.2;
-          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-          ctx.stroke();
+          drawSplash(s);
         }
 
         requestAnimationFrame(draw);
