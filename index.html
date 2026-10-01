@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>我们</title>
+  <title>思念</title>
+
   <link rel="dns-prefetch" href="//videotourl.com">
   <link rel="preconnect" href="https://videotourl.com" crossorigin>
   <link rel="dns-prefetch" href="//cdn.jsdmirror.com">
@@ -43,17 +44,20 @@
       height: 100%;
       overflow: hidden;
       font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', system-ui, sans-serif;
-      background-color: #0d141c;
+      background-color: #06060a;
     }
 
+    /* ============================================================
+       伤感主题色板 —— 冷灰蓝 + 深墨黑
+       ============================================================ */
     :root {
-      --page-bg: #0d141c;
-      --text-main: #e0e8f0;
-      --text-sub: #98a8b8;
-      --text-shadow: rgba(0, 0, 0, 0.75);
-      --accent: #e8a0b8;
-      --accent-2: #8fcbe8;
-      --glow: rgba(232, 160, 184, 0.5);
+      --page-bg: #06060a;
+      --text-main: #a8acb8;
+      --text-sub: #5a5e6e;
+      --text-shadow: rgba(0, 0, 0, 0.9);
+      --accent: #7a8498;
+      --accent-2: #5e6278;
+      --glow: rgba(122, 132, 152, 0.3);
       --font-kai: 'LXGW WenKai', 'Noto Serif SC', 'Microsoft YaHei', serif;
     }
 
@@ -69,7 +73,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #0d141c;
+      background: #06060a;
       user-select: none;
       pointer-events: none;
       animation: introAutoFade 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
@@ -85,7 +89,7 @@
     .intro-title {
       font-size: 22px;
       font-weight: 400;
-      color: #e0e8f0;
+      color: #7a8498;
       letter-spacing: 8px;
       text-indent: 8px;
       opacity: 0;
@@ -95,7 +99,7 @@
 
     .intro-sub {
       font-size: 11px;
-      color: #6b7a8a;
+      color: #3a3e4e;
       letter-spacing: 4px;
       text-indent: 4px;
       opacity: 0;
@@ -131,7 +135,21 @@
       -webkit-transform: translateZ(0);
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      background-color: #1a2530;
+      background-color: #0a0b10;
+    }
+
+    /* 雨滴效果层 */
+    #rain-layer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      z-index: 4;
+      pointer-events: none;
+      opacity: 0.55;
+      mix-blend-mode: screen;
     }
 
     #noise-layer {
@@ -143,9 +161,9 @@
       height: 100dvh;
       z-index: 3;
       pointer-events: none;
-      opacity: 0.04;
+      opacity: 0.05;
       mix-blend-mode: overlay;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.92 0 0 0 0 0.86 0 0 0 0 0.82 0 0 0 0.55 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.7 0 0 0 0 0.72 0 0 0 0 0.78 0 0 0 0.5 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
       background-repeat: repeat;
       background-size: 240px 240px;
     }
@@ -163,8 +181,8 @@
       background-size: 180px 120px;
       user-select: none;
       will-change: transform, opacity;
-      animation: watermarkDrift 60s linear infinite,
-                 watermarkBreathe 12s ease-in-out infinite;
+      animation: watermarkDrift 90s linear infinite,
+                 watermarkBreathe 18s ease-in-out infinite;
     }
 
     @keyframes watermarkDrift {
@@ -177,7 +195,7 @@
 
     @keyframes watermarkBreathe {
       0%, 100% { opacity: 1; }
-      50%      { opacity: 0.55; }
+      50%      { opacity: 0.4; }
     }
 
     .amap-logo,
@@ -214,7 +232,7 @@
     .info-panel .info-line i {
       font-size: 13px;
       color: var(--text-sub);
-      opacity: 0.85;
+      opacity: 0.7;
       flex-shrink: 0;
     }
 
@@ -254,7 +272,7 @@
       font-weight: 500;
       margin-top: 8px;
       padding-top: 6px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
       line-height: 1.9;
       letter-spacing: 0.2px;
     }
@@ -269,7 +287,7 @@
     .info-panel .info-together .tg-line i {
       font-size: 12px;
       color: var(--accent);
-      opacity: 0.9;
+      opacity: 0.7;
       flex-shrink: 0;
     }
 
@@ -289,13 +307,35 @@
       font-weight: 600;
     }
 
+    /* ============================================================
+       伤感诗句：相逢已是上上签，何须相思入流年
+       ============================================================ */
+    .sorrow-poem {
+      display: block;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-family: var(--font-kai);
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--accent);
+      letter-spacing: 2px;
+      line-height: 1.6;
+      white-space: nowrap;
+      opacity: 0.75;
+      font-style: italic;
+      text-shadow:
+        0 1px 3px var(--text-shadow),
+        0 0 8px rgba(122, 132, 152, 0.25);
+    }
+
     /* ========== 网站说明按钮（无方框） ========== */
     .site-info-btn {
       pointer-events: auto;
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      margin-top: 10px;
+      margin-top: 12px;
       padding: 0;
       background: transparent;
       border: none;
@@ -320,7 +360,7 @@
     .site-info-btn i {
       font-size: 12px;
       color: var(--accent);
-      opacity: 0.9;
+      opacity: 0.7;
     }
 
     /* ========== 网站说明弹窗 ========== */
@@ -334,7 +374,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(6, 10, 16, 0.75);
+      background: rgba(2, 3, 6, 0.85);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       opacity: 0;
@@ -353,10 +393,10 @@
       max-width: 460px;
       max-height: 80vh;
       overflow-y: auto;
-      background: rgba(18, 26, 36, 0.98);
-      border: 1px solid rgba(232, 160, 184, 0.25);
+      background: rgba(10, 11, 16, 0.98);
+      border: 1px solid rgba(122, 132, 152, 0.15);
       border-radius: 16px;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.75);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85);
       padding: 22px 22px 18px;
       transform: translateY(12px) scale(0.96);
       transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1);
@@ -371,7 +411,7 @@
     .site-info-card::-webkit-scrollbar { width: 6px; }
     .site-info-card::-webkit-scrollbar-track { background: transparent; }
     .site-info-card::-webkit-scrollbar-thumb {
-      background: rgba(232, 160, 184, 0.35);
+      background: rgba(122, 132, 152, 0.3);
       border-radius: 3px;
     }
 
@@ -381,7 +421,7 @@
       justify-content: space-between;
       margin-bottom: 14px;
       padding-bottom: 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .site-info-header h3 {
@@ -404,8 +444,8 @@
       width: 26px;
       height: 26px;
       border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
       color: var(--text-sub);
       font-size: 12px;
       cursor: pointer;
@@ -417,7 +457,7 @@
     }
 
     .site-info-close:hover {
-      background: rgba(232, 160, 184, 0.25);
+      background: rgba(122, 132, 152, 0.2);
       color: var(--text-main);
       border-color: var(--accent);
     }
@@ -438,7 +478,7 @@
 
     .site-info-section h4 i {
       font-size: 11px;
-      opacity: 0.9;
+      opacity: 0.8;
     }
 
     .site-info-list {
@@ -464,7 +504,7 @@
       background: var(--accent);
       flex-shrink: 0;
       margin-top: 6px;
-      opacity: 0.7;
+      opacity: 0.6;
     }
 
     .site-info-list li .name {
@@ -476,11 +516,11 @@
     .site-info-footer {
       margin-top: 18px;
       padding-top: 12px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
       font-size: 10.5px;
       color: var(--text-sub);
       text-align: center;
-      opacity: 0.8;
+      opacity: 0.7;
       letter-spacing: 0.3px;
       font-family: var(--font-kai);
     }
@@ -521,7 +561,7 @@
     .music-selector i {
       font-size: 13px;
       color: var(--text-sub);
-      opacity: 0.85;
+      opacity: 0.7;
     }
 
     .music-selector-wrap {
@@ -534,9 +574,9 @@
       align-items: center;
       gap: 6px;
       padding: 4px 10px;
-      background: rgba(30, 40, 50, 0.92);
+      background: rgba(16, 18, 24, 0.92);
       color: var(--text-main);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 6px;
       font-size: 11.5px;
       font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
@@ -544,7 +584,7 @@
       transition: border-color 0.2s ease, background 0.2s ease;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
       user-select: none;
       white-space: nowrap;
       max-width: 150px;
@@ -553,7 +593,7 @@
     }
 
     .music-selector-trigger:hover {
-      border-color: rgba(232, 160, 184, 0.6);
+      border-color: rgba(122, 132, 152, 0.4);
     }
 
     .music-selector-trigger .current-song {
@@ -581,10 +621,10 @@
       width: 220px;
       max-height: 260px;
       overflow-y: auto;
-      background: rgba(20, 28, 38, 0.97);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(10, 11, 16, 0.97);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       padding: 6px;
@@ -606,11 +646,8 @@
     .music-panel::-webkit-scrollbar { width: 5px; }
     .music-panel::-webkit-scrollbar-track { background: transparent; }
     .music-panel::-webkit-scrollbar-thumb {
-      background: rgba(232, 160, 184, 0.4);
+      background: rgba(122, 132, 152, 0.3);
       border-radius: 3px;
-    }
-    .music-panel::-webkit-scrollbar-thumb:hover {
-      background: rgba(232, 160, 184, 0.7);
     }
 
     .music-panel-header {
@@ -618,7 +655,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 4px 8px 8px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       margin-bottom: 4px;
     }
 
@@ -632,7 +669,7 @@
     .music-panel-header .count {
       font-size: 10px;
       color: var(--text-sub);
-      opacity: 0.7;
+      opacity: 0.6;
     }
 
     .music-item {
@@ -650,13 +687,52 @@
     }
 
     .music-item:hover {
-      background: rgba(232, 160, 184, 0.12);
+      background: rgba(122, 132, 152, 0.08);
     }
 
     .music-item.active {
-      background: rgba(232, 160, 184, 0.18);
+      background: rgba(122, 132, 152, 0.14);
       color: var(--accent);
       font-weight: 600;
+    }
+
+    /* ============================================================
+       禁用歌曲：灰色、不可点、不可选中
+       ============================================================ */
+    .music-item.disabled {
+      color: #2e323c;
+      cursor: not-allowed;
+      opacity: 0.4;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+
+    .music-item.disabled:hover {
+      background: transparent;
+    }
+
+    .music-item.disabled .idx,
+    .music-item.disabled .name {
+      color: #2e323c;
+      text-decoration: line-through;
+      text-decoration-color: rgba(122, 132, 152, 0.25);
+      text-decoration-thickness: 1px;
+    }
+
+    .music-item.disabled .playing-icon {
+      display: none;
+    }
+
+    .music-item.disabled::after {
+      content: "\f023";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      font-size: 9px;
+      color: #2e323c;
+      margin-left: 4px;
+      flex-shrink: 0;
     }
 
     .music-item .idx {
@@ -665,7 +741,7 @@
       font-family: 'Consolas', 'Monaco', monospace;
       min-width: 16px;
       text-align: center;
-      opacity: 0.7;
+      opacity: 0.6;
       flex-shrink: 0;
     }
 
@@ -705,30 +781,28 @@
       height: 26px;
       padding: 0 8px;
       border-radius: 6px;
-      background: rgba(30, 40, 50, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(16, 18, 24, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--text-sub);
       font-size: 11px;
       font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
       font-weight: 500;
-      cursor: pointer;
+      cursor: not-allowed;
       transition: all 0.2s ease;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
       white-space: nowrap;
       letter-spacing: 0.5px;
+      opacity: 0.45;
     }
 
-    .play-mode-btn:hover {
-      border-color: rgba(232, 160, 184, 0.6);
-      color: var(--text-main);
+    .play-mode-btn.mode-loop,
+    .play-mode-btn.mode-single,
+    .play-mode-btn.mode-shuffle {
+      color: var(--text-sub);
+      border-color: rgba(255, 255, 255, 0.08);
     }
-
-    .play-mode-btn:active { transform: scale(0.94); }
-    .play-mode-btn.mode-loop { color: var(--accent); border-color: rgba(232, 160, 184, 0.5); }
-    .play-mode-btn.mode-single { color: var(--accent-2); border-color: rgba(143, 203, 232, 0.5); }
-    .play-mode-btn.mode-shuffle { color: #c084fc; border-color: rgba(192, 132, 252, 0.5); }
 
     .progress-container {
       pointer-events: auto;
@@ -738,9 +812,9 @@
       width: 230px;
       padding: 6px 10px;
       border-radius: 12px;
-      background: rgba(20, 28, 38, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+      background: rgba(10, 11, 16, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       transition: opacity 0.3s ease, transform 0.3s ease;
@@ -773,17 +847,17 @@
       top: 50%;
       transform: translateY(-50%);
       height: 8px;
-      background: rgba(255, 255, 255, 0.10);
+      background: rgba(255, 255, 255, 0.04);
       border-radius: 4px;
       transition: height 0.15s ease, background 0.2s ease;
-      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
       pointer-events: none;
     }
 
     .progress-bar-wrap:hover::before,
     .progress-bar-wrap.active::before {
       height: 10px;
-      background: rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .progress-bar-fill {
@@ -797,7 +871,7 @@
       border-radius: 4px;
       pointer-events: none;
       transition: width 0.1s linear, height 0.15s ease;
-      box-shadow: 0 0 8px rgba(232, 160, 184, 0.5);
+      box-shadow: 0 0 8px rgba(122, 132, 152, 0.3);
       z-index: 1;
     }
 
@@ -813,7 +887,7 @@
       top: 50%;
       width: 14px;
       height: 14px;
-      background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(232,160,184,0.6) 40%, transparent 70%);
+      background: radial-gradient(circle, rgba(190,198,210,0.7) 0%, rgba(122,132,152,0.4) 40%, transparent 70%);
       border-radius: 50%;
       transform: translate(50%, -50%);
       opacity: 0;
@@ -831,12 +905,12 @@
       top: 50%;
       width: 20px;
       height: 20px;
-      background: #fff;
+      background: #9ea6b8;
       border-radius: 50%;
       transform: translate(-50%, -50%) scale(0);
       transition: transform 0.15s ease;
       pointer-events: none;
-      box-shadow: 0 0 0 4px rgba(232, 160, 184, 0.35), 0 0 10px rgba(232, 160, 184, 0.8);
+      box-shadow: 0 0 0 4px rgba(122, 132, 152, 0.2), 0 0 10px rgba(122, 132, 152, 0.5);
       z-index: 2;
     }
 
@@ -854,7 +928,8 @@
       min-width: 34px;
       text-align: center;
       font-weight: 600;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+      opacity: 0.7;
     }
 
     .progress-toggle {
@@ -865,8 +940,8 @@
       width: 22px;
       height: 22px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--text-sub);
       font-size: 10px;
       cursor: pointer;
@@ -875,7 +950,7 @@
     }
 
     .progress-toggle:hover {
-      background: rgba(232, 160, 184, 0.25);
+      background: rgba(122, 132, 152, 0.2);
       color: var(--text-main);
       border-color: var(--accent);
     }
@@ -888,15 +963,15 @@
       height: 26px;
       padding: 0 10px;
       border-radius: 8px;
-      background: rgba(20, 28, 38, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(10, 11, 16, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       color: var(--text-sub);
       font-size: 11px;
       cursor: pointer;
       transition: all 0.2s ease;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
       gap: 5px;
       white-space: nowrap;
     }
@@ -938,7 +1013,7 @@
       white-space: nowrap;
     }
 
-    .audio-hint.show { opacity: 0.75; }
+    .audio-hint.show { opacity: 0.65; }
 
     .custom-copyright {
       font-size: 12px;
@@ -963,9 +1038,9 @@
       gap: 6px;
       padding: 3px 10px;
       border-radius: 8px;
-      background: rgba(30, 40, 50, 0.88);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      background: rgba(16, 18, 24, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
       font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -1003,9 +1078,9 @@
       gap: 3px;
       padding: 6px 12px;
       border-radius: 14px;
-      background: rgba(30, 40, 50, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+      background: rgba(16, 18, 24, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
       font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -1052,7 +1127,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(10, 15, 22, 0.9);
+      background: rgba(4, 5, 8, 0.95);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       opacity: 0;
@@ -1067,7 +1142,7 @@
       max-width: 82vw;
       max-height: 82vh;
       border-radius: 12px;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85);
       transform: scale(0.92);
       transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1);
       object-fit: contain;
@@ -1106,6 +1181,7 @@
       user-select: none;
       transition: opacity 0.4s ease, transform 0.4s ease;
       pointer-events: none;
+      filter: grayscale(0.65) brightness(0.82) contrast(0.95);
     }
 
     #live2d-widget.dragging {
@@ -1132,19 +1208,19 @@
       bottom: calc(100% + 10px);
       max-width: 250px;
       padding: 0.7rem 0.95rem;
-      background: rgba(26, 26, 38, 0.95);
-      border: 1px solid rgba(192, 132, 252, 0.35);
+      background: rgba(16, 18, 24, 0.95);
+      border: 1px solid rgba(122, 132, 152, 0.25);
       border-radius: 14px;
       font-size: 0.82rem;
       font-weight: 600;
       line-height: 1.5;
-      color: #e8e8f0;
+      color: #b8bcc6;
       opacity: 0;
       transform: translateY(6px) scale(0.96);
       transition: opacity 0.25s ease, transform 0.25s ease;
       pointer-events: none;
       backdrop-filter: blur(10px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
       z-index: 10;
     }
 
@@ -1157,9 +1233,9 @@
       bottom: -7px;
       width: 12px;
       height: 12px;
-      background: rgba(26, 26, 38, 0.95);
-      border-right: 1px solid rgba(192, 132, 252, 0.35);
-      border-bottom: 1px solid rgba(192, 132, 252, 0.35);
+      background: rgba(16, 18, 24, 0.95);
+      border-right: 1px solid rgba(122, 132, 152, 0.25);
+      border-bottom: 1px solid rgba(122, 132, 152, 0.25);
       transform: rotate(45deg);
     }
 
@@ -1169,7 +1245,7 @@
       left: 50%;
       transform: translateX(-50%);
       font-size: 0.65rem;
-      color: #8888a0;
+      color: #5a5e6e;
       white-space: nowrap;
       pointer-events: none;
       display: none;
@@ -1183,9 +1259,9 @@
       width: 36px;
       height: 36px;
       border-radius: 10px;
-      border: 1px solid rgba(192, 132, 252, 0.5);
-      background: rgba(26, 26, 38, 0.92);
-      color: #c084fc;
+      border: 1px solid rgba(122, 132, 152, 0.4);
+      background: rgba(16, 18, 24, 0.92);
+      color: #7a8498;
       font-size: 16px;
       font-weight: 700;
       line-height: 1;
@@ -1194,13 +1270,13 @@
       align-items: center;
       justify-content: center;
       transition: background 0.2s, transform 0.2s, left 0.3s ease, bottom 0.3s ease;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(8px);
       user-select: none;
     }
 
     #l2d-visibility-toggle:hover {
-      background: rgba(192, 132, 252, 0.3);
+      background: rgba(122, 132, 152, 0.25);
       transform: scale(1.08);
     }
 
@@ -1209,6 +1285,8 @@
     #l2d-visibility-toggle.model-hidden { left: 24px; bottom: 24px; }
 
     @media (max-width: 768px) {
+      #rain-layer { opacity: 0.4; }
+
       .intro-title { font-size: 18px; letter-spacing: 6px; text-indent: 6px; }
       .intro-sub { font-size: 10px; letter-spacing: 3px; text-indent: 3px; }
       .info-panel { right: 12px; top: 10px; }
@@ -1220,6 +1298,7 @@
       .info-panel .info-together { font-size: 10px; margin-top: 6px; padding-top: 5px; line-height: 1.8; }
       .info-panel .info-together .tg-name { font-size: 11px; }
       .info-panel .info-together .tg-line i { font-size: 11px; }
+      .sorrow-poem { font-size: 10.5px; letter-spacing: 1.5px; margin-top: 8px; padding-top: 8px; }
       .bottom-right-stack { right: 12px; bottom: 10px; }
       .audio-btn { font-size: 11px; }
       .audio-btn i { font-size: 12px; }
@@ -1240,7 +1319,7 @@
 
       #watermark-layer {
         animation: none;
-        opacity: 0.9;
+        opacity: 0.85;
         will-change: auto;
         transform: none;
       }
@@ -1299,6 +1378,7 @@
     <div id="amap-container"></div>
     <div id="watermark-layer"></div>
     <div id="noise-layer"></div>
+    <canvas id="rain-layer"></canvas>
 
     <div class="info-panel">
       <div class="info-line">
@@ -1319,6 +1399,7 @@
           <span class="tg-name">陈落落</span><span class="tg-time" id="tgLuoluo">--</span>
         </span>
       </span>
+      <span class="sorrow-poem">相逢已是上上签，何须相思入流年</span>
       <button class="site-info-btn" id="siteInfoBtn" title="查看网站说明">
         <i class="fa-solid fa-circle-info"></i>
         <span>网站说明</span>
@@ -1343,7 +1424,7 @@
             </div>
           </div>
         </div>
-        <button class="play-mode-btn" id="playModeBtn" title="播放模式：列表循环">列表</button>
+        <button class="play-mode-btn" id="playModeBtn" title="仅循环第一首">锁定</button>
       </div>
 
       <div class="progress-container" id="progressContainer">
@@ -1579,6 +1660,7 @@
       const progressShowBtn = document.getElementById('progressShowBtn');
 
       const PLAYLIST = [
+        { name: 'CryForMe', src: 'https://videotourl.com/audio/1790847105326-b93a3068-f447-4526-9fca-36dffe4af26d.mp3' },
         { name: '我们俩', src: 'https://videotourl.com/audio/1790497581856-3d3fd584-9eaf-4600-8dae-ee83f29a5612.mp3' },
         { name: '特别的人', src: 'https://videotourl.com/audio/1790497672084-a0a1d890-d8f1-4515-a561-af048d49d930.mp3' },
         { name: '爱错', src: 'https://videotourl.com/audio/1790497709323-b0d6f452-803b-40ae-982b-0a322c419da5.mp3' },
@@ -1604,7 +1686,8 @@
       let isSeeking = false;
       let progressHidden = false;
 
-      let playMode = 'loop';
+      // 锁定：只能播放第一首
+      const LOCKED_INDEX = 0;
 
       function initMusicSelector() {
         musicListContainer.innerHTML = '';
@@ -1617,27 +1700,37 @@
 
         validSongs.forEach((song, index) => {
           const item = document.createElement('div');
-          item.className = 'music-item' + (index === currentSongIndex ? ' active' : '');
+          const isDisabled = index !== LOCKED_INDEX;
+          item.className = 'music-item' + (index === currentSongIndex ? ' active' : '') + (isDisabled ? ' disabled' : '');
           item.dataset.index = index;
           item.innerHTML = `
             <span class="idx">${String(index + 1).padStart(2, '0')}</span>
             <span class="name">${song.name}</span>
             <i class="fa-solid fa-volume-high playing-icon"></i>
           `;
-          item.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const wasPlaying = audioPlaying;
-            loadSong(index, wasPlaying);
-            closeMusicPanel();
-          });
+          if (isDisabled) {
+            // 禁用：不绑定点击、不响应、不可选
+            item.addEventListener('click', (e) => {
+              e.stopPropagation();
+              e.preventDefault();
+            });
+            item.addEventListener('mousedown', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            });
+          } else {
+            item.addEventListener('click', (e) => {
+              e.stopPropagation();
+              loadSong(LOCKED_INDEX, audioPlaying);
+              closeMusicPanel();
+            });
+          }
           musicListContainer.appendChild(item);
         });
 
-        if (validSongs.length > 0) {
-          currentSongIndex = 0;
-          bgAudio.src = validSongs[0].src;
-          currentSongName.textContent = validSongs[0].name;
-        }
+        currentSongIndex = LOCKED_INDEX;
+        bgAudio.src = validSongs[LOCKED_INDEX].src;
+        currentSongName.textContent = validSongs[LOCKED_INDEX].name;
       }
 
       function updateMusicListUI() {
@@ -1664,6 +1757,8 @@
       });
 
       function loadSong(index, autoPlay) {
+        // 强制只能加载第一首
+        if (index !== LOCKED_INDEX) index = LOCKED_INDEX;
         if (index < 0 || index >= validSongs.length) return;
         currentSongIndex = index;
         bgAudio.src = validSongs[index].src;
@@ -1676,45 +1771,6 @@
         if (autoPlay) {
           bgAudio.play().then(() => updateAudioUI(true)).catch(() => updateAudioUI(false));
         }
-      }
-
-      function updatePlayModeUI() {
-        playModeBtn.classList.remove('mode-loop', 'mode-single', 'mode-shuffle');
-        if (playMode === 'loop') {
-          playModeBtn.textContent = '列表';
-          playModeBtn.classList.add('mode-loop');
-          playModeBtn.title = '播放模式：列表循环';
-        } else if (playMode === 'single') {
-          playModeBtn.textContent = '单曲';
-          playModeBtn.classList.add('mode-single');
-          playModeBtn.title = '播放模式：单曲循环';
-        } else if (playMode === 'shuffle') {
-          playModeBtn.textContent = '随机';
-          playModeBtn.classList.add('mode-shuffle');
-          playModeBtn.title = '播放模式：随机播放';
-        }
-      }
-
-      playModeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (playMode === 'loop') playMode = 'single';
-        else if (playMode === 'single') playMode = 'shuffle';
-        else playMode = 'loop';
-        updatePlayModeUI();
-      });
-
-      function getNextIndex() {
-        if (validSongs.length === 0) return 0;
-        if (validSongs.length === 1) return 0;
-        if (playMode === 'single') return currentSongIndex;
-        if (playMode === 'shuffle') {
-          let next = currentSongIndex;
-          while (next === currentSongIndex) {
-            next = Math.floor(Math.random() * validSongs.length);
-          }
-          return next;
-        }
-        return (currentSongIndex + 1) % validSongs.length;
       }
 
       function updateAudioUI(playing) {
@@ -1780,14 +1836,10 @@
         }
       });
 
+      // 播放结束：强制循环第一首
       bgAudio.addEventListener('ended', () => {
-        const nextIndex = getNextIndex();
-        if (nextIndex === currentSongIndex && playMode === 'single') {
-          bgAudio.currentTime = 0;
-          bgAudio.play().then(() => updateAudioUI(true)).catch(() => updateAudioUI(false));
-        } else {
-          loadSong(nextIndex, true);
-        }
+        bgAudio.currentTime = 0;
+        bgAudio.play().then(() => updateAudioUI(true)).catch(() => updateAudioUI(false));
       });
 
       // 进度条
@@ -1906,7 +1958,6 @@
       });
 
       initMusicSelector();
-      updatePlayModeUI();
 
       // IP + 位置
       async function fetchVisitorIP() {
@@ -2055,7 +2106,7 @@
         animateEnable: !IS_MOBILE,
         jogEnable: !IS_MOBILE,
         zooms: IS_MOBILE ? [3, 12] : [3, 18],
-        mapStyle: IS_MOBILE ? 'amap://styles/darkblue' : 'amap://styles/normal'
+        mapStyle: IS_MOBILE ? 'amap://styles/darkblue' : 'amap://styles/dark'
       });
 
       if (!IS_MOBILE) {
@@ -2067,8 +2118,8 @@
       window.map = map;
 
       function updateWatermark() {
-        const color = 'rgba(180, 200, 220, 0.05)';
-        const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='180' height='120' viewBox='0 0 180 120'><text x='10' y='40' font-family='LXGW WenKai, Microsoft YaHei, PingFang SC, sans-serif' font-size='22' font-weight='500' fill='${color}' transform='rotate(-22 90 60)'>白菜</text><text x='100' y='100' font-family='LXGW WenKai, Microsoft YaHei, PingFang SC, sans-serif' font-size='22' font-weight='500' fill='${color}' transform='rotate(-22 90 60)'>白菜</text></svg>`;
+        const color = 'rgba(160, 175, 200, 0.045)';
+        const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='180' height='120' viewBox='0 0 180 120'><text x='10' y='40' font-family='LXGW WenKai, Microsoft YaHei, PingFang SC, sans-serif' font-size='22' font-weight='500' fill='${color}' transform='rotate(-22 90 60)'>思</text><text x='100' y='100' font-family='LXGW WenKai, Microsoft YaHei, PingFang SC, sans-serif' font-size='22' font-weight='500' fill='${color}' transform='rotate(-22 90 60)'>思</text></svg>`;
         document.getElementById('watermark-layer').style.backgroundImage =
           `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
       }
@@ -2156,7 +2207,7 @@
         const clickAttr = clickable
           ? `onclick="event.stopPropagation();event.preventDefault();window._openImageViewer && window._openImageViewer('${src}')"`
           : '';
-        return `<div ${clickAttr} style="width:${s}px;height:${s}px;border-radius:8px;overflow:hidden;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,20,40,0.25);background:${fallbackColor};display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600;${cursorStyle}">
+        return `<div ${clickAttr} style="width:${s}px;height:${s}px;border-radius:8px;overflow:hidden;border:2px solid rgba(160,170,190,0.6);box-shadow:0 2px 8px rgba(0,0,0,0.5);background:${fallbackColor};display:flex;align-items:center;justify-content:center;color:#b8bcc6;font-size:11px;font-weight:600;filter:grayscale(0.5) brightness(0.85);${cursorStyle}">
           <img src="${src}" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none;" alt=""
                onerror="this.style.display='none';this.parentNode.innerHTML='${label}';">
         </div>`;
@@ -2252,8 +2303,8 @@
         zIndex: 150
       });
       jiaxiangPhotoGroup.setContent(`
-        <div style="padding:6px;background:rgba(30,40,50,0.85);border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.4);">
-          ${makeSingleImg(IMG_JX_1, '#c44536', '图1', IMG_SIZE, true)}
+        <div style="padding:6px;background:rgba(16,18,24,0.85);border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.6);">
+          ${makeSingleImg(IMG_JX_1, '#3a4452', '图1', IMG_SIZE, true)}
         </div>
       `);
       jiaxiangPhotoGroup.setMap(map);
@@ -2264,10 +2315,10 @@
         anchor: 'top-center',
         offset: new AMap.Pixel(0, 36),
         style: {
-          'padding': '3px 10px', 'background-color': 'rgba(30,40,50,0.9)',
-          'border': '1px solid #2b6f9b', 'border-radius': '4px',
-          'color': '#8fcbe8', 'font-size': '12px', 'font-weight': '500',
-          'white-space': 'nowrap', 'box-shadow': '0 2px 6px rgba(0,0,0,0.3)',
+          'padding': '3px 10px', 'background-color': 'rgba(16,18,24,0.9)',
+          'border': '1px solid #4a5568', 'border-radius': '4px',
+          'color': '#8a94a8', 'font-size': '12px', 'font-weight': '500',
+          'white-space': 'nowrap', 'box-shadow': '0 2px 6px rgba(0,0,0,0.5)',
           'font-family': 'LXGW WenKai, Microsoft YaHei, sans-serif'
         },
         zIndex: 200
@@ -2281,8 +2332,8 @@
         zIndex: 150
       });
       nanchuanPhotoGroup.setContent(`
-        <div style="padding:6px;background:rgba(30,40,50,0.85);border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.4);">
-          ${makeSingleImg(IMG_NC_1, '#c44536', '图3', IMG_SIZE, true)}
+        <div style="padding:6px;background:rgba(16,18,24,0.85);border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.6);">
+          ${makeSingleImg(IMG_NC_1, '#3a4452', '图3', IMG_SIZE, true)}
         </div>
       `);
       nanchuanPhotoGroup.setMap(map);
@@ -2293,10 +2344,10 @@
         anchor: 'top-center',
         offset: new AMap.Pixel(0, 36),
         style: {
-          'padding': '3px 10px', 'background-color': 'rgba(30,40,50,0.9)',
-          'border': '1px solid #c44536', 'border-radius': '4px',
-          'color': '#e8a0b8', 'font-size': '12px', 'font-weight': '500',
-          'white-space': 'nowrap', 'box-shadow': '0 2px 6px rgba(0,0,0,0.3)',
+          'padding': '3px 10px', 'background-color': 'rgba(16,18,24,0.9)',
+          'border': '1px solid #6b5560', 'border-radius': '4px',
+          'color': '#9ea6b8', 'font-size': '12px', 'font-weight': '500',
+          'white-space': 'nowrap', 'box-shadow': '0 2px 6px rgba(0,0,0,0.5)',
           'font-family': 'LXGW WenKai, Microsoft YaHei, sans-serif'
         },
         zIndex: 200
@@ -2311,22 +2362,22 @@
 
       new AMap.BezierCurve({
         path: [YANGTUN, ctrlA, NANCHUAN],
-        strokeColor: '#e8a0b8', strokeWeight: 5, strokeOpacity: 0.12,
+        strokeColor: '#7a8498', strokeWeight: 5, strokeOpacity: 0.08,
         lineJoin: 'round', zIndex: 49, showDir: false
       }).setMap(map);
       new AMap.BezierCurve({
         path: [YANGTUN, ctrlA, NANCHUAN],
-        strokeColor: '#e8a0b8', strokeWeight: 2, strokeOpacity: 0.6,
+        strokeColor: '#7a8498', strokeWeight: 2, strokeOpacity: 0.45,
         lineJoin: 'round', zIndex: 50, showDir: false
       }).setMap(map);
       new AMap.BezierCurve({
         path: [NANCHUAN, ctrlA, YANGTUN],
-        strokeColor: '#e8a0b8', strokeWeight: 5, strokeOpacity: 0.12,
+        strokeColor: '#7a8498', strokeWeight: 5, strokeOpacity: 0.08,
         lineJoin: 'round', zIndex: 49, showDir: false
       }).setMap(map);
       new AMap.BezierCurve({
         path: [NANCHUAN, ctrlA, YANGTUN],
-        strokeColor: '#e8a0b8', strokeWeight: 2, strokeOpacity: 0.6,
+        strokeColor: '#7a8498', strokeWeight: 2, strokeOpacity: 0.45,
         lineJoin: 'round', zIndex: 50, showDir: false
       }).setMap(map);
 
@@ -2348,27 +2399,27 @@
           if (allCoords.length < 2) return;
 
           new AMap.Polyline({
-            path: allCoords, strokeColor: '#8fcbe8', strokeWeight: 5,
-            strokeOpacity: 0.08, lineJoin: 'round', zIndex: 44, showDir: false
+            path: allCoords, strokeColor: '#7a8498', strokeWeight: 5,
+            strokeOpacity: 0.06, lineJoin: 'round', zIndex: 44, showDir: false
           }).setMap(map);
 
           new AMap.Polyline({
-            path: allCoords, strokeColor: '#98a8b8', strokeWeight: 1.8,
-            strokeOpacity: 0.55, lineJoin: 'round', zIndex: 45, showDir: false
+            path: allCoords, strokeColor: '#6a7488', strokeWeight: 1.5,
+            strokeOpacity: 0.4, lineJoin: 'round', zIndex: 45, showDir: false
           }).setMap(map);
         }).catch(() => {});
       }
 
       const photoJX_A = new AMap.Marker({
         position: YANGTUN,
-        content: makeSingleImg(IMG_JX_1, '#c44536', '图1', IMG_SIZE, true),
+        content: makeSingleImg(IMG_JX_1, '#3a4452', '图1', IMG_SIZE, true),
         offset: new AMap.Pixel(-IMG_SIZE / 2, -IMG_SIZE / 2),
         zIndex: 250
       });
 
       const photoNC_A = new AMap.Marker({
         position: NANCHUAN,
-        content: makeSingleImg(IMG_NC_1, '#c44536', '图3', IMG_SIZE, true),
+        content: makeSingleImg(IMG_NC_1, '#3a4452', '图3', IMG_SIZE, true),
         offset: new AMap.Pixel(-IMG_SIZE / 2, -IMG_SIZE / 2),
         zIndex: 250
       });
@@ -2392,11 +2443,11 @@
           offset: new AMap.Pixel(0, offsetY),
           style: {
             'padding': '8px 18px', 'border-radius': '20px',
-            'background-color': 'rgba(30,40,50,0.92)',
+            'background-color': 'rgba(16,18,24,0.92)',
             'border': '1px solid ' + color,
             'color': color, 'font-size': '13px', 'font-weight': '500',
             'white-space': 'nowrap',
-            'box-shadow': '0 6px 18px rgba(0,0,0,0.4)',
+            'box-shadow': '0 6px 18px rgba(0,0,0,0.6)',
             'opacity': '0', 'transition': 'opacity 0.4s ease'
           },
           zIndex: 300
@@ -2404,11 +2455,11 @@
       }
 
       const nanchuanTextOffsetY = Math.round(IMG_SIZE / 2 + 16);
-      const textToNanchuan = createArrivalTextBelow(NANCHUAN, '天天开心', '#e8a0b8', nanchuanTextOffsetY);
+      const textToNanchuan = createArrivalTextBelow(NANCHUAN, '今生不见', '#7a8498', nanchuanTextOffsetY);
       textToNanchuan.setMap(map);
 
       const jiaxiangTextOffsetY = Math.round(IMG_SIZE / 2 + 16);
-      const textToJiaxiang = createArrivalTextBelow(YANGTUN, '天天开心', '#8fcbe8', jiaxiangTextOffsetY);
+      const textToJiaxiang = createArrivalTextBelow(YANGTUN, '来世不念', '#8a94a8', jiaxiangTextOffsetY);
       textToJiaxiang.setMap(map);
 
       function showText(textObj, duration) {
@@ -2419,8 +2470,8 @@
         }, duration);
       }
 
-      const DURATION = IS_MOBILE ? 3000 : 4000;
-      const PAUSE = 600;
+      const DURATION = IS_MOBILE ? 4500 : 5500;
+      const PAUSE = 800;
 
       function flyMultiple(markersWithPath, duration) {
         return new Promise((resolve) => {
@@ -2462,7 +2513,7 @@
               return;
             }
             if (dom) {
-              dom.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
+              dom.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
               dom.style.transform = 'scale(0.4)';
               dom.style.opacity = '0';
             }
@@ -2472,7 +2523,7 @@
               if (d) { d.style.transition = ''; d.style.transform = ''; d.style.opacity = ''; }
               done++;
               if (done === markers.length) resolve();
-            }, 420);
+            }, 620);
           });
         });
       }
@@ -2493,8 +2544,8 @@
           await flyMultiple([{ marker: photoJX_A, p0: YANGTUN, p1: ctrlA, p2: NANCHUAN }], DURATION);
           spawnArrivalGlow(NANCHUAN);
           await fadeOutMarkers([photoJX_A]);
-          showText(textToNanchuan, 2000);
-          await new Promise(r => setTimeout(r, PAUSE + 2000));
+          showText(textToNanchuan, 2500);
+          await new Promise(r => setTimeout(r, PAUSE + 2500));
 
           photoNC_A.show();
           { const dom = photoNC_A.getContentDom(); if (dom) { dom.style.transform = ''; dom.style.opacity = ''; } }
@@ -2502,8 +2553,8 @@
           await flyMultiple([{ marker: photoNC_A, p0: NANCHUAN, p1: ctrlA, p2: YANGTUN }], DURATION);
           spawnArrivalGlow(YANGTUN);
           await fadeOutMarkers([photoNC_A]);
-          showText(textToJiaxiang, 2000);
-          await new Promise(r => setTimeout(r, PAUSE + 2000));
+          showText(textToJiaxiang, 2500);
+          await new Promise(r => setTimeout(r, PAUSE + 2500));
         }
       }
 
@@ -2536,6 +2587,126 @@
     })();
   </script>
 
+  <!-- 雨滴效果 -->
+  <script>
+    (function () {
+      const canvas = document.getElementById('rain-layer');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      let W = 0, H = 0;
+      let dpr = 1;
+      const IS_MOBILE = window.innerWidth <= 768;
+
+      const DROP_COUNT = IS_MOBILE ? 90 : 180;
+
+      const drops = [];
+      const splashes = [];
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        W = canvas.clientWidth;
+        H = canvas.clientHeight;
+        canvas.width = Math.floor(W * dpr);
+        canvas.height = Math.floor(H * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+
+      function rand(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      function createDrop() {
+        return {
+          x: rand(-50, W + 50),
+          y: rand(-H, 0),
+          vy: rand(IS_MOBILE ? 5 : 7, IS_MOBILE ? 10 : 15),
+          vx: rand(-0.4, -0.12),
+          len: rand(10, 22),
+          width: rand(0.4, 1),
+          alpha: rand(0.1, 0.5)
+        };
+      }
+
+      function createSplash(x, y) {
+        return {
+          x: x,
+          y: y,
+          r: 0,
+          maxR: rand(3, 8),
+          alpha: 0.4,
+          vy: rand(-0.3, -0.1)
+        };
+      }
+
+      function init() {
+        resize();
+        drops.length = 0;
+        for (let i = 0; i < DROP_COUNT; i++) {
+          const d = createDrop();
+          d.y = rand(-H, H);
+          drops.push(d);
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+
+        ctx.lineCap = 'round';
+        for (let i = 0; i < drops.length; i++) {
+          const d = drops[i];
+
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(140, 160, 190, ${d.alpha})`;
+          ctx.lineWidth = d.width;
+
+          const endX = d.x + d.vx * (d.len / d.vy) * 8;
+          const endY = d.y + d.len;
+          ctx.moveTo(d.x, d.y);
+          ctx.lineTo(endX, endY);
+          ctx.stroke();
+
+          d.x += d.vx;
+          d.y += d.vy;
+
+          if (d.y > H + 30 || d.x < -100 || d.x > W + 100) {
+            drops[i] = createDrop();
+          } else {
+            if (d.y > H * 0.9 && Math.random() < 0.02) {
+              splashes.push(createSplash(d.x, d.y));
+            }
+          }
+        }
+
+        for (let i = splashes.length - 1; i >= 0; i--) {
+          const s = splashes[i];
+          s.r += 0.35;
+          s.alpha *= 0.94;
+          s.y += s.vy;
+
+          if (s.alpha < 0.02 || s.r > s.maxR) {
+            splashes.splice(i, 1);
+            continue;
+          }
+
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(140, 160, 190, ${s.alpha})`;
+          ctx.lineWidth = 0.8;
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      window.addEventListener('resize', resize);
+      window.addEventListener('orientationchange', () => setTimeout(resize, 300));
+
+      init();
+      requestAnimationFrame(draw);
+    })();
+  </script>
+
   <script>
     (function () {
       "use strict";
@@ -2543,12 +2714,12 @@
       const MODEL_URL = "https://cdn.jsdelivr.net/gh/baicaiacabbge/baicaiclcy@main/baicai2d/object_live2d_020_101.asset.model3.json";
 
       const MESSAGES = [
-        "我们",
-        "陈落落天天开心",
-        "好好的",
-        "但愿长久",
-        "陈白白&陈落落",
-        "要开心呀"
+        "我们……",
+        "你还好吗",
+        "我还在",
+        "想你了",
+        "陈落落",
+        "别来无恙"
       ];
       let messageIndex = 0;
 
@@ -2603,43 +2774,42 @@
           const tx = fresh ? pointerFocus.targetX : 0;
           const ty = fresh ? pointerFocus.targetY : 0;
 
-          pointerFocus.x += (tx - pointerFocus.x) * 0.16;
-          pointerFocus.y += (ty - pointerFocus.y) * 0.16;
+          pointerFocus.x += (tx - pointerFocus.x) * 0.08;
+          pointerFocus.y += (ty - pointerFocus.y) * 0.08;
 
           try {
-            core.setParameterValueById("ParamEyeBallX", pointerFocus.x * 0.7);
-            core.setParameterValueById("ParamEyeBallY", -pointerFocus.y * 0.5);
-            core.addParameterValueById("ParamAngleX", pointerFocus.x * 12, 0.5);
-            core.addParameterValueById("ParamAngleY", -pointerFocus.y * 8, 0.5);
-            core.addParameterValueById("ParamBodyAngleX", pointerFocus.x * 4, 0.35);
+            core.setParameterValueById("ParamEyeBallX", pointerFocus.x * 0.4);
+            core.setParameterValueById("ParamEyeBallY", -pointerFocus.y * 0.3);
+            core.addParameterValueById("ParamAngleX", pointerFocus.x * 6, 0.3);
+            core.addParameterValueById("ParamAngleY", -pointerFocus.y * 4, 0.3);
+            core.addParameterValueById("ParamBodyAngleX", pointerFocus.x * 2, 0.2);
 
-            core.setParameterValueById("ParamBreath", 0.5 + Math.sin(t * 1.25) * 0.18);
-            core.addParameterValueById("ParamBodyAngleY", Math.sin(t * 0.34) * 0.35, 0.28);
-            core.addParameterValueById("ParamBodyAngleZ", Math.sin(t * 0.42) * 0.26, 0.24);
-            core.addParameterValueById("ParamAngleZ", Math.sin(t * 0.38) * 0.24, 0.2);
+            // 呼吸更慢、更沉
+            core.setParameterValueById("ParamBreath", 0.35 + Math.sin(t * 0.6) * 0.12);
+            core.addParameterValueById("ParamBodyAngleY", Math.sin(t * 0.15) * 0.15, 0.15);
+            core.addParameterValueById("ParamBodyAngleZ", Math.sin(t * 0.2) * 0.12, 0.15);
+            core.addParameterValueById("ParamAngleZ", Math.sin(t * 0.18) * 0.1, 0.12);
 
-            const wispScale = 1.12;
-            core.addParameterValueById("ParamWillOTheWhisp1X", Math.sin(t * 0.64) * 0.58 * wispScale, 0.12);
-            core.addParameterValueById("ParamWillOTheWhisp1Y", Math.sin(t * 0.78 + 1.1) * 0.48 * wispScale, 0.12);
-            core.addParameterValueById("ParamWillOTheWhisp2X", -Math.sin(t * 0.42 + 0.6) * 0.54 * wispScale, 0.12);
-            core.addParameterValueById("ParamWillOTheWhisp2Y", Math.sin(t * 0.64) * 0.42 * wispScale, 0.12);
-            core.addParameterValueById("ParamWillOTheWhisp3X", Math.sin(t * 0.78 + 1.1) * 0.52 * wispScale, 0.12);
-            core.addParameterValueById("ParamWillOTheWhisp3Y", -Math.sin(t * 0.42 + 0.6) * 0.45 * wispScale, 0.12);
+            const wispScale = 0.6;
+            core.addParameterValueById("ParamWillOTheWhisp1X", Math.sin(t * 0.32) * 0.3 * wispScale, 0.08);
+            core.addParameterValueById("ParamWillOTheWhisp1Y", Math.sin(t * 0.4 + 1.1) * 0.25 * wispScale, 0.08);
+            core.addParameterValueById("ParamWillOTheWhisp2X", -Math.sin(t * 0.2 + 0.6) * 0.28 * wispScale, 0.08);
+            core.addParameterValueById("ParamWillOTheWhisp2Y", Math.sin(t * 0.32) * 0.22 * wispScale, 0.08);
 
-            core.addParameterValueById("ParamChainLShake", Math.sin(t * 0.64) * 0.44, 0.14);
-            core.addParameterValueById("ParamChainRShake", Math.sin(t * 0.42 + 0.6) * 0.44, 0.14);
+            core.addParameterValueById("ParamChainLShake", Math.sin(t * 0.3) * 0.22, 0.1);
+            core.addParameterValueById("ParamChainRShake", Math.sin(t * 0.22 + 0.6) * 0.22, 0.1);
 
             if (now > nextBlinkAt) {
-              blinkUntil = now + 140;
-              nextBlinkAt = now + 2400 + Math.random() * 3200;
+              blinkUntil = now + 180;
+              nextBlinkAt = now + 3200 + Math.random() * 4200;
             }
             if (now < blinkUntil) {
-              core.setParameterValueById("ParamEyeLOpen", 0.08);
-              core.setParameterValueById("ParamEyeROpen", 0.08);
+              core.setParameterValueById("ParamEyeLOpen", 0.05);
+              core.setParameterValueById("ParamEyeROpen", 0.05);
             }
 
             if (now < mouthOpenUntil) {
-              core.setParameterValueById("ParamMouthOpenY", 1);
+              core.setParameterValueById("ParamMouthOpenY", 0.6);
             }
           } catch (e) {}
         });
@@ -2649,7 +2819,7 @@
 
       async function loadModel() {
         statusEl.textContent = "模型加载中…";
-        statusEl.style.color = "#8888a0";
+        statusEl.style.color = "#5a5e6e";
 
         try {
           model = await PIXI.live2d.Live2DModel.from(MODEL_URL, {
@@ -2662,18 +2832,18 @@
           fitModel();
 
           statusEl.textContent = "Live2D Ready · Yuyuko";
-          statusEl.style.color = "#6b7280";
+          statusEl.style.color = "#4a4e5c";
 
           setTimeout(() => { playIdleMotion(); }, 900);
           setTimeout(() => sayNext(), 900);
         } catch (err) {
           statusEl.textContent = "加载失败";
-          statusEl.style.color = "#f87171";
+          statusEl.style.color = "#7a4452";
         }
       }
 
       function getMotionDuration(motion) {
-        if (!motion || !motion.Motion) return 3000;
+        if (!motion || !motion.Motion) return 4000;
         const curves = motion.Motion.Curves || [];
         let maxTime = 0;
         for (const curve of curves) {
@@ -2684,7 +2854,7 @@
             }
           }
         }
-        return maxTime > 0 ? maxTime * 1000 : 3000;
+        return maxTime > 0 ? maxTime * 1000 : 4000;
       }
 
       function playIdleMotion() {
@@ -2701,10 +2871,10 @@
           mm.startMotion(group, index);
           const duration = getMotionDuration(list[index]);
           clearTimeout(idleTimer);
-          idleTimer = setTimeout(playIdleMotion, Math.max(1200, duration * 0.85));
+          idleTimer = setTimeout(playIdleMotion, Math.max(2000, duration * 0.9));
         } catch (e) {
           clearTimeout(idleTimer);
-          idleTimer = setTimeout(playIdleMotion, 3000);
+          idleTimer = setTimeout(playIdleMotion, 4000);
         }
       }
 
@@ -2729,7 +2899,7 @@
 
       function onModelTap() {
         sayNext();
-        mouthOpenUntil = performance.now() + 600;
+        mouthOpenUntil = performance.now() + 700;
         playIdleMotion();
       }
 
@@ -2744,7 +2914,7 @@
           else bubble.style.left = "0";
         });
         clearTimeout(bubbleTimer);
-        bubbleTimer = setTimeout(() => bubble.classList.remove("show"), 3200);
+        bubbleTimer = setTimeout(() => bubble.classList.remove("show"), 4000);
       }
 
       window.addEventListener("pointermove", (e) => {
