@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>思念</title>
+  <title>我们</title>
 
   <link rel="dns-prefetch" href="//videotourl.com">
   <link rel="preconnect" href="https://videotourl.com" crossorigin>
@@ -47,9 +47,6 @@
       background-color: #06060a;
     }
 
-    /* ============================================================
-       伤感主题色板 —— 冷灰蓝 + 深墨黑
-       ============================================================ */
     :root {
       --page-bg: #06060a;
       --text-main: #a8acb8;
@@ -138,7 +135,7 @@
       background-color: #0a0b10;
     }
 
-    /* 雨滴效果层 */
+    /* 雨滴效果层 —— 加强版 */
     #rain-layer {
       position: fixed;
       top: 0;
@@ -148,7 +145,7 @@
       height: 100dvh;
       z-index: 4;
       pointer-events: none;
-      opacity: 0.55;
+      opacity: 0.95;
       mix-blend-mode: screen;
     }
 
@@ -307,9 +304,6 @@
       font-weight: 600;
     }
 
-    /* ============================================================
-       伤感诗句：相逢已是上上签，何须相思入流年
-       ============================================================ */
     .sorrow-poem {
       display: block;
       margin-top: 12px;
@@ -329,7 +323,6 @@
         0 0 8px rgba(122, 132, 152, 0.25);
     }
 
-    /* ========== 网站说明按钮（无方框） ========== */
     .site-info-btn {
       pointer-events: auto;
       display: inline-flex;
@@ -363,7 +356,6 @@
       opacity: 0.7;
     }
 
-    /* ========== 网站说明弹窗 ========== */
     .site-info-modal {
       position: fixed;
       top: 0;
@@ -697,42 +689,23 @@
     }
 
     /* ============================================================
-       禁用歌曲：灰色、不可点、不可选中
+       禁用歌曲：保持原样式，只让点击无效、不可选中
        ============================================================ */
     .music-item.disabled {
-      color: #2e323c;
       cursor: not-allowed;
-      opacity: 0.4;
       user-select: none;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .music-item.disabled:hover {
       background: transparent;
     }
 
-    .music-item.disabled .idx,
-    .music-item.disabled .name {
-      color: #2e323c;
-      text-decoration: line-through;
-      text-decoration-color: rgba(122, 132, 152, 0.25);
-      text-decoration-thickness: 1px;
-    }
-
     .music-item.disabled .playing-icon {
       display: none;
-    }
-
-    .music-item.disabled::after {
-      content: "\f023";
-      font-family: "Font Awesome 6 Free";
-      font-weight: 900;
-      font-size: 9px;
-      color: #2e323c;
-      margin-left: 4px;
-      flex-shrink: 0;
     }
 
     .music-item .idx {
@@ -794,7 +767,7 @@
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
       white-space: nowrap;
       letter-spacing: 0.5px;
-      opacity: 0.45;
+      opacity: 0.55;
     }
 
     .play-mode-btn.mode-loop,
@@ -1285,7 +1258,7 @@
     #l2d-visibility-toggle.model-hidden { left: 24px; bottom: 24px; }
 
     @media (max-width: 768px) {
-      #rain-layer { opacity: 0.4; }
+      #rain-layer { opacity: 0.85; }
 
       .intro-title { font-size: 18px; letter-spacing: 6px; text-indent: 6px; }
       .intro-sub { font-size: 10px; letter-spacing: 3px; text-indent: 3px; }
@@ -1606,7 +1579,6 @@
       updateTogether();
       setInterval(updateTogether, 1000);
 
-      // 网站说明弹窗
       const siteInfoBtn = document.getElementById('siteInfoBtn');
       const siteInfoModal = document.getElementById('siteInfoModal');
       const siteInfoClose = document.getElementById('siteInfoClose');
@@ -1634,7 +1606,6 @@
         }
       });
 
-      // 音乐播放器
       const bgAudio = document.getElementById('bgAudio');
       const audioBtn = document.getElementById('audioBtn');
       const audioLabel = document.getElementById('audioLabel');
@@ -1647,8 +1618,6 @@
       const musicPanel = document.getElementById('musicPanel');
       const musicListContainer = document.getElementById('musicListContainer');
       const musicCount = document.getElementById('musicCount');
-
-      const playModeBtn = document.getElementById('playModeBtn');
 
       const progressContainer = document.getElementById('progressContainer');
       const progressBarWrap = document.getElementById('progressBarWrap');
@@ -1686,7 +1655,6 @@
       let isSeeking = false;
       let progressHidden = false;
 
-      // 锁定：只能播放第一首
       const LOCKED_INDEX = 0;
 
       function initMusicSelector() {
@@ -1709,7 +1677,7 @@
             <i class="fa-solid fa-volume-high playing-icon"></i>
           `;
           if (isDisabled) {
-            // 禁用：不绑定点击、不响应、不可选
+            // 禁用：不响应点击，但保留外观
             item.addEventListener('click', (e) => {
               e.stopPropagation();
               e.preventDefault();
@@ -1718,6 +1686,10 @@
               e.preventDefault();
               e.stopPropagation();
             });
+            item.addEventListener('touchstart', (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+            }, { passive: false });
           } else {
             item.addEventListener('click', (e) => {
               e.stopPropagation();
@@ -1757,7 +1729,6 @@
       });
 
       function loadSong(index, autoPlay) {
-        // 强制只能加载第一首
         if (index !== LOCKED_INDEX) index = LOCKED_INDEX;
         if (index < 0 || index >= validSongs.length) return;
         currentSongIndex = index;
@@ -1836,13 +1807,11 @@
         }
       });
 
-      // 播放结束：强制循环第一首
       bgAudio.addEventListener('ended', () => {
         bgAudio.currentTime = 0;
         bgAudio.play().then(() => updateAudioUI(true)).catch(() => updateAudioUI(false));
       });
 
-      // 进度条
       function formatTime(seconds) {
         if (!isFinite(seconds) || seconds < 0) return '0:00';
         const m = Math.floor(seconds / 60);
@@ -1959,7 +1928,6 @@
 
       initMusicSelector();
 
-      // IP + 位置
       async function fetchVisitorIP() {
         try {
           const res = await fetch(IP_GET_API, {
@@ -2024,7 +1992,6 @@
 
       initIPInfo();
 
-      // CN 编码
       function updateCNCode() {
         const now = new Date();
         const y = now.getFullYear();
@@ -2046,7 +2013,6 @@
         }, msToNextMinute);
       })();
 
-      // 版权 + 时间
       function updateCopyright() {
         const startYear = 2025;
         const currentYear = new Date().getFullYear();
@@ -2070,7 +2036,6 @@
       setInterval(updateCopyright, 60000);
       setInterval(updateTime, 1000);
 
-      // 图片查看器
       const imageViewer = document.getElementById('imageViewer');
       const imageViewerImg = document.getElementById('imageViewerImg');
 
@@ -2095,7 +2060,6 @@
       }
       let IMG_SIZE = getImgSize();
 
-      // 地图初始化
       const map = new AMap.Map('amap-container', {
         zoom: IS_MOBILE ? 4 : 4.5,
         center: [111.5, 32.5],
@@ -2125,7 +2089,6 @@
       }
       updateWatermark();
 
-      // 天气
       function getWeatherIcon(weatherText) {
         if (!weatherText) return '·';
         const map = {
@@ -2455,11 +2418,11 @@
       }
 
       const nanchuanTextOffsetY = Math.round(IMG_SIZE / 2 + 16);
-      const textToNanchuan = createArrivalTextBelow(NANCHUAN, '今生不见', '#7a8498', nanchuanTextOffsetY);
+      const textToNanchuan = createArrivalTextBelow(NANCHUAN, '......', '#7a8498', nanchuanTextOffsetY);
       textToNanchuan.setMap(map);
 
       const jiaxiangTextOffsetY = Math.round(IMG_SIZE / 2 + 16);
-      const textToJiaxiang = createArrivalTextBelow(YANGTUN, '来世不念', '#8a94a8', jiaxiangTextOffsetY);
+      const textToJiaxiang = createArrivalTextBelow(YANGTUN, '......', '#8a94a8', jiaxiangTextOffsetY);
       textToJiaxiang.setMap(map);
 
       function showText(textObj, duration) {
@@ -2587,7 +2550,7 @@
     })();
   </script>
 
-  <!-- 雨滴效果 -->
+  <!-- 雨滴效果 —— 加强版 -->
   <script>
     (function () {
       const canvas = document.getElementById('rain-layer');
@@ -2598,7 +2561,8 @@
       let dpr = 1;
       const IS_MOBILE = window.innerWidth <= 768;
 
-      const DROP_COUNT = IS_MOBILE ? 90 : 180;
+      // 雨滴数量：桌面 350，手机 180（是原来的近两倍）
+      const DROP_COUNT = IS_MOBILE ? 180 : 350;
 
       const drops = [];
       const splashes = [];
@@ -2618,13 +2582,18 @@
 
       function createDrop() {
         return {
-          x: rand(-50, W + 50),
+          x: rand(-80, W + 80),
           y: rand(-H, 0),
-          vy: rand(IS_MOBILE ? 5 : 7, IS_MOBILE ? 10 : 15),
-          vx: rand(-0.4, -0.12),
-          len: rand(10, 22),
-          width: rand(0.4, 1),
-          alpha: rand(0.1, 0.5)
+          // 下落更快
+          vy: rand(IS_MOBILE ? 9 : 12, IS_MOBILE ? 16 : 24),
+          // 横向漂移更大，斜雨更明显
+          vx: rand(-1.2, -0.4),
+          // 雨丝更长
+          len: rand(18, 42),
+          // 雨丝更粗
+          width: rand(0.8, 2),
+          // 透明度更高
+          alpha: rand(0.35, 0.9)
         };
       }
 
@@ -2633,9 +2602,9 @@
           x: x,
           y: y,
           r: 0,
-          maxR: rand(3, 8),
-          alpha: 0.4,
-          vy: rand(-0.3, -0.1)
+          maxR: rand(5, 14),
+          alpha: 0.7,
+          vy: rand(-0.4, -0.15)
         };
       }
 
@@ -2652,12 +2621,21 @@
       function draw() {
         ctx.clearRect(0, 0, W, H);
 
+        // 底部雨雾：让雨有"落地积水"的感觉
+        const fogGrad = ctx.createLinearGradient(0, H * 0.75, 0, H);
+        fogGrad.addColorStop(0, 'rgba(140, 165, 200, 0)');
+        fogGrad.addColorStop(1, 'rgba(140, 165, 200, 0.18)');
+        ctx.fillStyle = fogGrad;
+        ctx.fillRect(0, H * 0.75, W, H * 0.25);
+
+        // 画雨丝
         ctx.lineCap = 'round';
         for (let i = 0; i < drops.length; i++) {
           const d = drops[i];
 
           ctx.beginPath();
-          ctx.strokeStyle = `rgba(140, 160, 190, ${d.alpha})`;
+          // 颜色更亮：从 140,160,190 提到 170,195,235
+          ctx.strokeStyle = `rgba(170, 195, 235, ${d.alpha})`;
           ctx.lineWidth = d.width;
 
           const endX = d.x + d.vx * (d.len / d.vy) * 8;
@@ -2669,29 +2647,31 @@
           d.x += d.vx;
           d.y += d.vy;
 
-          if (d.y > H + 30 || d.x < -100 || d.x > W + 100) {
+          if (d.y > H + 40 || d.x < -120 || d.x > W + 120) {
             drops[i] = createDrop();
           } else {
-            if (d.y > H * 0.9 && Math.random() < 0.02) {
+            // 涟漪触发概率从 0.02 提到 0.06
+            if (d.y > H * 0.85 && Math.random() < 0.06) {
               splashes.push(createSplash(d.x, d.y));
             }
           }
         }
 
+        // 画涟漪
         for (let i = splashes.length - 1; i >= 0; i--) {
           const s = splashes[i];
-          s.r += 0.35;
-          s.alpha *= 0.94;
+          s.r += 0.5;
+          s.alpha *= 0.93;
           s.y += s.vy;
 
-          if (s.alpha < 0.02 || s.r > s.maxR) {
+          if (s.alpha < 0.03 || s.r > s.maxR) {
             splashes.splice(i, 1);
             continue;
           }
 
           ctx.beginPath();
-          ctx.strokeStyle = `rgba(140, 160, 190, ${s.alpha})`;
-          ctx.lineWidth = 0.8;
+          ctx.strokeStyle = `rgba(170, 195, 235, ${s.alpha})`;
+          ctx.lineWidth = 1.2;
           ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
           ctx.stroke();
         }
@@ -2784,7 +2764,6 @@
             core.addParameterValueById("ParamAngleY", -pointerFocus.y * 4, 0.3);
             core.addParameterValueById("ParamBodyAngleX", pointerFocus.x * 2, 0.2);
 
-            // 呼吸更慢、更沉
             core.setParameterValueById("ParamBreath", 0.35 + Math.sin(t * 0.6) * 0.12);
             core.addParameterValueById("ParamBodyAngleY", Math.sin(t * 0.15) * 0.15, 0.15);
             core.addParameterValueById("ParamBodyAngleZ", Math.sin(t * 0.2) * 0.12, 0.15);
