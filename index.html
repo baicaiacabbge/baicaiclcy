@@ -43,17 +43,17 @@
       height: 100%;
       overflow: hidden;
       font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', system-ui, sans-serif;
-      background-color: #06060a;
+      background-color: #0d141c;
     }
 
     :root {
-      --page-bg: #06060a;
-      --text-main: #a8acb8;
-      --text-sub: #5a5e6e;
-      --text-shadow: rgba(0, 0, 0, 0.9);
-      --accent: #7a8498;
-      --accent-2: #5e6278;
-      --glow: rgba(122, 132, 152, 0.3);
+      --page-bg: #0d141c;
+      --text-main: #e0e8f0;
+      --text-sub: #98a8b8;
+      --text-shadow: rgba(0, 0, 0, 0.75);
+      --accent: #e8a0b8;
+      --accent-2: #8fcbe8;
+      --glow: rgba(232, 160, 184, 0.5);
       --font-kai: 'LXGW WenKai', 'Noto Serif SC', 'Microsoft YaHei', serif;
     }
 
@@ -69,7 +69,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #06060a;
+      background: #0d141c;
       user-select: none;
       pointer-events: none;
       animation: introAutoFade 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
@@ -85,7 +85,7 @@
     .intro-title {
       font-size: 22px;
       font-weight: 400;
-      color: #7a8498;
+      color: #e0e8f0;
       letter-spacing: 8px;
       text-indent: 8px;
       opacity: 0;
@@ -95,7 +95,7 @@
 
     .intro-sub {
       font-size: 11px;
-      color: #3a3e4e;
+      color: #6b7a8a;
       letter-spacing: 4px;
       text-indent: 4px;
       opacity: 0;
@@ -131,20 +131,7 @@
       -webkit-transform: translateZ(0);
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      background-color: #0a0b10;
-    }
-
-    #rain-layer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      height: 100dvh;
-      z-index: 4;
-      pointer-events: none;
-      opacity: 0.9;
-      mix-blend-mode: screen;
+      background-color: #1a2530;
     }
 
     #noise-layer {
@@ -156,9 +143,9 @@
       height: 100dvh;
       z-index: 3;
       pointer-events: none;
-      opacity: 0.05;
+      opacity: 0.04;
       mix-blend-mode: overlay;
-      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.7 0 0 0 0 0.72 0 0 0 0 0.78 0 0 0 0.5 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.92 0 0 0 0 0.86 0 0 0 0 0.82 0 0 0 0.55 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
       background-repeat: repeat;
       background-size: 240px 240px;
     }
@@ -176,8 +163,8 @@
       background-size: 180px 120px;
       user-select: none;
       will-change: transform, opacity;
-      animation: watermarkDrift 90s linear infinite,
-                 watermarkBreathe 18s ease-in-out infinite;
+      animation: watermarkDrift 60s linear infinite,
+                 watermarkBreathe 12s ease-in-out infinite;
     }
 
     @keyframes watermarkDrift {
@@ -190,7 +177,7 @@
 
     @keyframes watermarkBreathe {
       0%, 100% { opacity: 1; }
-      50%      { opacity: 0.4; }
+      50%      { opacity: 0.55; }
     }
 
     .amap-logo,
@@ -227,7 +214,7 @@
     .info-panel .info-line i {
       font-size: 13px;
       color: var(--text-sub);
-      opacity: 0.7;
+      opacity: 0.85;
       flex-shrink: 0;
     }
 
@@ -267,7 +254,7 @@
       font-weight: 500;
       margin-top: 8px;
       padding-top: 6px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
       line-height: 1.9;
       letter-spacing: 0.2px;
     }
@@ -282,7 +269,7 @@
     .info-panel .info-together .tg-line i {
       font-size: 12px;
       color: var(--accent);
-      opacity: 0.7;
+      opacity: 0.9;
       flex-shrink: 0;
     }
 
@@ -302,31 +289,13 @@
       font-weight: 600;
     }
 
-    .sorrow-poem {
-      display: block;
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      font-family: var(--font-kai);
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--accent);
-      letter-spacing: 2px;
-      line-height: 1.6;
-      white-space: nowrap;
-      opacity: 0.75;
-      font-style: italic;
-      text-shadow:
-        0 1px 3px var(--text-shadow),
-        0 0 8px rgba(122, 132, 152, 0.25);
-    }
-
+    /* ========== 网站说明按钮（无方框） ========== */
     .site-info-btn {
       pointer-events: auto;
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      margin-top: 12px;
+      margin-top: 10px;
       padding: 0;
       background: transparent;
       border: none;
@@ -351,9 +320,44 @@
     .site-info-btn i {
       font-size: 12px;
       color: var(--accent);
-      opacity: 0.7;
+      opacity: 0.9;
     }
 
+    /* ========== 分享按钮 ========== */
+    .share-btn {
+      pointer-events: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 8px;
+      padding: 0;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-sub);
+      font-size: 12px;
+      font-family: var(--font-kai);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: color 0.2s ease, transform 0.15s ease;
+      user-select: none;
+      white-space: nowrap;
+      text-shadow:
+        0 1px 2px var(--text-shadow),
+        0 0 6px var(--text-shadow);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .share-btn:hover { color: var(--accent-2); }
+    .share-btn:active { transform: scale(0.96); }
+    .share-btn i {
+      font-size: 12px;
+      color: var(--accent-2);
+      opacity: 0.9;
+    }
+
+    /* ========== 网站说明弹窗 ========== */
     .site-info-modal {
       position: fixed;
       top: 0;
@@ -364,7 +368,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(2, 3, 6, 0.85);
+      background: rgba(6, 10, 16, 0.75);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       opacity: 0;
@@ -383,10 +387,10 @@
       max-width: 460px;
       max-height: 80vh;
       overflow-y: auto;
-      background: rgba(10, 11, 16, 0.98);
-      border: 1px solid rgba(122, 132, 152, 0.15);
+      background: rgba(18, 26, 36, 0.98);
+      border: 1px solid rgba(232, 160, 184, 0.25);
       border-radius: 16px;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.75);
       padding: 22px 22px 18px;
       transform: translateY(12px) scale(0.96);
       transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1);
@@ -401,7 +405,7 @@
     .site-info-card::-webkit-scrollbar { width: 6px; }
     .site-info-card::-webkit-scrollbar-track { background: transparent; }
     .site-info-card::-webkit-scrollbar-thumb {
-      background: rgba(122, 132, 152, 0.3);
+      background: rgba(232, 160, 184, 0.35);
       border-radius: 3px;
     }
 
@@ -411,7 +415,7 @@
       justify-content: space-between;
       margin-bottom: 14px;
       padding-bottom: 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .site-info-header h3 {
@@ -434,8 +438,8 @@
       width: 26px;
       height: 26px;
       border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.06);
       color: var(--text-sub);
       font-size: 12px;
       cursor: pointer;
@@ -447,7 +451,7 @@
     }
 
     .site-info-close:hover {
-      background: rgba(122, 132, 152, 0.2);
+      background: rgba(232, 160, 184, 0.25);
       color: var(--text-main);
       border-color: var(--accent);
     }
@@ -468,7 +472,7 @@
 
     .site-info-section h4 i {
       font-size: 11px;
-      opacity: 0.8;
+      opacity: 0.9;
     }
 
     .site-info-list {
@@ -494,7 +498,7 @@
       background: var(--accent);
       flex-shrink: 0;
       margin-top: 6px;
-      opacity: 0.6;
+      opacity: 0.7;
     }
 
     .site-info-list li .name {
@@ -506,11 +510,11 @@
     .site-info-footer {
       margin-top: 18px;
       padding-top: 12px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
       font-size: 10.5px;
       color: var(--text-sub);
       text-align: center;
-      opacity: 0.7;
+      opacity: 0.8;
       letter-spacing: 0.3px;
       font-family: var(--font-kai);
     }
@@ -551,7 +555,7 @@
     .music-selector i {
       font-size: 13px;
       color: var(--text-sub);
-      opacity: 0.7;
+      opacity: 0.85;
     }
 
     .music-selector-wrap {
@@ -564,9 +568,9 @@
       align-items: center;
       gap: 6px;
       padding: 4px 10px;
-      background: rgba(16, 18, 24, 0.92);
+      background: rgba(30, 40, 50, 0.92);
       color: var(--text-main);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 6px;
       font-size: 11.5px;
       font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
@@ -574,7 +578,7 @@
       transition: border-color 0.2s ease, background 0.2s ease;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
       user-select: none;
       white-space: nowrap;
       max-width: 150px;
@@ -583,7 +587,7 @@
     }
 
     .music-selector-trigger:hover {
-      border-color: rgba(122, 132, 152, 0.4);
+      border-color: rgba(232, 160, 184, 0.6);
     }
 
     .music-selector-trigger .current-song {
@@ -611,10 +615,10 @@
       width: 220px;
       max-height: 260px;
       overflow-y: auto;
-      background: rgba(10, 11, 16, 0.97);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(20, 28, 38, 0.97);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 12px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.85);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       padding: 6px;
@@ -636,8 +640,11 @@
     .music-panel::-webkit-scrollbar { width: 5px; }
     .music-panel::-webkit-scrollbar-track { background: transparent; }
     .music-panel::-webkit-scrollbar-thumb {
-      background: rgba(122, 132, 152, 0.3);
+      background: rgba(232, 160, 184, 0.4);
       border-radius: 3px;
+    }
+    .music-panel::-webkit-scrollbar-thumb:hover {
+      background: rgba(232, 160, 184, 0.7);
     }
 
     .music-panel-header {
@@ -645,7 +652,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 4px 8px 8px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       margin-bottom: 4px;
     }
 
@@ -659,7 +666,7 @@
     .music-panel-header .count {
       font-size: 10px;
       color: var(--text-sub);
-      opacity: 0.6;
+      opacity: 0.7;
     }
 
     .music-item {
@@ -677,30 +684,13 @@
     }
 
     .music-item:hover {
-      background: rgba(122, 132, 152, 0.08);
+      background: rgba(232, 160, 184, 0.12);
     }
 
     .music-item.active {
-      background: rgba(122, 132, 152, 0.14);
+      background: rgba(232, 160, 184, 0.18);
       color: var(--accent);
       font-weight: 600;
-    }
-
-    .music-item.disabled {
-      cursor: not-allowed;
-      user-select: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .music-item.disabled:hover {
-      background: transparent;
-    }
-
-    .music-item.disabled .playing-icon {
-      display: none;
     }
 
     .music-item .idx {
@@ -709,7 +699,7 @@
       font-family: 'Consolas', 'Monaco', monospace;
       min-width: 16px;
       text-align: center;
-      opacity: 0.6;
+      opacity: 0.7;
       flex-shrink: 0;
     }
 
@@ -749,28 +739,30 @@
       height: 26px;
       padding: 0 8px;
       border-radius: 6px;
-      background: rgba(16, 18, 24, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(30, 40, 50, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       color: var(--text-sub);
       font-size: 11px;
       font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
       font-weight: 500;
-      cursor: not-allowed;
+      cursor: pointer;
       transition: all 0.2s ease;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
       white-space: nowrap;
       letter-spacing: 0.5px;
-      opacity: 0.55;
     }
 
-    .play-mode-btn.mode-loop,
-    .play-mode-btn.mode-single,
-    .play-mode-btn.mode-shuffle {
-      color: var(--text-sub);
-      border-color: rgba(255, 255, 255, 0.08);
+    .play-mode-btn:hover {
+      border-color: rgba(232, 160, 184, 0.6);
+      color: var(--text-main);
     }
+
+    .play-mode-btn:active { transform: scale(0.94); }
+    .play-mode-btn.mode-loop { color: var(--accent); border-color: rgba(232, 160, 184, 0.5); }
+    .play-mode-btn.mode-single { color: var(--accent-2); border-color: rgba(143, 203, 232, 0.5); }
+    .play-mode-btn.mode-shuffle { color: #c084fc; border-color: rgba(192, 132, 252, 0.5); }
 
     .progress-container {
       pointer-events: auto;
@@ -780,9 +772,9 @@
       width: 230px;
       padding: 6px 10px;
       border-radius: 12px;
-      background: rgba(10, 11, 16, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+      background: rgba(20, 28, 38, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       transition: opacity 0.3s ease, transform 0.3s ease;
@@ -815,17 +807,17 @@
       top: 50%;
       transform: translateY(-50%);
       height: 8px;
-      background: rgba(255, 255, 255, 0.04);
+      background: rgba(255, 255, 255, 0.10);
       border-radius: 4px;
       transition: height 0.15s ease, background 0.2s ease;
-      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
       pointer-events: none;
     }
 
     .progress-bar-wrap:hover::before,
     .progress-bar-wrap.active::before {
       height: 10px;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.16);
     }
 
     .progress-bar-fill {
@@ -839,7 +831,7 @@
       border-radius: 4px;
       pointer-events: none;
       transition: width 0.1s linear, height 0.15s ease;
-      box-shadow: 0 0 8px rgba(122, 132, 152, 0.3);
+      box-shadow: 0 0 8px rgba(232, 160, 184, 0.5);
       z-index: 1;
     }
 
@@ -855,7 +847,7 @@
       top: 50%;
       width: 14px;
       height: 14px;
-      background: radial-gradient(circle, rgba(190,198,210,0.7) 0%, rgba(122,132,152,0.4) 40%, transparent 70%);
+      background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(232,160,184,0.6) 40%, transparent 70%);
       border-radius: 50%;
       transform: translate(50%, -50%);
       opacity: 0;
@@ -873,12 +865,12 @@
       top: 50%;
       width: 20px;
       height: 20px;
-      background: #9ea6b8;
+      background: #fff;
       border-radius: 50%;
       transform: translate(-50%, -50%) scale(0);
       transition: transform 0.15s ease;
       pointer-events: none;
-      box-shadow: 0 0 0 4px rgba(122, 132, 152, 0.2), 0 0 10px rgba(122, 132, 152, 0.5);
+      box-shadow: 0 0 0 4px rgba(232, 160, 184, 0.35), 0 0 10px rgba(232, 160, 184, 0.8);
       z-index: 2;
     }
 
@@ -896,8 +888,7 @@
       min-width: 34px;
       text-align: center;
       font-weight: 600;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
-      opacity: 0.7;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
     }
 
     .progress-toggle {
@@ -908,8 +899,8 @@
       width: 22px;
       height: 22px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       color: var(--text-sub);
       font-size: 10px;
       cursor: pointer;
@@ -918,7 +909,7 @@
     }
 
     .progress-toggle:hover {
-      background: rgba(122, 132, 152, 0.2);
+      background: rgba(232, 160, 184, 0.25);
       color: var(--text-main);
       border-color: var(--accent);
     }
@@ -931,15 +922,15 @@
       height: 26px;
       padding: 0 10px;
       border-radius: 8px;
-      background: rgba(10, 11, 16, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(20, 28, 38, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       color: var(--text-sub);
       font-size: 11px;
       cursor: pointer;
       transition: all 0.2s ease;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
       gap: 5px;
       white-space: nowrap;
     }
@@ -981,7 +972,7 @@
       white-space: nowrap;
     }
 
-    .audio-hint.show { opacity: 0.65; }
+    .audio-hint.show { opacity: 0.75; }
 
     .custom-copyright {
       font-size: 12px;
@@ -1006,9 +997,9 @@
       gap: 6px;
       padding: 3px 10px;
       border-radius: 8px;
-      background: rgba(16, 18, 24, 0.88);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      background: rgba(30, 40, 50, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
       font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -1046,9 +1037,9 @@
       gap: 3px;
       padding: 6px 12px;
       border-radius: 14px;
-      background: rgba(16, 18, 24, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+      background: rgba(30, 40, 50, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
       font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -1095,7 +1086,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(4, 5, 8, 0.95);
+      background: rgba(10, 15, 22, 0.9);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       opacity: 0;
@@ -1110,7 +1101,7 @@
       max-width: 82vw;
       max-height: 82vh;
       border-radius: 12px;
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
       transform: scale(0.92);
       transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.3, 1);
       object-fit: contain;
@@ -1137,6 +1128,321 @@
       100% { transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
     }
 
+    /* ========== 天气对比卡片 ========== */
+    .weather-compare-card {
+      position: fixed;
+      left: 16px;
+      top: 14px;
+      z-index: 999;
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: rgba(20, 28, 38, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      max-width: 240px;
+    }
+    .weather-compare-card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .wc-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--text-main);
+    }
+    .wc-city {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-kai);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--text-main);
+    }
+    .wc-city .wc-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 6px rgba(232, 160, 184, 0.6);
+    }
+    .wc-city.jx .wc-dot {
+      background: var(--accent-2);
+      box-shadow: 0 0 6px rgba(143, 203, 232, 0.6);
+    }
+    .wc-info {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--text-sub);
+      font-size: 11.5px;
+    }
+    .wc-info .wc-icon {
+      font-size: 14px;
+      line-height: 1;
+    }
+    .wc-info .wc-temp {
+      color: var(--text-main);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .wc-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.08);
+      margin: 6px 0;
+    }
+    .wc-diff {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-sub);
+    }
+    .wc-diff .wc-diff-label {
+      font-family: var(--font-kai);
+      letter-spacing: 0.3px;
+    }
+    .wc-diff .wc-diff-value {
+      color: var(--text-main);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    .wc-msg {
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.08);
+      font-family: var(--font-kai);
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+      line-height: 1.5;
+      text-align: center;
+      opacity: 0.9;
+    }
+
+    /* ========== 分享弹窗 ========== */
+    .share-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 3100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(6, 10, 16, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+      padding: 20px;
+    }
+    .share-modal.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    .share-card {
+      width: 100%;
+      max-width: 380px;
+      background: linear-gradient(160deg, rgba(24, 32, 44, 0.98), rgba(14, 20, 30, 0.98));
+      border: 1px solid rgba(232, 160, 184, 0.25);
+      border-radius: 20px;
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.85),
+        0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+        0 0 60px rgba(232, 160, 184, 0.08);
+      padding: 20px;
+      transform: translateY(16px) scale(0.94);
+      transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.05);
+      color: var(--text-main);
+      font-family: 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', sans-serif;
+      position: relative;
+      overflow: hidden;
+    }
+    .share-card::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        rgba(232, 160, 184, 0.06) 90deg,
+        transparent 180deg,
+        rgba(143, 203, 232, 0.06) 270deg,
+        transparent 360deg
+      );
+      animation: shareCardRotate 12s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes shareCardRotate {
+      to { transform: rotate(360deg); }
+    }
+    .share-modal.show .share-card {
+      transform: translateY(0) scale(1);
+    }
+    .share-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      z-index: 1;
+    }
+    .share-header h3 {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-kai);
+      color: var(--text-main);
+      background: linear-gradient(90deg, #e8a0b8, #8fcbe8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .share-header h3 i {
+      font-size: 14px;
+      background: linear-gradient(135deg, #e8a0b8, #8fcbe8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .share-close {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-sub);
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 2;
+    }
+    .share-close:hover {
+      background: rgba(232, 160, 184, 0.25);
+      color: var(--text-main);
+      border-color: var(--accent);
+      transform: rotate(90deg);
+    }
+    .share-preview {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #06080e;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+      box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(232, 160, 184, 0.1) inset;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .share-preview canvas {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 14px;
+    }
+    .share-actions {
+      display: flex;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+    .share-action-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid rgba(232, 160, 184, 0.3);
+      background: linear-gradient(135deg, rgba(232, 160, 184, 0.18), rgba(143, 203, 232, 0.18));
+      color: var(--text-main);
+      font-size: 12.5px;
+      font-family: var(--font-kai);
+      font-weight: 600;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+      overflow: hidden;
+    }
+    .share-action-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+      transition: left 0.6s ease;
+    }
+    .share-action-btn:hover::before {
+      left: 100%;
+    }
+    .share-action-btn:hover {
+      border-color: rgba(232, 160, 184, 0.7);
+      box-shadow: 0 0 20px rgba(232, 160, 184, 0.25);
+      transform: translateY(-1px);
+    }
+    .share-action-btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+    .share-action-btn i {
+      font-size: 14px;
+      background: linear-gradient(135deg, #e8a0b8, #8fcbe8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .share-tip {
+      margin-top: 10px;
+      font-size: 10.5px;
+      color: var(--text-sub);
+      text-align: center;
+      opacity: 0.7;
+      letter-spacing: 0.3px;
+      line-height: 1.5;
+      position: relative;
+      z-index: 1;
+    }
+
     #live2d-widget {
       position: fixed;
       left: 24px;
@@ -1149,7 +1455,6 @@
       user-select: none;
       transition: opacity 0.4s ease, transform 0.4s ease;
       pointer-events: none;
-      filter: grayscale(0.65) brightness(0.82) contrast(0.95);
     }
 
     #live2d-widget.dragging {
@@ -1176,19 +1481,19 @@
       bottom: calc(100% + 10px);
       max-width: 250px;
       padding: 0.7rem 0.95rem;
-      background: rgba(16, 18, 24, 0.95);
-      border: 1px solid rgba(122, 132, 152, 0.25);
+      background: rgba(26, 26, 38, 0.95);
+      border: 1px solid rgba(192, 132, 252, 0.35);
       border-radius: 14px;
       font-size: 0.82rem;
       font-weight: 600;
       line-height: 1.5;
-      color: #b8bcc6;
+      color: #e8e8f0;
       opacity: 0;
       transform: translateY(6px) scale(0.96);
       transition: opacity 0.25s ease, transform 0.25s ease;
       pointer-events: none;
       backdrop-filter: blur(10px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
       z-index: 10;
     }
 
@@ -1201,9 +1506,9 @@
       bottom: -7px;
       width: 12px;
       height: 12px;
-      background: rgba(16, 18, 24, 0.95);
-      border-right: 1px solid rgba(122, 132, 152, 0.25);
-      border-bottom: 1px solid rgba(122, 132, 152, 0.25);
+      background: rgba(26, 26, 38, 0.95);
+      border-right: 1px solid rgba(192, 132, 252, 0.35);
+      border-bottom: 1px solid rgba(192, 132, 252, 0.35);
       transform: rotate(45deg);
     }
 
@@ -1213,7 +1518,7 @@
       left: 50%;
       transform: translateX(-50%);
       font-size: 0.65rem;
-      color: #5a5e6e;
+      color: #8888a0;
       white-space: nowrap;
       pointer-events: none;
       display: none;
@@ -1227,9 +1532,9 @@
       width: 36px;
       height: 36px;
       border-radius: 10px;
-      border: 1px solid rgba(122, 132, 152, 0.4);
-      background: rgba(16, 18, 24, 0.92);
-      color: #7a8498;
+      border: 1px solid rgba(192, 132, 252, 0.5);
+      background: rgba(26, 26, 38, 0.92);
+      color: #c084fc;
       font-size: 16px;
       font-weight: 700;
       line-height: 1;
@@ -1238,13 +1543,13 @@
       align-items: center;
       justify-content: center;
       transition: background 0.2s, transform 0.2s, left 0.3s ease, bottom 0.3s ease;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(8px);
       user-select: none;
     }
 
     #l2d-visibility-toggle:hover {
-      background: rgba(122, 132, 152, 0.25);
+      background: rgba(192, 132, 252, 0.3);
       transform: scale(1.08);
     }
 
@@ -1253,8 +1558,6 @@
     #l2d-visibility-toggle.model-hidden { left: 24px; bottom: 24px; }
 
     @media (max-width: 768px) {
-      #rain-layer { opacity: 0.85; }
-
       .intro-title { font-size: 18px; letter-spacing: 6px; text-indent: 6px; }
       .intro-sub { font-size: 10px; letter-spacing: 3px; text-indent: 3px; }
       .info-panel { right: 12px; top: 10px; }
@@ -1266,7 +1569,6 @@
       .info-panel .info-together { font-size: 10px; margin-top: 6px; padding-top: 5px; line-height: 1.8; }
       .info-panel .info-together .tg-name { font-size: 11px; }
       .info-panel .info-together .tg-line i { font-size: 11px; }
-      .sorrow-poem { font-size: 10.5px; letter-spacing: 1.5px; margin-top: 8px; padding-top: 8px; }
       .bottom-right-stack { right: 12px; bottom: 10px; }
       .audio-btn { font-size: 11px; }
       .audio-btn i { font-size: 12px; }
@@ -1283,11 +1585,25 @@
       .distance-block .db-distance { font-size: 11px; }
       .distance-block .db-daynight { font-size: 10px; }
 
+      .weather-compare-card {
+        left: 12px;
+        top: 10px;
+        padding: 8px 12px;
+        max-width: 200px;
+      }
+      .wc-row { font-size: 11px; }
+      .wc-info { font-size: 10.5px; }
+      .wc-info .wc-icon { font-size: 12px; }
+      .wc-diff { font-size: 10px; }
+      .wc-msg { font-size: 10px; }
+
+      .share-btn { font-size: 11px; margin-top: 6px; }
+
       #noise-layer { display: none; }
 
       #watermark-layer {
         animation: none;
-        opacity: 0.85;
+        opacity: 0.9;
         will-change: auto;
         transform: none;
       }
@@ -1318,6 +1634,10 @@
       .site-info-section h4 { font-size: 11px; }
       .site-info-list li { font-size: 11px; }
 
+      .share-card { max-width: 92vw; padding: 16px; }
+      .share-header h3 { font-size: 13.5px; }
+      .share-action-btn { font-size: 11.5px; height: 40px; }
+
       #live2d-widget {
         width: 140px;
         height: 175px;
@@ -1346,7 +1666,6 @@
     <div id="amap-container"></div>
     <div id="watermark-layer"></div>
     <div id="noise-layer"></div>
-    <canvas id="rain-layer"></canvas>
 
     <div class="info-panel">
       <div class="info-line">
@@ -1364,13 +1683,16 @@
       <span class="info-together">
         <span class="tg-line">
           <i class=""></i>
-          <span class="tg-name">陈落落</span><span class="tg-time" id="tgLuoluo">--</span>
+          <span class="tg-name">陈柚柚</span><span class="tg-time" id="tgLuoluo">--</span>
         </span>
       </span>
-      <span class="sorrow-poem">相逢已是上上签，何须相思入流年</span>
       <button class="site-info-btn" id="siteInfoBtn" title="查看网站说明">
         <i class="fa-solid fa-circle-info"></i>
         <span>网站说明</span>
+      </button>
+      <button class="share-btn" id="shareBtn" title="生成分享卡片">
+        <i class="fa-solid fa-share-nodes"></i>
+        <span>分享</span>
       </button>
     </div>
 
@@ -1392,7 +1714,7 @@
             </div>
           </div>
         </div>
-        <button class="play-mode-btn" id="playModeBtn" title="仅循环第一首">锁定</button>
+        <button class="play-mode-btn" id="playModeBtn" title="播放模式：列表循环">列表</button>
       </div>
 
       <div class="progress-container" id="progressContainer">
@@ -1422,6 +1744,8 @@
         <span class="time-text" id="timeText"></span>
       </div>
     </div>
+
+    <div class="weather-compare-card" id="weatherCompareCard"></div>
 
     <div class="image-viewer" id="imageViewer">
       <img id="imageViewerImg" src="" alt="">
@@ -1498,6 +1822,28 @@
         </div>
       </div>
     </div>
+
+    <!-- 分享弹窗 -->
+    <div class="share-modal" id="shareModal">
+      <div class="share-card">
+        <div class="share-header">
+          <h3><i class="fa-solid fa-share-nodes"></i>分享卡片</h3>
+          <button class="share-close" id="shareClose" title="关闭">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="share-preview">
+          <canvas id="sharePreviewCanvas" width="720" height="960"></canvas>
+        </div>
+        <div class="share-actions">
+          <button class="share-action-btn" id="shareDownloadBtn">
+            <i class="fa-solid fa-download"></i>
+            <span>保存图片</span>
+          </button>
+        </div>
+        <div class="share-tip" id="shareTip">长按图片可保存到手机相册</div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -1520,7 +1866,7 @@
 
       const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
 
-      const TG_LUOLUO_START = new Date(2026, 7, 2, 0, 0, 0);
+      const TG_YOUYOU_START = new Date(2025, 6, 1, 0, 0, 0);
 
       function formatTogether(startDate) {
         const now = new Date();
@@ -1568,12 +1914,13 @@
 
       function updateTogether() {
         const luoluoEl = document.getElementById('tgLuoluo');
-        if (luoluoEl) luoluoEl.textContent = '· ' + formatTogether(TG_LUOLUO_START);
+        if (luoluoEl) luoluoEl.textContent = '· ' + formatTogether(TG_YOUYOU_START);
       }
 
       updateTogether();
       setInterval(updateTogether, 1000);
 
+      // 网站说明弹窗
       const siteInfoBtn = document.getElementById('siteInfoBtn');
       const siteInfoModal = document.getElementById('siteInfoModal');
       const siteInfoClose = document.getElementById('siteInfoClose');
@@ -1601,6 +1948,7 @@
         }
       });
 
+      // 音乐播放器
       const bgAudio = document.getElementById('bgAudio');
       const audioBtn = document.getElementById('audioBtn');
       const audioLabel = document.getElementById('audioLabel');
@@ -1614,6 +1962,8 @@
       const musicListContainer = document.getElementById('musicListContainer');
       const musicCount = document.getElementById('musicCount');
 
+      const playModeBtn = document.getElementById('playModeBtn');
+
       const progressContainer = document.getElementById('progressContainer');
       const progressBarWrap = document.getElementById('progressBarWrap');
       const progressBarFill = document.getElementById('progressBarFill');
@@ -1624,7 +1974,6 @@
       const progressShowBtn = document.getElementById('progressShowBtn');
 
       const PLAYLIST = [
-        { name: 'CryForMe', src: 'https://videotourl.com/audio/1790847105326-b93a3068-f447-4526-9fca-36dffe4af26d.mp3' },
         { name: '我们俩', src: 'https://videotourl.com/audio/1790497581856-3d3fd584-9eaf-4600-8dae-ee83f29a5612.mp3' },
         { name: '特别的人', src: 'https://videotourl.com/audio/1790497672084-a0a1d890-d8f1-4515-a561-af048d49d930.mp3' },
         { name: '爱错', src: 'https://videotourl.com/audio/1790497709323-b0d6f452-803b-40ae-982b-0a322c419da5.mp3' },
@@ -1650,7 +1999,7 @@
       let isSeeking = false;
       let progressHidden = false;
 
-      const LOCKED_INDEX = 0;
+      let playMode = 'loop';
 
       function initMusicSelector() {
         musicListContainer.innerHTML = '';
@@ -1663,31 +2012,27 @@
 
         validSongs.forEach((song, index) => {
           const item = document.createElement('div');
-          const isDisabled = index !== LOCKED_INDEX;
-          item.className = 'music-item' + (index === currentSongIndex ? ' active' : '') + (isDisabled ? ' disabled' : '');
+          item.className = 'music-item' + (index === currentSongIndex ? ' active' : '');
           item.dataset.index = index;
           item.innerHTML = `
             <span class="idx">${String(index + 1).padStart(2, '0')}</span>
             <span class="name">${song.name}</span>
             <i class="fa-solid fa-volume-high playing-icon"></i>
           `;
-          if (isDisabled) {
-            item.addEventListener('click', (e) => { e.stopPropagation(); e.preventDefault(); });
-            item.addEventListener('mousedown', (e) => { e.preventDefault(); e.stopPropagation(); });
-            item.addEventListener('touchstart', (e) => { e.preventDefault(); e.stopPropagation(); }, { passive: false });
-          } else {
-            item.addEventListener('click', (e) => {
-              e.stopPropagation();
-              loadSong(LOCKED_INDEX, audioPlaying);
-              closeMusicPanel();
-            });
-          }
+          item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const wasPlaying = audioPlaying;
+            loadSong(index, wasPlaying);
+            closeMusicPanel();
+          });
           musicListContainer.appendChild(item);
         });
 
-        currentSongIndex = LOCKED_INDEX;
-        bgAudio.src = validSongs[LOCKED_INDEX].src;
-        currentSongName.textContent = validSongs[LOCKED_INDEX].name;
+        if (validSongs.length > 0) {
+          currentSongIndex = 0;
+          bgAudio.src = validSongs[0].src;
+          currentSongName.textContent = validSongs[0].name;
+        }
       }
 
       function updateMusicListUI() {
@@ -1714,7 +2059,6 @@
       });
 
       function loadSong(index, autoPlay) {
-        if (index !== LOCKED_INDEX) index = LOCKED_INDEX;
         if (index < 0 || index >= validSongs.length) return;
         currentSongIndex = index;
         bgAudio.src = validSongs[index].src;
@@ -1727,6 +2071,45 @@
         if (autoPlay) {
           bgAudio.play().then(() => updateAudioUI(true)).catch(() => updateAudioUI(false));
         }
+      }
+
+      function updatePlayModeUI() {
+        playModeBtn.classList.remove('mode-loop', 'mode-single', 'mode-shuffle');
+        if (playMode === 'loop') {
+          playModeBtn.textContent = '列表';
+          playModeBtn.classList.add('mode-loop');
+          playModeBtn.title = '播放模式：列表循环';
+        } else if (playMode === 'single') {
+          playModeBtn.textContent = '单曲';
+          playModeBtn.classList.add('mode-single');
+          playModeBtn.title = '播放模式：单曲循环';
+        } else if (playMode === 'shuffle') {
+          playModeBtn.textContent = '随机';
+          playModeBtn.classList.add('mode-shuffle');
+          playModeBtn.title = '播放模式：随机播放';
+        }
+      }
+
+      playModeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (playMode === 'loop') playMode = 'single';
+        else if (playMode === 'single') playMode = 'shuffle';
+        else playMode = 'loop';
+        updatePlayModeUI();
+      });
+
+      function getNextIndex() {
+        if (validSongs.length === 0) return 0;
+        if (validSongs.length === 1) return 0;
+        if (playMode === 'single') return currentSongIndex;
+        if (playMode === 'shuffle') {
+          let next = currentSongIndex;
+          while (next === currentSongIndex) {
+            next = Math.floor(Math.random() * validSongs.length);
+          }
+          return next;
+        }
+        return (currentSongIndex + 1) % validSongs.length;
       }
 
       function updateAudioUI(playing) {
@@ -1766,7 +2149,9 @@
           e.target.closest('#progressShowBtn') ||
           e.target.closest('#siteInfoBtn') ||
           e.target.closest('#siteInfoModal') ||
-          e.target.closest('#imageViewer')
+          e.target.closest('#imageViewer') ||
+          e.target.closest('#shareBtn') ||
+          e.target.closest('#shareModal')
         )) {
           return;
         }
@@ -1793,10 +2178,16 @@
       });
 
       bgAudio.addEventListener('ended', () => {
-        bgAudio.currentTime = 0;
-        bgAudio.play().then(() => updateAudioUI(true)).catch(() => updateAudioUI(false));
+        const nextIndex = getNextIndex();
+        if (nextIndex === currentSongIndex && playMode === 'single') {
+          bgAudio.currentTime = 0;
+          bgAudio.play().then(() => updateAudioUI(true)).catch(() => updateAudioUI(false));
+        } else {
+          loadSong(nextIndex, true);
+        }
       });
 
+      // 进度条
       function formatTime(seconds) {
         if (!isFinite(seconds) || seconds < 0) return '0:00';
         const m = Math.floor(seconds / 60);
@@ -1912,7 +2303,9 @@
       });
 
       initMusicSelector();
+      updatePlayModeUI();
 
+      // IP + 位置
       async function fetchVisitorIP() {
         try {
           const res = await fetch(IP_GET_API, {
@@ -1977,6 +2370,7 @@
 
       initIPInfo();
 
+      // CN 编码
       function updateCNCode() {
         const now = new Date();
         const y = now.getFullYear();
@@ -1998,11 +2392,12 @@
         }, msToNextMinute);
       })();
 
+      // 版权 + 时间
       function updateCopyright() {
         const startYear = 2025;
         const currentYear = new Date().getFullYear();
         const yearText = currentYear > startYear ? `${startYear}-${currentYear}` : `${startYear}`;
-        document.getElementById('copyrightText').textContent = `陈白白&陈落落 ©${yearText}`;
+        document.getElementById('copyrightText').textContent = `陈白白&陈柚柚 ©${yearText}`;
       }
 
       function updateTime() {
@@ -2021,6 +2416,7 @@
       setInterval(updateCopyright, 60000);
       setInterval(updateTime, 1000);
 
+      // 图片查看器
       const imageViewer = document.getElementById('imageViewer');
       const imageViewerImg = document.getElementById('imageViewerImg');
 
@@ -2033,7 +2429,7 @@
       }
       imageViewer.addEventListener('click', closeImageViewer);
 
-      const IMG_JX_1 = 'https://videotourl.com/images/1790447001064-f4bc47a5-6626-4eb5-955b-99b78b24acac.jpeg';
+      const IMG_JX_1 = 'https://videotourl.com/images/1791108914210-4127e5a4-5f64-4713-a8c4-60d18a847af8.jpeg';
       const IMG_NC_1 = 'https://videotourl.com/images/1790446808049-f56f13e8-21df-477c-9576-52ed146e2a27.jpeg';
 
       function getImgSize() {
@@ -2045,6 +2441,7 @@
       }
       let IMG_SIZE = getImgSize();
 
+      // 地图初始化
       const map = new AMap.Map('amap-container', {
         zoom: IS_MOBILE ? 4 : 4.5,
         center: [111.5, 32.5],
@@ -2055,7 +2452,7 @@
         animateEnable: !IS_MOBILE,
         jogEnable: !IS_MOBILE,
         zooms: IS_MOBILE ? [3, 12] : [3, 18],
-        mapStyle: IS_MOBILE ? 'amap://styles/darkblue' : 'amap://styles/dark'
+        mapStyle: IS_MOBILE ? 'amap://styles/darkblue' : 'amap://styles/normal'
       });
 
       if (!IS_MOBILE) {
@@ -2067,13 +2464,14 @@
       window.map = map;
 
       function updateWatermark() {
-        const color = 'rgba(160, 175, 200, 0.045)';
-        const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='180' height='120' viewBox='0 0 180 120'><text x='10' y='40' font-family='LXGW WenKai, Microsoft YaHei, PingFang SC, sans-serif' font-size='22' font-weight='500' fill='${color}' transform='rotate(-22 90 60)'>思</text><text x='100' y='100' font-family='LXGW WenKai, Microsoft YaHei, PingFang SC, sans-serif' font-size='22' font-weight='500' fill='${color}' transform='rotate(-22 90 60)'>思</text></svg>`;
+        const color = 'rgba(180, 200, 220, 0.05)';
+        const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='180' height='120' viewBox='0 0 180 120'><text x='10' y='40' font-family='LXGW WenKai, Microsoft YaHei, PingFang SC, sans-serif' font-size='22' font-weight='500' fill='${color}' transform='rotate(-22 90 60)'>柚柚</text><text x='100' y='100' font-family='LXGW WenKai, Microsoft YaHei, PingFang SC, sans-serif' font-size='22' font-weight='500' fill='${color}' transform='rotate(-22 90 60)'>柚柚</text></svg>`;
         document.getElementById('watermark-layer').style.backgroundImage =
           `url("data:image/svg+xml;utf8,${encodeURIComponent(svg)}")`;
       }
       updateWatermark();
 
+      // 天气
       function getWeatherIcon(weatherText) {
         if (!weatherText) return '·';
         const map = {
@@ -2130,12 +2528,90 @@
       });
       weatherTextJiaxiang.setMap(map);
 
+      // ========== 天气对比卡片 ==========
+      const weatherCompareCard = document.getElementById('weatherCompareCard');
+      let lastWeatherNC = null;
+      let lastWeatherJX = null;
+
+      function getWeatherMessage(wNC, wJX) {
+        if (!wNC || !wJX) return '';
+        const tNC = wNC.temperature != null ? Number(wNC.temperature) : null;
+        const tJX = wJX.temperature != null ? Number(wJX.temperature) : null;
+        const dNC = wNC.weather || '';
+        const dJX = wJX.weather || '';
+
+        const rainy = (s) => s.includes('雨') || s.includes('雪');
+        const sunny = (s) => s.includes('晴');
+
+        if (rainy(dNC) && !rainy(dJX)) return '南川有雨，记得带伞';
+        if (rainy(dJX) && !rainy(dNC)) return '嘉祥有雨，记得带伞';
+        if (rainy(dNC) && rainy(dJX)) return '两地都有雨，各自安好';
+
+        if (tNC != null && tJX != null) {
+          const diff = Math.abs(tNC - tJX);
+          if (diff >= 8) {
+            return tNC > tJX ? '南川暖些，嘉祥记得添衣' : '嘉祥暖些，南川记得添衣';
+          }
+          if (diff <= 2) return '温度相近，心意相通';
+        }
+
+        if (sunny(dNC) && sunny(dJX)) return '两地皆晴，宜思念';
+        return '各自安好，便是晴天';
+      }
+
+      function renderWeatherCompare() {
+        try {
+          if (!lastWeatherNC && !lastWeatherJX) {
+            weatherCompareCard.classList.remove('show');
+            return;
+          }
+          const nc = lastWeatherNC || {};
+          const jx = lastWeatherJX || {};
+          const ncTemp = nc.temperature != null ? nc.temperature + '°' : '--°';
+          const jxTemp = jx.temperature != null ? jx.temperature + '°' : '--°';
+          const ncIcon = getWeatherIcon(nc.weather);
+          const jxIcon = getWeatherIcon(jx.weather);
+          const ncDesc = nc.weather || '暂无';
+          const jxDesc = jx.weather || '暂无';
+
+          let diffHtml = '';
+          if (nc.temperature != null && jx.temperature != null) {
+            const diff = Math.abs(Number(nc.temperature) - Number(jx.temperature));
+            diffHtml = `<div class="wc-diff"><span class="wc-diff-label">温差</span><span class="wc-diff-value">${diff}°</span></div>`;
+          }
+
+          const msg = getWeatherMessage(lastWeatherNC, lastWeatherJX);
+
+          weatherCompareCard.innerHTML = `
+            <div class="wc-row">
+              <span class="wc-city"><span class="wc-dot"></span>南川</span>
+              <span class="wc-info"><span class="wc-icon">${ncIcon}</span><span class="wc-temp">${ncTemp}</span><span>${ncDesc}</span></span>
+            </div>
+            <div class="wc-divider"></div>
+            <div class="wc-row">
+              <span class="wc-city jx"><span class="wc-dot"></span>嘉祥</span>
+              <span class="wc-info"><span class="wc-icon">${jxIcon}</span><span class="wc-temp">${jxTemp}</span><span>${jxDesc}</span></span>
+            </div>
+            ${diffHtml}
+            ${msg ? `<div class="wc-msg">${msg}</div>` : ''}
+          `;
+          weatherCompareCard.classList.add('show');
+        } catch (e) {
+          // 忽略错误，不影响主流程
+        }
+      }
+
       async function loadBothWeather() {
         if (!WEATHER_ENABLED) return;
         const wNC = await fetchWeatherByCity(CITY_NANCHUAN);
         weatherTextNanchuan.setText(buildWeatherHTML(wNC));
+        lastWeatherNC = wNC;
+
         const wJX = await fetchWeatherByCity(CITY_JIAXIANG);
         weatherTextJiaxiang.setText(buildWeatherHTML(wJX));
+        lastWeatherJX = wJX;
+
+        renderWeatherCompare();
       }
 
       setTimeout(loadBothWeather, 2000);
@@ -2155,7 +2631,7 @@
         const clickAttr = clickable
           ? `onclick="event.stopPropagation();event.preventDefault();window._openImageViewer && window._openImageViewer('${src}')"`
           : '';
-        return `<div ${clickAttr} style="width:${s}px;height:${s}px;border-radius:8px;overflow:hidden;border:2px solid rgba(160,170,190,0.6);box-shadow:0 2px 8px rgba(0,0,0,0.5);background:${fallbackColor};display:flex;align-items:center;justify-content:center;color:#b8bcc6;font-size:11px;font-weight:600;filter:grayscale(0.5) brightness(0.85);${cursorStyle}">
+        return `<div ${clickAttr} style="width:${s}px;height:${s}px;border-radius:8px;overflow:hidden;border:2px solid #fff;box-shadow:0 2px 8px rgba(0,20,40,0.25);background:${fallbackColor};display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600;${cursorStyle}">
           <img src="${src}" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;user-select:none;-webkit-user-drag:none;" alt=""
                onerror="this.style.display='none';this.parentNode.innerHTML='${label}';">
         </div>`;
@@ -2251,8 +2727,8 @@
         zIndex: 150
       });
       jiaxiangPhotoGroup.setContent(`
-        <div style="padding:6px;background:rgba(16,18,24,0.85);border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.6);">
-          ${makeSingleImg(IMG_JX_1, '#3a4452', '图1', IMG_SIZE, true)}
+        <div style="padding:6px;background:rgba(30,40,50,0.85);border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.4);">
+          ${makeSingleImg(IMG_JX_1, '#c44536', '图1', IMG_SIZE, true)}
         </div>
       `);
       jiaxiangPhotoGroup.setMap(map);
@@ -2263,10 +2739,10 @@
         anchor: 'top-center',
         offset: new AMap.Pixel(0, 36),
         style: {
-          'padding': '3px 10px', 'background-color': 'rgba(16,18,24,0.9)',
-          'border': '1px solid #4a5568', 'border-radius': '4px',
-          'color': '#8a94a8', 'font-size': '12px', 'font-weight': '500',
-          'white-space': 'nowrap', 'box-shadow': '0 2px 6px rgba(0,0,0,0.5)',
+          'padding': '3px 10px', 'background-color': 'rgba(30,40,50,0.9)',
+          'border': '1px solid #2b6f9b', 'border-radius': '4px',
+          'color': '#8fcbe8', 'font-size': '12px', 'font-weight': '500',
+          'white-space': 'nowrap', 'box-shadow': '0 2px 6px rgba(0,0,0,0.3)',
           'font-family': 'LXGW WenKai, Microsoft YaHei, sans-serif'
         },
         zIndex: 200
@@ -2280,8 +2756,8 @@
         zIndex: 150
       });
       nanchuanPhotoGroup.setContent(`
-        <div style="padding:6px;background:rgba(16,18,24,0.85);border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.6);">
-          ${makeSingleImg(IMG_NC_1, '#3a4452', '图3', IMG_SIZE, true)}
+        <div style="padding:6px;background:rgba(30,40,50,0.85);border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.4);">
+          ${makeSingleImg(IMG_NC_1, '#c44536', '图3', IMG_SIZE, true)}
         </div>
       `);
       nanchuanPhotoGroup.setMap(map);
@@ -2292,10 +2768,10 @@
         anchor: 'top-center',
         offset: new AMap.Pixel(0, 36),
         style: {
-          'padding': '3px 10px', 'background-color': 'rgba(16,18,24,0.9)',
-          'border': '1px solid #6b5560', 'border-radius': '4px',
-          'color': '#9ea6b8', 'font-size': '12px', 'font-weight': '500',
-          'white-space': 'nowrap', 'box-shadow': '0 2px 6px rgba(0,0,0,0.5)',
+          'padding': '3px 10px', 'background-color': 'rgba(30,40,50,0.9)',
+          'border': '1px solid #c44536', 'border-radius': '4px',
+          'color': '#e8a0b8', 'font-size': '12px', 'font-weight': '500',
+          'white-space': 'nowrap', 'box-shadow': '0 2px 6px rgba(0,0,0,0.3)',
           'font-family': 'LXGW WenKai, Microsoft YaHei, sans-serif'
         },
         zIndex: 200
@@ -2310,25 +2786,26 @@
 
       new AMap.BezierCurve({
         path: [YANGTUN, ctrlA, NANCHUAN],
-        strokeColor: '#7a8498', strokeWeight: 5, strokeOpacity: 0.08,
+        strokeColor: '#e8a0b8', strokeWeight: 5, strokeOpacity: 0.12,
         lineJoin: 'round', zIndex: 49, showDir: false
       }).setMap(map);
       new AMap.BezierCurve({
         path: [YANGTUN, ctrlA, NANCHUAN],
-        strokeColor: '#7a8498', strokeWeight: 2, strokeOpacity: 0.45,
+        strokeColor: '#e8a0b8', strokeWeight: 2, strokeOpacity: 0.6,
         lineJoin: 'round', zIndex: 50, showDir: false
       }).setMap(map);
       new AMap.BezierCurve({
         path: [NANCHUAN, ctrlA, YANGTUN],
-        strokeColor: '#7a8498', strokeWeight: 5, strokeOpacity: 0.08,
+        strokeColor: '#e8a0b8', strokeWeight: 5, strokeOpacity: 0.12,
         lineJoin: 'round', zIndex: 49, showDir: false
       }).setMap(map);
       new AMap.BezierCurve({
         path: [NANCHUAN, ctrlA, YANGTUN],
-        strokeColor: '#7a8498', strokeWeight: 2, strokeOpacity: 0.45,
+        strokeColor: '#e8a0b8', strokeWeight: 2, strokeOpacity: 0.6,
         lineJoin: 'round', zIndex: 50, showDir: false
       }).setMap(map);
 
+      // 驾车路线 —— 加粗 + 提高不透明度，卫星图上更明显
       function loadRealRoute() {
         if (!AMAP_WS_KEY || AMAP_WS_KEY === '') return;
         const url = `https://restapi.amap.com/v3/direction/driving?origin=${NANCHUAN[0]},${NANCHUAN[1]}&destination=${YANGTUN[0]},${YANGTUN[1]}&key=${AMAP_WS_KEY}&extensions=base`;
@@ -2346,28 +2823,39 @@
           });
           if (allCoords.length < 2) return;
 
+          // 底层宽描边（深色光晕）
           new AMap.Polyline({
-            path: allCoords, strokeColor: '#7a8498', strokeWeight: 5,
-            strokeOpacity: 0.06, lineJoin: 'round', zIndex: 44, showDir: false
+            path: allCoords, strokeColor: '#5e2c3c', strokeWeight: 12,
+            strokeOpacity: 0.55, lineJoin: 'round', lineCap: 'round',
+            zIndex: 44, showDir: false
           }).setMap(map);
 
+          // 中层主色（粉）
           new AMap.Polyline({
-            path: allCoords, strokeColor: '#6a7488', strokeWeight: 1.5,
-            strokeOpacity: 0.4, lineJoin: 'round', zIndex: 45, showDir: false
+            path: allCoords, strokeColor: '#e8a0b8', strokeWeight: 6,
+            strokeOpacity: 0.95, lineJoin: 'round', lineCap: 'round',
+            zIndex: 45, showDir: false
+          }).setMap(map);
+
+          // 顶层亮线（浅色高光，卫星图也能看清）
+          new AMap.Polyline({
+            path: allCoords, strokeColor: '#ffe6f0', strokeWeight: 2.5,
+            strokeOpacity: 1, lineJoin: 'round', lineCap: 'round',
+            zIndex: 46, showDir: false
           }).setMap(map);
         }).catch(() => {});
       }
 
       const photoJX_A = new AMap.Marker({
         position: YANGTUN,
-        content: makeSingleImg(IMG_JX_1, '#3a4452', '图1', IMG_SIZE, true),
+        content: makeSingleImg(IMG_JX_1, '#c44536', '图1', IMG_SIZE, true),
         offset: new AMap.Pixel(-IMG_SIZE / 2, -IMG_SIZE / 2),
         zIndex: 250
       });
 
       const photoNC_A = new AMap.Marker({
         position: NANCHUAN,
-        content: makeSingleImg(IMG_NC_1, '#3a4452', '图3', IMG_SIZE, true),
+        content: makeSingleImg(IMG_NC_1, '#c44536', '图3', IMG_SIZE, true),
         offset: new AMap.Pixel(-IMG_SIZE / 2, -IMG_SIZE / 2),
         zIndex: 250
       });
@@ -2391,11 +2879,11 @@
           offset: new AMap.Pixel(0, offsetY),
           style: {
             'padding': '8px 18px', 'border-radius': '20px',
-            'background-color': 'rgba(16,18,24,0.92)',
+            'background-color': 'rgba(30,40,50,0.92)',
             'border': '1px solid ' + color,
             'color': color, 'font-size': '13px', 'font-weight': '500',
             'white-space': 'nowrap',
-            'box-shadow': '0 6px 18px rgba(0,0,0,0.6)',
+            'box-shadow': '0 6px 18px rgba(0,0,0,0.4)',
             'opacity': '0', 'transition': 'opacity 0.4s ease'
           },
           zIndex: 300
@@ -2403,11 +2891,11 @@
       }
 
       const nanchuanTextOffsetY = Math.round(IMG_SIZE / 2 + 16);
-      const textToNanchuan = createArrivalTextBelow(NANCHUAN, '......', '#7a8498', nanchuanTextOffsetY);
+      const textToNanchuan = createArrivalTextBelow(NANCHUAN, '天天开心', '#e8a0b8', nanchuanTextOffsetY);
       textToNanchuan.setMap(map);
 
       const jiaxiangTextOffsetY = Math.round(IMG_SIZE / 2 + 16);
-      const textToJiaxiang = createArrivalTextBelow(YANGTUN, '......', '#8a94a8', jiaxiangTextOffsetY);
+      const textToJiaxiang = createArrivalTextBelow(YANGTUN, '天天开心', '#8fcbe8', jiaxiangTextOffsetY);
       textToJiaxiang.setMap(map);
 
       function showText(textObj, duration) {
@@ -2418,8 +2906,8 @@
         }, duration);
       }
 
-      const DURATION = IS_MOBILE ? 4500 : 5500;
-      const PAUSE = 800;
+      const DURATION = IS_MOBILE ? 3000 : 4000;
+      const PAUSE = 600;
 
       function flyMultiple(markersWithPath, duration) {
         return new Promise((resolve) => {
@@ -2461,7 +2949,7 @@
               return;
             }
             if (dom) {
-              dom.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
+              dom.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
               dom.style.transform = 'scale(0.4)';
               dom.style.opacity = '0';
             }
@@ -2471,7 +2959,7 @@
               if (d) { d.style.transition = ''; d.style.transform = ''; d.style.opacity = ''; }
               done++;
               if (done === markers.length) resolve();
-            }, 620);
+            }, 420);
           });
         });
       }
@@ -2492,8 +2980,8 @@
           await flyMultiple([{ marker: photoJX_A, p0: YANGTUN, p1: ctrlA, p2: NANCHUAN }], DURATION);
           spawnArrivalGlow(NANCHUAN);
           await fadeOutMarkers([photoJX_A]);
-          showText(textToNanchuan, 2500);
-          await new Promise(r => setTimeout(r, PAUSE + 2500));
+          showText(textToNanchuan, 2000);
+          await new Promise(r => setTimeout(r, PAUSE + 2000));
 
           photoNC_A.show();
           { const dom = photoNC_A.getContentDom(); if (dom) { dom.style.transform = ''; dom.style.opacity = ''; } }
@@ -2501,8 +2989,8 @@
           await flyMultiple([{ marker: photoNC_A, p0: NANCHUAN, p1: ctrlA, p2: YANGTUN }], DURATION);
           spawnArrivalGlow(YANGTUN);
           await fadeOutMarkers([photoNC_A]);
-          showText(textToJiaxiang, 2500);
-          await new Promise(r => setTimeout(r, PAUSE + 2500));
+          showText(textToJiaxiang, 2000);
+          await new Promise(r => setTimeout(r, PAUSE + 2000));
         }
       }
 
@@ -2532,210 +3020,395 @@
         }, 300);
       });
 
-    })();
-  </script>
+      // ============================================================
+      // 分享功能 —— 动态 Canvas 卡片（星点漂移 + 光晕呼吸 + 路线流光）
+      // ============================================================
+      const shareBtn = document.getElementById('shareBtn');
+      const shareModal = document.getElementById('shareModal');
+      const shareClose = document.getElementById('shareClose');
+      const sharePreviewCanvas = document.getElementById('sharePreviewCanvas');
+      const shareDownloadBtn = document.getElementById('shareDownloadBtn');
+      const shareTip = document.getElementById('shareTip');
 
-  <!-- 雨滴效果 —— 真实版（三层绘制 + 全局风向） -->
-  <script>
-    (function () {
-      const canvas = document.getElementById('rain-layer');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
+      const SHARE_W = 720;
+      const SHARE_H = 960;
+      let shareAnimId = 0;
+      let shareStartTime = 0;
 
-      let W = 0, H = 0;
-      let dpr = 1;
-      const IS_MOBILE = window.innerWidth <= 768;
-
-      const DROP_COUNT = IS_MOBILE ? 130 : 220;
-
-      // 全局风向：所有雨滴基本往同一个方向斜
-      const WIND_X = -0.75;
-
-      const drops = [];
-      const splashes = [];
-
-      function resize() {
-        dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-        W = canvas.clientWidth;
-        H = canvas.clientHeight;
-        canvas.width = Math.floor(W * dpr);
-        canvas.height = Math.floor(H * dpr);
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      }
-
-      function rand(min, max) {
-        return Math.random() * (max - min) + min;
-      }
-
-      function createDrop() {
-        const vy = rand(IS_MOBILE ? 7 : 10, IS_MOBILE ? 14 : 20);
-        const len = vy * rand(1.1, 1.6);
-        return {
-          x: rand(-80, W + 80),
-          y: rand(-H, 0),
-          vy: vy,
-          // 全局风向 + 微扰
-          vx: WIND_X + rand(-0.15, 0.15),
-          len: len,
-          width: rand(0.5, 1.4),
-          alpha: rand(0.35, 0.85),
-          headR: rand(0.6, 1.3),
-          blur: rand(0, 1)
-        };
-      }
-
-      function createSplash(x, y) {
-        return {
-          x: x,
-          y: y,
-          r: 0,
-          maxR: rand(5, 12),
-          alpha: 0.7,
-          vy: rand(-0.4, -0.15),
-          rings: Math.random() < 0.4 ? 2 : 1
-        };
-      }
-
-      function init() {
-        resize();
-        drops.length = 0;
-        for (let i = 0; i < DROP_COUNT; i++) {
-          const d = createDrop();
-          d.y = rand(-H, H);
-          drops.push(d);
+      // 预生成星点（固定，避免每帧抖动）
+      const shareStars = [];
+      (function initStars() {
+        const count = 70;
+        for (let i = 0; i < count; i++) {
+          shareStars.push({
+            x: Math.random() * SHARE_W,
+            y: Math.random() * SHARE_H,
+            r: Math.random() * 1.4 + 0.3,
+            baseAlpha: Math.random() * 0.5 + 0.2,
+            phase: Math.random() * Math.PI * 2,
+            speed: Math.random() * 0.02 + 0.008,
+            driftX: (Math.random() - 0.5) * 0.15,
+            driftY: (Math.random() - 0.5) * 0.15
+          });
         }
-      }
+      })();
 
-      // 画一颗真实雨滴：拖尾 + 水珠核心 + 水滴头
-      function drawDrop(d) {
-        const endX = d.x + d.vx * (d.len / d.vy) * 6;
-        const endY = d.y + d.len;
-
-        // ---- 第一层：拖尾渐变 ----
-        const tailGrad = ctx.createLinearGradient(d.x, d.y, endX, endY);
-        tailGrad.addColorStop(0, `rgba(180, 205, 240, 0)`);
-        tailGrad.addColorStop(0.6, `rgba(180, 205, 240, ${d.alpha * 0.25})`);
-        tailGrad.addColorStop(1, `rgba(200, 225, 255, ${d.alpha * 0.5})`);
-
-        ctx.beginPath();
-        ctx.strokeStyle = tailGrad;
-        ctx.lineWidth = d.width * 1.5;
-        ctx.lineCap = 'round';
-        if (d.blur > 0) {
-          ctx.shadowBlur = d.blur * 2;
-          ctx.shadowColor = `rgba(180, 205, 240, ${d.alpha * 0.4})`;
+      // 路线流光粒子
+      const shareFlowParticles = [];
+      (function initFlow() {
+        const count = 18;
+        for (let i = 0; i < count; i++) {
+          shareFlowParticles.push({
+            t: Math.random(),
+            speed: Math.random() * 0.0015 + 0.0008,
+            size: Math.random() * 1.6 + 1.0
+          });
         }
-        ctx.moveTo(d.x, d.y);
-        ctx.lineTo(endX, endY);
-        ctx.stroke();
-        ctx.shadowBlur = 0;
+      })();
 
-        // ---- 第二层：水珠核心 ----
-        const coreStartRatio = 0.55;
-        const coreStartX = d.x + (endX - d.x) * coreStartRatio;
-        const coreStartY = d.y + (endY - d.y) * coreStartRatio;
+      function drawShareCardFrame(ctx, time) {
+        // time 单位秒
+        const t = time;
 
-        const coreGrad = ctx.createLinearGradient(coreStartX, coreStartY, endX, endY);
-        coreGrad.addColorStop(0, `rgba(220, 235, 255, ${d.alpha * 0.35})`);
-        coreGrad.addColorStop(1, `rgba(240, 248, 255, ${d.alpha * 0.95})`);
+        // ---- 1. 深空渐变背景 ----
+        const bgGrad = ctx.createLinearGradient(0, 0, SHARE_W * 0.3, SHARE_H);
+        bgGrad.addColorStop(0, '#0a0e16');
+        bgGrad.addColorStop(0.5, '#0f1520');
+        bgGrad.addColorStop(1, '#0a1018');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, SHARE_W, SHARE_H);
 
-        ctx.beginPath();
-        ctx.strokeStyle = coreGrad;
-        ctx.lineWidth = d.width * 0.65;
-        ctx.lineCap = 'round';
-        ctx.moveTo(coreStartX, coreStartY);
-        ctx.lineTo(endX, endY);
-        ctx.stroke();
-
-        // ---- 第三层：水滴头（末端小圆点）----
-        const headGrad = ctx.createRadialGradient(endX, endY, 0, endX, endY, d.headR * 2);
-        headGrad.addColorStop(0, `rgba(255, 255, 255, ${d.alpha})`);
-        headGrad.addColorStop(0.5, `rgba(200, 225, 255, ${d.alpha * 0.5})`);
-        headGrad.addColorStop(1, `rgba(200, 225, 255, 0)`);
-
-        ctx.beginPath();
-        ctx.fillStyle = headGrad;
-        ctx.arc(endX, endY, d.headR * 2, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      function drawSplash(s) {
-        ctx.beginPath();
-        ctx.strokeStyle = `rgba(180, 205, 240, ${s.alpha})`;
-        ctx.lineWidth = 1;
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.stroke();
-
-        if (s.rings === 2 && s.r > s.maxR * 0.4) {
+        // ---- 2. 星点（缓慢漂移 + 呼吸闪烁） ----
+        for (const star of shareStars) {
+          const alpha = star.baseAlpha * (0.5 + 0.5 * Math.sin(t * star.speed * 60 + star.phase));
+          const x = (star.x + star.driftX * t * 30) % SHARE_W;
+          const y = (star.y + star.driftY * t * 30) % SHARE_H;
           ctx.beginPath();
-          ctx.strokeStyle = `rgba(180, 205, 240, ${s.alpha * 0.5})`;
-          ctx.lineWidth = 0.7;
-          ctx.arc(s.x, s.y, s.r * 0.6, 0, Math.PI * 2);
-          ctx.stroke();
-        }
-
-        if (s.r > 2 && Math.random() < 0.12) {
-          const angle = Math.random() * Math.PI * 2;
-          const dist = s.r * 1.2;
-          const dx = s.x + Math.cos(angle) * dist;
-          const dy = s.y + Math.sin(angle) * dist;
-          ctx.beginPath();
-          ctx.fillStyle = `rgba(220, 235, 255, ${s.alpha * 0.6})`;
-          ctx.arc(dx, dy, 0.8, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(200, 220, 255, ${alpha})`;
+          ctx.arc(x, y, star.r, 0, Math.PI * 2);
           ctx.fill();
         }
-      }
 
-      function draw() {
-        ctx.clearRect(0, 0, W, H);
+        // ---- 3. 顶部双色光晕（呼吸） ----
+        const breathe = 0.85 + 0.15 * Math.sin(t * 1.2);
 
-        // 底部雨雾
-        const fogGrad = ctx.createLinearGradient(0, H * 0.75, 0, H);
-        fogGrad.addColorStop(0, 'rgba(140, 165, 200, 0)');
-        fogGrad.addColorStop(1, 'rgba(140, 165, 200, 0.13)');
-        ctx.fillStyle = fogGrad;
-        ctx.fillRect(0, H * 0.75, W, H * 0.25);
+        // 粉色光晕（左）
+        const glow1 = ctx.createRadialGradient(
+          SHARE_W * 0.3, 180, 10,
+          SHARE_W * 0.3, 180, 380
+        );
+        glow1.addColorStop(0, `rgba(232, 160, 184, ${0.22 * breathe})`);
+        glow1.addColorStop(1, 'rgba(232, 160, 184, 0)');
+        ctx.fillStyle = glow1;
+        ctx.fillRect(0, 0, SHARE_W, 500);
 
-        // 画雨滴
-        for (let i = 0; i < drops.length; i++) {
-          const d = drops[i];
-          drawDrop(d);
+        // 蓝色光晕（右）
+        const glow2 = ctx.createRadialGradient(
+          SHARE_W * 0.72, 220, 10,
+          SHARE_W * 0.72, 220, 360
+        );
+        glow2.addColorStop(0, `rgba(143, 203, 232, ${0.18 * breathe})`);
+        glow2.addColorStop(1, 'rgba(143, 203, 232, 0)');
+        ctx.fillStyle = glow2;
+        ctx.fillRect(0, 0, SHARE_W, 500);
 
-          d.x += d.vx;
-          d.y += d.vy;
+        // ---- 4. 边框内发光 ----
+        ctx.strokeStyle = `rgba(232, 160, 184, ${0.15 + 0.08 * breathe})`;
+        ctx.lineWidth = 1.5;
+        roundRectPath(ctx, 20, 20, SHARE_W - 40, SHARE_H - 40, 24);
+        ctx.stroke();
 
-          if (d.y > H + 40 || d.x < -120 || d.x > W + 120) {
-            drops[i] = createDrop();
-          } else {
-            if (d.y > H * 0.85 && Math.random() < 0.04) {
-              splashes.push(createSplash(d.x, d.y));
-            }
-          }
+        // ---- 5. 标题 ----
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#e0e8f0';
+        ctx.font = '600 44px "LXGW WenKai", "Microsoft YaHei", sans-serif';
+        ctx.fillText('南川 · 嘉祥', SHARE_W / 2, 140);
+
+        // 副标题
+        ctx.fillStyle = 'rgba(152, 168, 184, 0.8)';
+        ctx.font = '500 18px "LXGW WenKai", "Microsoft YaHei", sans-serif';
+        ctx.fillText('W  E', SHARE_W / 2, 182);
+
+        // ---- 6. 分隔装饰线（双色渐变 + 流动光点） ----
+        const lineY = 230;
+        const lineGrad = ctx.createLinearGradient(140, lineY, SHARE_W - 140, lineY);
+        lineGrad.addColorStop(0, 'rgba(232, 160, 184, 0)');
+        lineGrad.addColorStop(0.5, 'rgba(232, 160, 184, 0.6)');
+        lineGrad.addColorStop(1, 'rgba(232, 160, 184, 0)');
+        ctx.strokeStyle = lineGrad;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(140, lineY);
+        ctx.lineTo(SHARE_W - 140, lineY);
+        ctx.stroke();
+
+        // 流动光点
+        const flowX = 140 + ((t * 120) % (SHARE_W - 280));
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255, 220, 235, ${0.7 + 0.3 * Math.sin(t * 5)})`;
+        ctx.arc(flowX, lineY, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // ---- 7. 距离 ----
+        // 渐变文字
+        const distGrad = ctx.createLinearGradient(SHARE_W / 2 - 150, 0, SHARE_W / 2 + 150, 0);
+        distGrad.addColorStop(0, '#e8a0b8');
+        distGrad.addColorStop(1, '#8fcbe8');
+        ctx.fillStyle = distGrad;
+        ctx.font = '700 58px "Segoe UI", "Microsoft YaHei", sans-serif';
+        ctx.fillText(distanceText, SHARE_W / 2, 320);
+
+        ctx.fillStyle = 'rgba(152, 168, 184, 0.7)';
+        ctx.font = '500 16px "LXGW WenKai", "Microsoft YaHei", sans-serif';
+        ctx.fillText('— 两地的距离 —', SHARE_W / 2, 356);
+
+        // ---- 8. 两城卡片（错位 + 玻璃拟态 + 光晕） ----
+        const cardY1 = 410;
+        const cardY2 = 460;
+        const cardH = 190;
+        const cardW = 250;
+        const gap = 40;
+        const leftX = (SHARE_W - cardW * 2 - gap) / 2;
+        const rightX = leftX + cardW + gap;
+
+        drawShareCityCard(ctx, leftX, cardY1, cardW, cardH, '南川', lastWeatherNC, '#e8a0b8', t, 0);
+        drawShareCityCard(ctx, rightX, cardY2, cardW, cardH, '嘉祥', lastWeatherJX, '#8fcbe8', t, Math.PI);
+
+        // ---- 9. 中间连接流光（两卡片之间） ----
+        const linkY1 = cardY1 + cardH / 2;
+        const linkY2 = cardY2 + cardH / 2;
+        const linkGrad = ctx.createLinearGradient(leftX + cardW, linkY1, rightX, linkY2);
+        linkGrad.addColorStop(0, 'rgba(232, 160, 184, 0.5)');
+        linkGrad.addColorStop(1, 'rgba(143, 203, 232, 0.5)');
+        ctx.strokeStyle = linkGrad;
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(leftX + cardW + 5, linkY1);
+        ctx.lineTo(rightX - 5, linkY2);
+        ctx.stroke();
+
+        // 连接线上的流光粒子
+        for (const p of shareFlowParticles) {
+          p.t += p.speed;
+          if (p.t > 1) p.t = 0;
+          const px = leftX + cardW + 5 + (rightX - 5 - leftX - cardW - 5) * p.t;
+          const py = linkY1 + (linkY2 - linkY1) * p.t;
+          const alpha = Math.sin(p.t * Math.PI) * 0.9;
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(255, 230, 245, ${alpha})`;
+          ctx.arc(px, py, p.size, 0, Math.PI * 2);
+          ctx.fill();
         }
 
-        // 画涟漪
-        for (let i = splashes.length - 1; i >= 0; i--) {
-          const s = splashes[i];
-          s.r += 0.5;
-          s.alpha *= 0.93;
-          s.y += s.vy;
+        // ---- 10. 暖心文案 ----
+        const msg = getWeatherMessage(lastWeatherNC, lastWeatherJX);
+        if (msg) {
+          const msgY = 760;
+          // 文案背景光
+          const msgGlow = ctx.createRadialGradient(
+            SHARE_W / 2, msgY - 10, 5,
+            SHARE_W / 2, msgY - 10, 220
+          );
+          msgGlow.addColorStop(0, `rgba(143, 203, 232, ${0.12 * breathe})`);
+          msgGlow.addColorStop(1, 'rgba(143, 203, 232, 0)');
+          ctx.fillStyle = msgGlow;
+          ctx.fillRect(0, msgY - 60, SHARE_W, 120);
 
-          if (s.alpha < 0.03 || s.r > s.maxR) {
-            splashes.splice(i, 1);
-            continue;
-          }
-
-          drawSplash(s);
+          ctx.fillStyle = '#8fcbe8';
+          ctx.font = '500 26px "LXGW WenKai", "Microsoft YaHei", sans-serif';
+          ctx.fillText(msg, SHARE_W / 2, msgY);
         }
 
-        requestAnimationFrame(draw);
+        // ---- 11. 底部署名 + 日期 ----
+        ctx.fillStyle = 'rgba(224, 232, 240, 0.75)';
+        ctx.font = '500 18px "LXGW WenKai", "Microsoft YaHei", sans-serif';
+        ctx.fillText('陈白白 & 陈柚柚', SHARE_W / 2, 840);
+
+        const now = new Date();
+        const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}  ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+        ctx.fillStyle = 'rgba(152, 168, 184, 0.5)';
+        ctx.font = '400 14px "Consolas", "Monaco", monospace';
+        ctx.fillText(dateStr, SHARE_W / 2, 872);
+
+        // 底部装饰双色线
+        const botY = 900;
+        const botGrad = ctx.createLinearGradient(180, botY, SHARE_W - 180, botY);
+        botGrad.addColorStop(0, 'rgba(143, 203, 232, 0)');
+        botGrad.addColorStop(0.5, 'rgba(143, 203, 232, 0.5)');
+        botGrad.addColorStop(1, 'rgba(143, 203, 232, 0)');
+        ctx.strokeStyle = botGrad;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(180, botY);
+        ctx.lineTo(SHARE_W - 180, botY);
+        ctx.stroke();
       }
 
-      window.addEventListener('resize', resize);
-      window.addEventListener('orientationchange', () => setTimeout(resize, 300));
+      function drawShareCityCard(ctx, x, y, w, h, cityName, weather, accent, time, phaseOffset) {
+        const breathe = 0.85 + 0.15 * Math.sin(time * 1.2 + phaseOffset);
 
-      init();
-      requestAnimationFrame(draw);
+        // 卡片外层光晕
+        const cardGlow = ctx.createRadialGradient(
+          x + w / 2, y + h / 2, 10,
+          x + w / 2, y + h / 2, w * 0.9
+        );
+        cardGlow.addColorStop(0, `rgba(232, 160, 184, ${0.06 * breathe})`);
+        cardGlow.addColorStop(1, 'rgba(232, 160, 184, 0)');
+        ctx.fillStyle = cardGlow;
+        ctx.fillRect(x - 20, y - 20, w + 40, h + 40);
+
+        // 玻璃卡片背景（渐变）
+        const cardGrad = ctx.createLinearGradient(x, y, x + w, y + h);
+        cardGrad.addColorStop(0, 'rgba(32, 42, 54, 0.92)');
+        cardGrad.addColorStop(1, 'rgba(20, 28, 38, 0.92)');
+        ctx.fillStyle = cardGrad;
+        roundRectPath(ctx, x, y, w, h, 18);
+        ctx.fill();
+
+        // 边框（发光）
+        ctx.strokeStyle = `rgba(255, 255, 255, ${0.08 + 0.05 * breathe})`;
+        ctx.lineWidth = 1;
+        roundRectPath(ctx, x, y, w, h, 18);
+        ctx.stroke();
+
+        // 顶部高光条
+        const topGrad = ctx.createLinearGradient(x, y, x + w, y);
+        topGrad.addColorStop(0, 'rgba(255, 255, 255, 0)');
+        topGrad.addColorStop(0.5, `rgba(255, 255, 255, ${0.06 + 0.04 * breathe})`);
+        topGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        ctx.fillStyle = topGrad;
+        ctx.fillRect(x + 2, y + 1, w - 4, 2);
+
+        // 城市名（渐变）
+        ctx.textAlign = 'center';
+        const nameGrad = ctx.createLinearGradient(x + w * 0.3, 0, x + w * 0.7, 0);
+        nameGrad.addColorStop(0, accent);
+        nameGrad.addColorStop(1, '#ffffff');
+        ctx.fillStyle = nameGrad;
+        ctx.font = '600 26px "LXGW WenKai", "Microsoft YaHei", sans-serif';
+        ctx.fillText(cityName, x + w / 2, y + 52);
+
+        // 天气图标（带发光）
+        const icon = getWeatherIcon(weather ? weather.weather : '');
+        const iconY = y + 118;
+        // 图标底部光晕
+        const iconGlow = ctx.createRadialGradient(
+          x + w / 2, iconY - 8, 5,
+          x + w / 2, iconY - 8, 60
+        );
+        iconGlow.addColorStop(0, `rgba(255, 255, 255, ${0.12 * breathe})`);
+        iconGlow.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        ctx.fillStyle = iconGlow;
+        ctx.fillRect(x + w / 2 - 60, iconY - 68, 120, 100);
+
+        ctx.font = '54px "Segoe UI Emoji", "Apple Color Emoji", sans-serif';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(icon, x + w / 2, iconY + 5);
+
+        // 温度
+        const temp = weather && weather.temperature != null ? weather.temperature + '°' : '--°';
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '700 32px "Segoe UI", "Microsoft YaHei", sans-serif';
+        ctx.fillText(temp, x + w / 2, y + 165);
+
+        // 天气描述
+        const desc = weather && weather.weather ? weather.weather : '暂无';
+        ctx.fillStyle = 'rgba(152, 168, 184, 0.85)';
+        ctx.font = '500 15px "LXGW WenKai", "Microsoft YaHei", sans-serif';
+        ctx.fillText(desc, x + w / 2, y + 188);
+      }
+
+      function roundRectPath(ctx, x, y, w, h, r) {
+        r = Math.min(r, w / 2, h / 2);
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.lineTo(x + w - r, y);
+        ctx.arcTo(x + w, y, x + w, y + r, r);
+        ctx.lineTo(x + w, y + h - r);
+        ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+        ctx.lineTo(x + r, y + h);
+        ctx.arcTo(x, y + h, x, y + h - r, r);
+        ctx.lineTo(x, y + r);
+        ctx.arcTo(x, y, x + r, y, r);
+        ctx.closePath();
+      }
+
+      function startShareAnimation() {
+        const ctx = sharePreviewCanvas.getContext('2d');
+        if (!ctx) return;
+
+        shareStartTime = performance.now();
+
+        function frame(now) {
+          const t = (now - shareStartTime) / 1000;
+          try {
+            drawShareCardFrame(ctx, t);
+          } catch (e) {
+            // 忽略
+          }
+          shareAnimId = requestAnimationFrame(frame);
+        }
+        cancelAnimationFrame(shareAnimId);
+        shareAnimId = requestAnimationFrame(frame);
+      }
+
+      function stopShareAnimation() {
+        cancelAnimationFrame(shareAnimId);
+        shareAnimId = 0;
+      }
+
+      function openShareModal() {
+        shareModal.classList.add('show');
+        // 等弹窗动画完成后启动动画
+        setTimeout(() => {
+          startShareAnimation();
+        }, 100);
+      }
+
+      function closeShareModal() {
+        shareModal.classList.remove('show');
+        stopShareAnimation();
+      }
+
+      shareBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openShareModal();
+      });
+
+      shareClose.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeShareModal();
+      });
+
+      shareModal.addEventListener('click', (e) => {
+        if (e.target === shareModal) closeShareModal();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && shareModal.classList.contains('show')) {
+          closeShareModal();
+        }
+      });
+
+      shareDownloadBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        try {
+          // 导出当前 canvas
+          const dataUrl = sharePreviewCanvas.toDataURL('image/png');
+          const a = document.createElement('a');
+          a.href = dataUrl;
+          const now = new Date();
+          const stamp = `${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}_${String(now.getHours()).padStart(2,'0')}${String(now.getMinutes()).padStart(2,'0')}`;
+          a.download = `南川嘉祥_${stamp}.png`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          shareTip.textContent = '已保存，请查看下载目录';
+        } catch (err) {
+          shareTip.textContent = '保存失败，请长按图片保存';
+        }
+      });
+
     })();
   </script>
 
@@ -2746,12 +3419,12 @@
       const MODEL_URL = "https://cdn.jsdelivr.net/gh/baicaiacabbge/baicaiclcy@main/baicai2d/object_live2d_020_101.asset.model3.json";
 
       const MESSAGES = [
-        "我们……",
-        "你还好吗",
-        "我还在",
-        "想你了",
-        "陈落落",
-        "QVQ"
+        "我们",
+        "陈柚柚天天开心",
+        "好好的",
+        "但愿长久",
+        "陈白白&陈柚柚",
+        "要开心呀"
       ];
       let messageIndex = 0;
 
@@ -2806,41 +3479,43 @@
           const tx = fresh ? pointerFocus.targetX : 0;
           const ty = fresh ? pointerFocus.targetY : 0;
 
-          pointerFocus.x += (tx - pointerFocus.x) * 0.08;
-          pointerFocus.y += (ty - pointerFocus.y) * 0.08;
+          pointerFocus.x += (tx - pointerFocus.x) * 0.16;
+          pointerFocus.y += (ty - pointerFocus.y) * 0.16;
 
           try {
-            core.setParameterValueById("ParamEyeBallX", pointerFocus.x * 0.4);
-            core.setParameterValueById("ParamEyeBallY", -pointerFocus.y * 0.3);
-            core.addParameterValueById("ParamAngleX", pointerFocus.x * 6, 0.3);
-            core.addParameterValueById("ParamAngleY", -pointerFocus.y * 4, 0.3);
-            core.addParameterValueById("ParamBodyAngleX", pointerFocus.x * 2, 0.2);
+            core.setParameterValueById("ParamEyeBallX", pointerFocus.x * 0.7);
+            core.setParameterValueById("ParamEyeBallY", -pointerFocus.y * 0.5);
+            core.addParameterValueById("ParamAngleX", pointerFocus.x * 12, 0.5);
+            core.addParameterValueById("ParamAngleY", -pointerFocus.y * 8, 0.5);
+            core.addParameterValueById("ParamBodyAngleX", pointerFocus.x * 4, 0.35);
 
-            core.setParameterValueById("ParamBreath", 0.35 + Math.sin(t * 0.6) * 0.12);
-            core.addParameterValueById("ParamBodyAngleY", Math.sin(t * 0.15) * 0.15, 0.15);
-            core.addParameterValueById("ParamBodyAngleZ", Math.sin(t * 0.2) * 0.12, 0.15);
-            core.addParameterValueById("ParamAngleZ", Math.sin(t * 0.18) * 0.1, 0.12);
+            core.setParameterValueById("ParamBreath", 0.5 + Math.sin(t * 1.25) * 0.18);
+            core.addParameterValueById("ParamBodyAngleY", Math.sin(t * 0.34) * 0.35, 0.28);
+            core.addParameterValueById("ParamBodyAngleZ", Math.sin(t * 0.42) * 0.26, 0.24);
+            core.addParameterValueById("ParamAngleZ", Math.sin(t * 0.38) * 0.24, 0.2);
 
-            const wispScale = 0.6;
-            core.addParameterValueById("ParamWillOTheWhisp1X", Math.sin(t * 0.32) * 0.3 * wispScale, 0.08);
-            core.addParameterValueById("ParamWillOTheWhisp1Y", Math.sin(t * 0.4 + 1.1) * 0.25 * wispScale, 0.08);
-            core.addParameterValueById("ParamWillOTheWhisp2X", -Math.sin(t * 0.2 + 0.6) * 0.28 * wispScale, 0.08);
-            core.addParameterValueById("ParamWillOTheWhisp2Y", Math.sin(t * 0.32) * 0.22 * wispScale, 0.08);
+            const wispScale = 1.12;
+            core.addParameterValueById("ParamWillOTheWhisp1X", Math.sin(t * 0.64) * 0.58 * wispScale, 0.12);
+            core.addParameterValueById("ParamWillOTheWhisp1Y", Math.sin(t * 0.78 + 1.1) * 0.48 * wispScale, 0.12);
+            core.addParameterValueById("ParamWillOTheWhisp2X", -Math.sin(t * 0.42 + 0.6) * 0.54 * wispScale, 0.12);
+            core.addParameterValueById("ParamWillOTheWhisp2Y", Math.sin(t * 0.64) * 0.42 * wispScale, 0.12);
+            core.addParameterValueById("ParamWillOTheWhisp3X", Math.sin(t * 0.78 + 1.1) * 0.52 * wispScale, 0.12);
+            core.addParameterValueById("ParamWillOTheWhisp3Y", -Math.sin(t * 0.42 + 0.6) * 0.45 * wispScale, 0.12);
 
-            core.addParameterValueById("ParamChainLShake", Math.sin(t * 0.3) * 0.22, 0.1);
-            core.addParameterValueById("ParamChainRShake", Math.sin(t * 0.22 + 0.6) * 0.22, 0.1);
+            core.addParameterValueById("ParamChainLShake", Math.sin(t * 0.64) * 0.44, 0.14);
+            core.addParameterValueById("ParamChainRShake", Math.sin(t * 0.42 + 0.6) * 0.44, 0.14);
 
             if (now > nextBlinkAt) {
-              blinkUntil = now + 180;
-              nextBlinkAt = now + 3200 + Math.random() * 4200;
+              blinkUntil = now + 140;
+              nextBlinkAt = now + 2400 + Math.random() * 3200;
             }
             if (now < blinkUntil) {
-              core.setParameterValueById("ParamEyeLOpen", 0.05);
-              core.setParameterValueById("ParamEyeROpen", 0.05);
+              core.setParameterValueById("ParamEyeLOpen", 0.08);
+              core.setParameterValueById("ParamEyeROpen", 0.08);
             }
 
             if (now < mouthOpenUntil) {
-              core.setParameterValueById("ParamMouthOpenY", 0.6);
+              core.setParameterValueById("ParamMouthOpenY", 1);
             }
           } catch (e) {}
         });
@@ -2850,7 +3525,7 @@
 
       async function loadModel() {
         statusEl.textContent = "模型加载中…";
-        statusEl.style.color = "#5a5e6e";
+        statusEl.style.color = "#8888a0";
 
         try {
           model = await PIXI.live2d.Live2DModel.from(MODEL_URL, {
@@ -2863,18 +3538,18 @@
           fitModel();
 
           statusEl.textContent = "Live2D Ready · Yuyuko";
-          statusEl.style.color = "#4a4e5c";
+          statusEl.style.color = "#6b7280";
 
           setTimeout(() => { playIdleMotion(); }, 900);
           setTimeout(() => sayNext(), 900);
         } catch (err) {
           statusEl.textContent = "加载失败";
-          statusEl.style.color = "#7a4452";
+          statusEl.style.color = "#f87171";
         }
       }
 
       function getMotionDuration(motion) {
-        if (!motion || !motion.Motion) return 4000;
+        if (!motion || !motion.Motion) return 3000;
         const curves = motion.Motion.Curves || [];
         let maxTime = 0;
         for (const curve of curves) {
@@ -2885,7 +3560,7 @@
             }
           }
         }
-        return maxTime > 0 ? maxTime * 1000 : 4000;
+        return maxTime > 0 ? maxTime * 1000 : 3000;
       }
 
       function playIdleMotion() {
@@ -2902,10 +3577,10 @@
           mm.startMotion(group, index);
           const duration = getMotionDuration(list[index]);
           clearTimeout(idleTimer);
-          idleTimer = setTimeout(playIdleMotion, Math.max(2000, duration * 0.9));
+          idleTimer = setTimeout(playIdleMotion, Math.max(1200, duration * 0.85));
         } catch (e) {
           clearTimeout(idleTimer);
-          idleTimer = setTimeout(playIdleMotion, 4000);
+          idleTimer = setTimeout(playIdleMotion, 3000);
         }
       }
 
@@ -2930,7 +3605,7 @@
 
       function onModelTap() {
         sayNext();
-        mouthOpenUntil = performance.now() + 700;
+        mouthOpenUntil = performance.now() + 600;
         playIdleMotion();
       }
 
@@ -2945,7 +3620,7 @@
           else bubble.style.left = "0";
         });
         clearTimeout(bubbleTimer);
-        bubbleTimer = setTimeout(() => bubble.classList.remove("show"), 4000);
+        bubbleTimer = setTimeout(() => bubble.classList.remove("show"), 3200);
       }
 
       window.addEventListener("pointermove", (e) => {
