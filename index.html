@@ -1,4 +1,4 @@
-<!-- 最后一次更新时间:2026-11-14-v2.35 -->
+<!-- 最后一次更新时间:2026-11-15-v2.35 -->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -2874,25 +2874,62 @@
       const factorA = 0.12;
       const ctrlA = [midLng - dLat * factorA, midLat + dLng * factorA];
 
+            // ============================================================
+      // 贝塞尔曲线分界线 - 加粗加亮版
+      // ============================================================
+      const t_split = 0.5; 
+      const midPoint = [
+        Math.pow(1 - t_split, 2) * NANCHUAN[0] + 2 * (1 - t_split) * t_split * ctrlA[0] + Math.pow(t_split, 2) * YANGTUN[0],
+        Math.pow(1 - t_split, 2) * NANCHUAN[1] + 2 * (1 - t_split) * t_split * ctrlA[1] + Math.pow(t_split, 2) * YANGTUN[1]
+      ];
+
+      const ctrlA_blue = [
+        (NANCHUAN[0] + ctrlA[0]) / 2,
+        (NANCHUAN[1] + ctrlA[1]) / 2
+      ];
+      const ctrlA_pink = [
+        (ctrlA[0] + YANGTUN[0]) / 2,
+        (ctrlA[1] + YANGTUN[1]) / 2
+      ];
+
+      // 蓝色段 (南川 -> 分界点)
+      // 外层宽光晕
       new AMap.BezierCurve({
-        path: [YANGTUN, ctrlA, NANCHUAN],
-        strokeColor: '#e8a0b8', strokeWeight: 5, strokeOpacity: 0.12,
+        path: [NANCHUAN, ctrlA_blue, midPoint],
+        strokeColor: '#8fcbe8', strokeWeight: 8, strokeOpacity: 0.3,
         lineJoin: 'round', zIndex: 49, showDir: false
       }).setMap(map);
+      // 内层实线（高亮）
+      new AMap.BezierCurve({
+        path: [NANCHUAN, ctrlA_blue, midPoint],
+        strokeColor: '#cceeff', strokeWeight: 3.5, strokeOpacity: 1,
+        lineJoin: 'round', zIndex: 50, showDir: false
+      }).setMap(map);
+
+      // 粉色段 (分界点 -> 嘉祥)
+      // 外层宽光晕
+      new AMap.BezierCurve({
+        path: [midPoint, ctrlA_pink, YANGTUN],
+        strokeColor: '#e8a0b8', strokeWeight: 8, strokeOpacity: 0.3,
+        lineJoin: 'round', zIndex: 49, showDir: false
+      }).setMap(map);
+      // 内层实线（高亮）
+      new AMap.BezierCurve({
+        path: [midPoint, ctrlA_pink, YANGTUN],
+        strokeColor: '#ffe6f0', strokeWeight: 3.5, strokeOpacity: 1,
+        lineJoin: 'round', zIndex: 50, showDir: false
+      }).setMap(map);
+
+      // 底层路线保留
       new AMap.BezierCurve({
         path: [YANGTUN, ctrlA, NANCHUAN],
-        strokeColor: '#e8a0b8', strokeWeight: 2, strokeOpacity: 0.6,
-        lineJoin: 'round', zIndex: 50, showDir: false
+        strokeColor: '#e8a0b8', strokeWeight: 5, strokeOpacity: 0.05,
+        lineJoin: 'round', zIndex: 48, showDir: false
       }).setMap(map);
       new AMap.BezierCurve({
         path: [NANCHUAN, ctrlA, YANGTUN],
-        strokeColor: '#e8a0b8', strokeWeight: 5, strokeOpacity: 0.12,
-        lineJoin: 'round', zIndex: 49, showDir: false
-      }).setMap(map);
-      new AMap.BezierCurve({
-        path: [NANCHUAN, ctrlA, YANGTUN],
-        strokeColor: '#e8a0b8', strokeWeight: 2, strokeOpacity: 0.6,
-        lineJoin: 'round', zIndex: 50, showDir: false
+        strokeColor: '#e8a0b8', strokeWeight: 5, strokeOpacity: 0.05,
+        lineJoin: 'round', zIndex: 48, showDir: false
       }).setMap(map);
 
       // 驾车路线 —— 加粗 + 提高不透明度，卫星图上更明显
@@ -3790,6 +3827,5 @@
       });
     })();
   </script>
-<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"e73519f3fe2e40058035919fcc2cc6f0","r":1,"spa":2}' crossorigin="anonymous"></script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a5ab3e8399fa6602',t:'MTc5NDcxNDEyNw=='};var l=window.parent.location,o;try{o=new URL(l.origin).origin}catch(e){try{o=new URL(new URL(l.href).origin).origin}catch(e){o=''}}var u='/cdn-cgi/challenge-platform/scripts/jsd/main.js?ray=a5ab3e8399fa6602',a=document.createElement('script');a.src=o?new URL(u,o).href:u;document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
